@@ -1,0 +1,42 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>観光推進MAP</title>
+    <link href="{% static 'css/style.css' %}" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.min.js"></script>
+    
+    <script type="text/javascript">
+            $(document).ready(function(){
+                $('.slider').bxSlider({
+                    auto: true,
+                    pause: 4000,
+                });
+            });
+    </script>
+</head>
+
+<body>
+
+    <div class="slider">
+        <img src="{% static 'images/1.jpg' %}" width="500" height="240" alt="">
+        <img src="{% static 'images/2.jpg' %}" width="500" height="240" alt="">
+        <img src="{% static 'images/3.jpg' %}" width="500" height="240" alt="">
+    </div>
+
+<!-- ヘッダー ---------------------------------->
+<header>
+    <form id="form4" action="自分のサイトURL" method="get">
+        <input id="sbox4"  id="s" name="s" type="text" placeholder="フリーワードを入力" />
+        <button id="sbtn4" type="submit"><i class="fas fa-search"></i></button>
+    </form>
+</header>
+
+
+</body>
+</html>
