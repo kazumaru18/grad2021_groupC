@@ -88,3 +88,39 @@
       }
       
       /* [END maps_places_searchbox] */
+
+      .ui-button {
+        background-color: #fff;
+        border: 0;
+        border-radius: 2px;
+        box-shadow: 0 1px 4px -1px rgba(0, 0, 0, 0.3);
+        margin: 10px;
+        padding: 0 0.5em;
+        font: 400 18px Roboto, Arial, sans-serif;
+        overflow: hidden;
+        height: 40px;
+        cursor: pointer;
+      }
+      .ui-button:hover {
+        background: #ebebeb;
+      }
+      
+      /* 検索ボックス */
+      .controls{
+        box-sizing: border-box;
+        position: relative;
+        border: 1px solid #999;
+        display: block;
+        padding: 3px 10px;
+        border-radius: 20px;
+        height: 2.3em;
+        width: 260px;
+        overflow: hidden;
+      }
+      .controls input[type="text"]{
+        border: none;
+        height: 2.0em;
+      }
+      .controls input[type="text"]:focus {
+        outline: 0;
+      }

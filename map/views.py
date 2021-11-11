@@ -6,3 +6,5 @@ class IndexView(generic.TemplateView):
     template_name="index.html"
 class MapView(generic.TemplateView):
     template_name="map.html"
+class TestView(generic.TemplateView):
+    template_name="test.html"

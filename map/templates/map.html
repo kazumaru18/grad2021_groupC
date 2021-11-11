@@ -75,6 +75,7 @@
      
         //コールバック関数には results, status が渡されるので、status により条件分岐
         function callback(results, status) {
+          // console.log(pos['lat']);
           $.ajax({
             url: 'http://webservice.recruit.co.jp/hotpepper/gourmet/v1/?key=04b892c025d4a7cf&lat=35.862423&lng=139.971296&range=3&order=4&count=50&format=jsonp',
             type: 'GET',
