@@ -1,13 +1,29 @@
 {% load static %}
 <!DOCTYPE html>
-<html lang="ja">
-<head>
-<meta charset="UTF-8">
-<title>Google Maps JavaScript API 2点間のルート案内</title>
-<body>
-    <div id="gmap" style="height:400px;width:600px"></div> <!-- 地図を表示する領域 -->
-     
-    <script>
+<html>
+  <head>
+    <title>Simple Map</title>
+    <meta name="viewport" content="initial-scale=1.0">
+    <meta charset="utf-8">
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+    <link href="{% static 'css/sakata.css' %}" rel="stylesheet" />
+    <script src="{% static 'css/index.js' %}"></script>
+  </head>
+  <body>
+    <header>
+      <h3>かんこーすいしんまっぷ🐰</h3>
+    </header>
+    <hr>
+    <input
+      id="pac-input"
+      class="controls"
+      type="text"
+      placeholder="Search Box"
+    />
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+  <script>
+  
+
     function initMap() {
       var target = document.getElementById('gmap');  
       var tokyo = {lat: 35.681167, lng: 139.767052};  //東京駅の緯度経度
@@ -55,11 +71,25 @@
           radius: 500,  //検索する半径（メートル）
           type: ['store']  //タイプで検索。文字列またはその配列で指定
           //キーワードで検索する場合は name:'レストラン' や ['レストラン','中華'] のように指定
-     
         }, callback);  //コールバック関数（callback）は別途定義
      
         //コールバック関数には results, status が渡されるので、status により条件分岐
         function callback(results, status) {
+          $.ajax({
+            url: 'http://webservice.recruit.co.jp/hotpepper/gourmet/v1/?key=04b892c025d4a7cf&lat=35.862423&lng=139.971296&range=3&order=4&count=25&format=jsonp',
+            type: 'GET',
+            dataType: 'jsonp',
+            jsonpCallback: 'callback'
+          }).done(function(data) {
+          // console.log(data['results']['shop'][0]['address']); // 成功時 この処理はダミーなので変更してください
+            console.log(data); // 成功時 この処理はダミーなので変更してください
+            var res = data['results']['shop'];
+            for (var k in res) {
+              gourmetMarker(res[k]);
+            }
+          }).fail(function(data) {
+            console.log("no"); // 失敗時
+          });
           // status は以下のような定数で判定（OK の場合は results が配列で返ってきます）
           if (status === google.maps.places.PlacesServiceStatus.OK) {
             //results の数だけ for 文で繰り返し処理
@@ -93,12 +123,28 @@
           infowindow.open(map, this);
         });
       }
+
+      
+
+      function gourmetMarker(res) {
+        //var placeLoc = place.geometry.location; 
+        var marker = new google.maps.Marker({
+          map: map,
+          position: {lat: res['lat'], lng: res['lng']}  //results[i].geometry.location
+        });
+     
+        //マーカーにイベントリスナを設定
+        marker.addListener('click', function() {
+          var i = "<img src=res['logo_image']>" + res['name'] + "<br>" + res['address'] + "<br>" + res['access'] + "<br>" + "<img src=res['photo']['mobile']['s']>";
+          infowindow.setContent(i);  //results[i].name
+          infowindow.open(map, this);
+        });
+      }
     }
         
     </script> 
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAaKn-PcSb_pTFwH6IJ2_ANNLKsHVMHWwU&callback=initMap&libraries=places" async defer></script><!-- YOUR_API_KEYの部分は取得した APIキーで置き換えます。また Placesを使用する場合は最後に「&libraries=places」を追加する必要があります。 -->  
-
-    <script type="text/python" src="./main.py"></script>
+    <div id="gmap" style="height: 600px;width:100%"></div> <!-- 地図を表示する領域 -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAaKn-PcSb_pTFwH6IJ2_ANNLKsHVMHWwU&callback=initMap&libraries=places" async defer></script>
     
-    </body>
+  </body>
 </html>

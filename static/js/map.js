@@ -1,29 +1,15 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <div id="gmap"></div>
+function initMap() {
 
-    <a href="http://webservice.recruit.co.jp/"><img src="http://webservice.recruit.co.jp/banner/hotpepper-s.gif" alt="ホットペッパー Webサービス" width="135" height="17" border="0" title="ホットペッパー Webサービス"></a>
-
-    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-    <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true"></script>
-    <script type="text/javascript" >
-    
-// GoogleMapを生成して表示
-google.maps.event.addDomListener(window, "load", function(){
-    var map = document.getElementById("gmap");
-    var options = {
-        zoom: 14,
-        center: new google.maps.LatLng(34.702485, 135.495951)
-    };
-    mapObj = new google.maps.Map(map, options);
-});
+    // GoogleMapを生成して表示
+    google.maps.event.addDomListener(window, "load", function(){
+        var map = document.getElementById("gmap");
+        var options = {
+            zoom: 14,
+            center: new google.maps.LatLng(34.702485, 135.495951)
+        };
+        mapObj = new google.maps.Map(map, options);
+    });
+}
 
 
 var currentInfoWin = null;
@@ -33,7 +19,7 @@ function getRamenShop() {
     console.log( "getRamenShop()" );
 
     // ホットペッパーAPI
-    var url ="http://webservice.recruit.co.jp/hotpepper/gourmet/v1/?key=04b892c025d4a7cf&middle_area=Y300,Y305,Y310&genre=G013&format=jsonp&callback=?";
+    var url ="http://webservice.recruit.co.jp/hotpepper/gourmet/v1/?key=04b892c025d4a7cf&lat=35.862423&lng=139.971296&range=3&order=4&format=json";
     // ホットペッパーAPIを呼び出す
     $.getJSON(url, {"url":url}).then(
         //成功時の処理
@@ -95,6 +81,3 @@ function disp(resultJSON) {
 window.onload = function() {
   getRamenShop();
 }
-    </script>
-</body>
-</html>
