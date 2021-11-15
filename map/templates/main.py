@@ -2,7 +2,7 @@ import requests
 import json
 
 #とりあえず例として、どこかのWeb APIを叩くことにする
-url = 'http://webservice.recruit.co.jp/hotpepper/gourmet/v1/?key=04b892c025d4a7cf&lat=35.862423&lng=139.971296&range=3&order=4&format=json'
+url = 'http://webservice.recruit.co.jp/hotpepper/gourmet/v1/?key=my key&lat=35.862423&lng=139.971296&range=3&order=4&format=json'
 
 #requests.getを使うと、レスポンス内容を取得できるのでとりあえず変数へ保存
 response = requests.get(url)
@@ -22,3 +22,7 @@ jsonData = response.json()
 result = jsonData['results']['shop']
 for restaurant in result:
 	print([restaurant['logo_image'], restaurant['name'], restaurant['address'], restaurant['access'], restaurant['urls'], restaurant['photo']['mobile']['s']])
+
+# from config import settings
+# PRIVATE_DIR = getattr(settings, "MAP_KEY", None)
+# print(PRIVATE_DIR)

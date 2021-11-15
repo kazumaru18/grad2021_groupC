@@ -1,3 +1,8 @@
+function gmap(){
+  var sc = document.createElement('script');
+  sc.src = 'https://maps.googleapis.com/maps/api/js?key='+conf.MAP_KEY+'&libraries=places&callback=initMap&v=weekly&v=beta';
+  document.body.appendChild(sc);
+}
 // [START maps_places_searchbox]
 // This example adds a search box to a map, using the Google Place Autocomplete
 // feature. People can enter geographical searches. The search box will return a
@@ -5,7 +10,6 @@
 // This example requires the Places library. Include the libraries=places
 // parameter when you first load the API. For example:
 // <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places">
-
 function initMap() {
   map = new google.maps.Map(document.getElementById('map'), {
     center: {lat: 35.859766, lng: 139.971014},
@@ -57,7 +61,7 @@ function initMap() {
     // console.log(pos['lat']);
     //コールバック関数には results, status が渡されるので、status により条件分岐
     function callback(results, status) {
-      var urlw ='http://webservice.recruit.co.jp/hotpepper/gourmet/v1/?key=04b892c025d4a7cf&lat='+pos["lat"]+'&lng='+pos["lng"]+'&range=3&order=4&count=50&format=jsonp';
+      var urlw ='http://webservice.recruit.co.jp/hotpepper/gourmet/v1/?key='+conf.GOURMET_KEY+'&lat='+pos["lat"]+'&lng='+pos["lng"]+'&range=3&order=4&count=50&format=jsonp';
       $.ajax({
         url: urlw,
         type: 'GET',
@@ -98,10 +102,10 @@ function initMap() {
       map: map,
       position: place.geometry.location  //results[i].geometry.location
     });
- 
+    // console.log(place);
     //マーカーにイベントリスナを設定
     marker.addListener('click', function() {
-      var i = place.name + "<br>" + place.rating;
+      var i = place.name + "<br>★：" + place.rating + "<br>" + place.vicinity;
       infowindow.setContent(i);  //results[i].name
       infowindow.open(map, this);
     });
@@ -202,14 +206,22 @@ function initMap() {
         scaledSize: new google.maps.Size(25, 25),
       };
 
+      var search;
       // Create a marker for each place.
       markers.push(
-        new google.maps.Marker({
+        search = new google.maps.Marker({
           map,
           // icon,
           title: place.name,
           position: place.geometry.location,
+        }),
+
+        search.addListener('click', function() {
+          var i = place.name + "<br>★：" + place.rating + "<br>" + place.formatted_address;
+          infowindow.setContent(i);  //results[i].name
+          infowindow.open(map, this);
         })
+
       );
       if (place.geometry.viewport) {
         // Only geocodes have viewport.

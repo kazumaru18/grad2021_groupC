@@ -19,7 +19,7 @@ function getRamenShop() {
     console.log( "getRamenShop()" );
 
     // ホットペッパーAPI
-    var url ="http://webservice.recruit.co.jp/hotpepper/gourmet/v1/?key=04b892c025d4a7cf&lat=35.862423&lng=139.971296&range=3&order=4&format=json";
+    var url ="http://webservice.recruit.co.jp/hotpepper/gourmet/v1/?key="+conf.GOURMET_KEY+"&lat=35.862423&lng=139.971296&range=3&order=4&format=json";
     // ホットペッパーAPIを呼び出す
     $.getJSON(url, {"url":url}).then(
         //成功時の処理

@@ -8,6 +8,8 @@
     <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
     <link href="{% static 'css/sakata.css' %}" rel="stylesheet" />
     <script src="{% static 'css/index.js' %}"></script>
+    <script src="{% static 'js/index.js' %}"></script>
+    <script src="{% static 'js/apikey.js' %}"></script>
   </head>
   <body>
     <header>
@@ -77,7 +79,7 @@
         function callback(results, status) {
           // console.log(pos['lat']);
           $.ajax({
-            url: 'http://webservice.recruit.co.jp/hotpepper/gourmet/v1/?key=04b892c025d4a7cf&lat=35.862423&lng=139.971296&range=3&order=4&count=50&format=jsonp',
+            url: 'http://webservice.recruit.co.jp/hotpepper/gourmet/v1/?key='+conf.GOURMET_KEY+'&lat=35.862423&lng=139.971296&range=3&order=4&count=50&format=jsonp',
             type: 'GET',
             dataType: 'jsonp',
             jsonpCallback: 'callback'
@@ -145,7 +147,8 @@
         
     </script> 
     <div id="gmap" style="height: 600px;width:100%"></div> <!-- 地図を表示する領域 -->
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAaKn-PcSb_pTFwH6IJ2_ANNLKsHVMHWwU&callback=initMap&libraries=places" async defer></script>
-    
+    <script>
+      gmap();
+    </script>
   </body>
 </html>

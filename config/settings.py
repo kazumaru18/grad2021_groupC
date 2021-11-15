@@ -120,6 +120,4 @@ STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
 )
 
-
-MAP_KEY = "AIzaSyAaKn-PcSb_pTFwH6IJ2_ANNLKsHVMHWwU"
-GOURMET_KEY = "04b892c025d4a7cf"
+from .settings_test import *
