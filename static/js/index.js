@@ -1,3 +1,9 @@
+function gmap(){
+  var sc = document.createElement('script');
+  sc.src = 'https://maps.googleapis.com/maps/api/js?key='+config.GOOGLEMAP_API_KEY+'&libraries=places&callback=initMap&v=weekly&v=beta';
+  document.body.appendChild(sc);
+}
+
 // [START maps_places_searchbox]
 // This example adds a search box to a map, using the Google Place Autocomplete
 // feature. People can enter geographical searches. The search box will return a
@@ -9,11 +15,14 @@
 function initMap() {
   map = new google.maps.Map(document.getElementById('map'), {
     center: {lat: 35.859766, lng: 139.971014},
-    zoom: 12,
-    heading: 320,
-    tilt: 47.5,
+    zoom: 15,
+    heading: 0,
+    tilt: 0,
     mapId: "90f87356969d889c",
   });
+
+  // const GOOGLEMAP_API_KEY = config.apikey;
+  // console.log(GOOGLEMAP_API_KEY); // ← ブラウザで確認できる。
 
   //情報ウィンドウのインスタンスの生成（後でマーカーに紐付け）
   var infowindow = new google.maps.InfoWindow();
@@ -42,7 +51,7 @@ function initMap() {
     //情報ウィンドウのコンテンツを設定
     infowindow.setContent('現在位置を取得しました。');
     //情報ウィンドウを表示
-    infowindow.open(map);
+    // infowindow.open(map);
     //マップの中心位置を指定
     map.setCenter(pos);
     
@@ -56,8 +65,11 @@ function initMap() {
 
     //コールバック関数には results, status が渡されるので、status により条件分岐
     function callback(results, status) {
+      const HOTPEPPER_API_KEY = config.hotkey;
+      // console.log(HOTPEPPER_API_KEY); // ← ブラウザで確認できる。
+      var urlw = 'http://webservice.recruit.co.jp/hotpepper/gourmet/v1/?key='+HOTPEPPER_API_KEY+'&lat='+pos["lat"]+'&lng='+pos["lng"]+'&range=3&order=4&count=50&format=jsonp';
       $.ajax({
-        url: 'http://webservice.recruit.co.jp/hotpepper/gourmet/v1/?key=04b892c025d4a7cf&lat=35.862423&lng=139.971296&range=3&order=4&count=50&format=jsonp',
+        url: urlw,
         type: 'GET',
         dataType: 'jsonp',
         jsonpCallback: 'callback'
@@ -204,7 +216,7 @@ function initMap() {
       markers.push(
         new google.maps.Marker({
           map,
-          icon,
+          // icon,
           title: place.name,
           position: place.geometry.location,
         })

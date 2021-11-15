@@ -2,105 +2,123 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>観光推進MAP</title>
-    <link href="{% static 'css/style.css' %}" rel="stylesheet" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.css">
-    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-    <script src="{% static 'js/index.js' %}"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.min.js"></script>
-    
-    <script type="text/javascript">
-            $(document).ready(function(){
-                $('.slider').bxSlider({
-                    auto: true,
-                    pause: 3000,
-                });
-            });
-    </script>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>観光推進MAP</title>
+  <link href="{% static 'css/style.css' %}" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.css">
+  <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.min.js"></script>
+  
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+      $('.slider').bxSlider({
+        auto: true,
+        pause: 3000,
+      });
+    });
+  </script>
 </head>
 
 <body>
 
 <!-- ヘッダー ---------------------------------->
 <header>
-    <h1>
-        <a href="test">観光推進MAP</a>
-    </h1>
-    <nav class="pc-nav">
-        <ul>
-            <li><a href="#">システム概要</a></li>
-            <li><a href="test">マップ</a></li>
-            <li><a href="#">ログイン</a></li>
-            <li><a href="#">お問い合わせ</a></li>
-        </ul>
-    </nav>
+  <h1><a href="/">観光推進MAP</a></h1>
+  <nav class="pc-nav">
+    <ul>
+      <li><a href="#">システム概要</a></li>
+      <li><a href="test">マップ</a></li>
+      <li><a href="#">ログイン</a></li>
+      <li><a href="#">お問い合わせ</a></li>
+    </ul>
+  </nav>
+  <section>
+    <div class="btn-trigger" id="btn03">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  </section>
 </header>
 
 <!-- メイン ------------------------------------>
 <main>
-    <div class="slider">
-        <img src="{% static 'images/01.jpg' %}" width="" height="auto" alt="">
-        <img src="{% static 'images/02.jpg' %}" width="" height="auto" alt="">
-        <img src="{% static 'images/03.jpg' %}" width="" height="auto" alt="">
-    </div>
-    <div class="top-search">
-        <h1 class="search-title">検索</h1>
-        <form method="get" action="#" class="search_container">
-            <input id="pac-input" class="controls" type="text" size="75" placeholder="キーワード検索">
-            <input type="submit" value="&#xf002">
-        </form>
-        <h1 class="search-subtitle">場所から検索</h1>
-        <div class="btan">
-            <div class="btn-wrap">
-                <a href="test2" class="btn btn-switch"><span>PUSH！</span></a>
-                <a href="" class="btn btn-switch"><span>PUSH！</span></a>
-                <a href="" class="btn btn-switch"><span>PUSH！</span></a>
-                <a href="" class="btn btn-switch"><span>PUSH！</span></a>
-            </div>
-        </div>
-    </div>
-    <div class="news">
-        <h1 class="news-title">お知らせ</h1>
-        <dl>
-            <dt>2020/1/6</dt>
-            <dd>株式会社◯◯◯◯と資本提携しました。ここにテキストが入ります。</dd>
-            <dt>2019/12/30</dt>
-            <dd>XXXが日経新聞で取り上げられました。ここにテキストが入ります。</dd>
-            <dt>2019/12/10</dt>
-            <dd>自社サービスXXXがリリースされました。ここにテキストが入ります。</dd>
-            <dt>2019/10/6</dt>
-            <dd>本社移転しました。ここにテキストが入ります。</dd>
-            <dt>2020/1/6</dt>
-            <dd>株式会社◯◯◯◯と資本提携しました。ここにテキストが入ります。</dd>
-            <dt>2019/12/30</dt>
-            <dd>XXXが日経新聞で取り上げられました。ここにテキストが入ります。</dd>
-            <dt>2019/12/10</dt>
-            <dd>自社サービスXXXがリリースされました。ここにテキストが入ります。</dd>
-            <dt>2019/10/6</dt>
-            <dd>本社移転しました。ここにテキストが入ります。</dd>
-        </dl>
-    </div>
+  <div class="slider">
+    <img src="{% static 'images/01.jpg' %}" width="" height="auto" alt="">
+    <img src="{% static 'images/02.jpg' %}" width="" height="auto" alt="">
+    <img src="{% static 'images/03.jpg' %}" width="" height="auto" alt="">
+  </div>
+  <div class="top-search">
+    <h1 class="search-title">検索</h1>
+    <form method="get" action="#" class="search_container">
+        <input type="text" size="55%" placeholder="キーワード検索">
+        <input class="musimegane" type="submit" value="&#xf002">
+    </form>
+    <h1 class="search-subtitle">カテゴリー検索</h1>
+    <ul class="menu">
+      <li><a href="#"><strong>親カテゴリ1</strong></a>
+        <ul>
+          <li><a href="#">子カテゴリ1</a></li>
+          <li><a href="#">子カテゴリ2</a></li>
+          <li><a href="#">子カテゴリ3</a></li>
+          <li><a href="#">子カテゴリ4</a></li>
+        </ul>
+      </li>
+      <li><a href="#"><strong>親カテゴリ1</strong></a>
+        <ul>
+          <li><a href="#">子カテゴリ5</a></li>
+          <li><a href="#">子カテゴリ6</a></li>
+          <li><a href="#">子カテゴリ7</a></li>
+          <li><a href="#">子カテゴリ8</a></li>
+        </ul>
+      </li>
+      <li><a href="#"><strong>親カテゴリ1</strong></a></li>
+      <li><a href="#"><strong>親カテゴリ1</strong></a></li>
+      <li><a href="#"><strong>親カテゴリ1</strong></a></li>
+    </ul>
+  </div>
+  <div class="news">
+    <h1 class="news-title">お知らせ</h1>
+    <dl>
+      <dt>2020/1/6</dt>
+      <dd>株式会社◯◯◯◯と資本提携しました。ここにテキストが入ります。</dd>
+      <dt>2019/12/30</dt>
+      <dd>XXXが日経新聞で取り上げられました。ここにテキストが入ります。</dd>
+      <dt>2019/12/10</dt>
+      <dd>自社サービスXXXがリリースされました。ここにテキストが入ります。</dd>
+      <dt>2019/10/6</dt>
+      <dd>本社移転しました。ここにテキストが入ります。</dd>
+      <dt>2020/1/6</dt>
+      <dd>株式会社◯◯◯◯と資本提携しました。ここにテキストが入ります。</dd>
+      <dt>2019/12/30</dt>
+      <dd>XXXが日経新聞で取り上げられました。ここにテキストが入ります。</dd>
+      <dt>2019/12/10</dt>
+      <dd>自社サービスXXXがリリースされました。ここにテキストが入ります。</dd>
+      <dt>2019/10/6</dt>
+      <dd>本社移転しました。ここにテキストが入ります。</dd>
+    </dl>
+  </div>
 </main>
 
 <!-- フッター ---------------------------------->
 <footer id="footer">
-    <section class="primary">
+  <section class="primary">
     <div class="footer">
       <p class="logo"><a href="#">GroupC</a></p>
       <p class="address">
         〒277-0842 千葉県柏市末広町10-1<br>
-        TEL : 04-7147-1008　/　FAX : 04-7167-2601
+        TEL : 04-7147-1008　/　二号館 : 04-7167-2601
       </p>
       <div class="navi-row">
         <ul class="navi">
           <li><a href="#">ホーム</a></li>
           <li><a href="#">システム概要</a></li>
-          <li><a href="#">マップ</a></li>
+          <li><a href="test">マップ</a></li>
           <li><a href="#">お問い合わせ</a></li>
         </ul>
         <ul class="sns-navi">
@@ -111,13 +129,13 @@
         </ul>
       </div>
     </div>
-    </section>
-    <section class="secondary">
+  </section>
+  <section class="secondary">
     <div class="footer">
       <p class="copyright">Copyright.</p>
     </div>
-    </section>
+  </section>
 </footer>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAaKn-PcSb_pTFwH6IJ2_ANNLKsHVMHWwU&libraries=places&callback=initMap&v=weekly&v=beta"async defer></script>
+
 </body>
 </html>
