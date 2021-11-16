@@ -16,7 +16,7 @@ function initMap() {
     zoom: 15,
     heading: 0,
     tilt: 0,
-    mapId: "90f87356969d889c",
+    // mapId: "90f87356969d889c",
   });
 
   //情報ウィンドウのインスタンスの生成（後でマーカーに紐付け）
@@ -77,14 +77,14 @@ function initMap() {
       }).fail(function(data) {
         console.log("no"); // 失敗時
       });
-      // status は以下のような定数で判定（OK の場合は results が配列で返ってきます）
-      if (status === google.maps.places.PlacesServiceStatus.OK) {
-        //results の数だけ for 文で繰り返し処理
-        for (var i = 0; i < results.length; i++) {
-          //createMarker() はマーカーを生成する関数（別途定義）
-          createMarker(results[i]);
-        }
-      }
+      // // status は以下のような定数で判定（OK の場合は results が配列で返ってきます）
+      // if (status === google.maps.places.PlacesServiceStatus.OK) {
+      //   //results の数だけ for 文で繰り返し処理
+      //   for (var i = 0; i < results.length; i++) {
+      //     //createMarker() はマーカーを生成する関数（別途定義）
+      //     createMarker(results[i]);
+      //   }
+      // }
     }
   }, function() {  //位置情報の取得をユーザーがブロックした場合のコールバック
     //情報ウィンドウの位置をマップの中心位置に指定
@@ -96,23 +96,23 @@ function initMap() {
   });   
   
   //マーカーを生成する関数（引数には検索結果の配列 results[i] が入ってきます）
-  function createMarker(place) {
-    //var placeLoc = place.geometry.location; 
-    var marker = new google.maps.Marker({
-      map: map,
-      position: place.geometry.location  //results[i].geometry.location
-    });
-    // console.log(place);
-    //マーカーにイベントリスナを設定
-    marker.addListener('click', function() {
-      var i = place.name + "<br>★：" + place.rating + "<br>" + place.vicinity;
-      infowindow.setContent(i);  //results[i].name
-      infowindow.open(map, this);
-    });
-  }
+  // function createMarker(place) {
+  //   //var placeLoc = place.geometry.location; 
+  //   var marker = new google.maps.Marker({
+  //     map: map,
+  //     position: place.geometry.location  //results[i].geometry.location
+  //   });
+  //   // console.log(place);
+  //   //マーカーにイベントリスナを設定
+  //   marker.addListener('click', function() {
+  //     var i = place.name + "<br>★：" + place.rating + "<br>" + place.vicinity;
+  //     infowindow.setContent(i);  //results[i].name
+  //     infowindow.open(map, this);
+  //   });
+  // }
 
   
-
+  let list = [];
   function gourmetMarker(res) {
     //var placeLoc = place.geometry.location; 
     var marker = new google.maps.Marker({
@@ -126,6 +126,7 @@ function initMap() {
       infowindow.setContent(i);  //results[i].name
       infowindow.open(map, this);
     });
+    list.push(marker);
   }
 
   const buttons = [
@@ -188,6 +189,10 @@ function initMap() {
       marker.setMap(null);
     });
     markers = [];
+    list.forEach((marker) => {
+      marker.setMap(null);
+    });
+    list = [];
 
     // For each place, get the icon, name and location.
     const bounds = new google.maps.LatLngBounds();

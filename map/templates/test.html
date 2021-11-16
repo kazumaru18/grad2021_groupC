@@ -1,33 +1,153 @@
 {% load static %}
 <!DOCTYPE html>
-<html>
-  <head>
-    <title>Simple Map</title>
-    <meta name="viewport" content="initial-scale=1.0">
-    <meta charset="utf-8">
-    <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
-    <link href="{% static 'css/sakata.css' %}" rel="stylesheet" />
-    <script src="{% static 'js/index.js' %}"></script>
-    <script src="{% static 'js/apikey.js' %}"></script>
-  </head>
-  <body>
-    <header>
-      <h3>かんこーすいしんまっぷ🐰</h3>
-    </header>
-    <hr>
-    <input
-      id="pac-input"
-      class="controls"
-      type="text"
-      placeholder="Google マップを検索する"
-    />
-    <!-- <p><button onclick="getMyPlace()">現在位置を取得</button></p> -->
-<div id="result"></div>
-<!-- <div id="map" style="width:100%;height:300px;"></div> -->
-    <div id="map"></div>
-    <script>
-      gmap();
-    </script>
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-  </body>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width">
+<meta name="robots" content="all" />
+<meta name="author" content="toogie">
+
+<meta name="keywords" content="">
+<title>サンプル6：任意の２点間のルート検索</title>
+<link rel="stylesheet" href="{% static 'css/test.css' %}">
+<link rel="stylesheet" href="{% static 'css/base.css' %}">
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=&sensor=false"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script>
+var map, begin, end;
+var directionsDisplay;
+var directionsService;
+
+begin = '東京駅';
+end = '東京スカイツリー';
+
+$(function() {
+    $('#searchButton').click(function(e) {
+        e.preventDefault();         // hrefが無効になり、画面遷移が行わない
+
+        begin = $('#inputBegin').val();
+        end   = $('#inputEnd').val();
+
+        // ルート説明をクリア
+        $('#directionsPanel').text(' ');
+
+        google.maps.event.addDomListener(window, 'load', initialize(begin, end));
+        google.maps.event.addDomListener(window, 'load', calcRoute(begin, end));
+    });
+});
+
+
+function initialize(begin, end) {
+    // インスタンス[geocoder]作成
+    var geocoder = new google.maps.Geocoder();
+
+    geocoder.geocode({
+        // 起点のキーワード
+        'address': begin
+
+    }, function(result, status) {
+        if (status == google.maps.GeocoderStatus.OK) {
+            // 中心点を指定
+            var latlng = result[0].geometry.location;
+
+            // オプション
+            var myOptions = {
+                zoom: 14,
+                center: latlng,
+                scrollwheel: false,     // ホイールでの拡大・縮小
+                mapTypeId: google.maps.MapTypeId.ROADMAP,
+            };
+
+            // #map_canvasを取得し、[mapOptions]の内容の、地図のインスタンス([map])を作成する
+            map = new google.maps.Map(document.getElementById('map_canvas'), myOptions);
+
+            // 経路を取得
+            directionsDisplay = new google.maps.DirectionsRenderer();
+            directionsDisplay.setMap(map);
+            directionsDisplay.setPanel(document.getElementById('directionsPanel'));     // 経路詳細
+
+            // 場所
+            $('#begin').text(begin);
+            $('#end').text(end);
+
+        } else {
+            alert('取得できませんでした…');
+        }
+    });
+}
+
+// ルート取得
+function calcRoute(begin, end) {
+
+    var request = {
+        origin: begin,         // 開始地点
+        destination: end,      // 終了地点
+        travelMode: google.maps.TravelMode.DRIVING,     // [自動車]でのルート
+        avoidHighways: true,        // 高速道路利用フラグ
+    };
+
+    // インスタンス作成
+    directionsService = new google.maps.DirectionsService();
+
+    directionsService.route(request, function(response, status) {
+        if (status == google.maps.DirectionsStatus.OK) {
+            directionsDisplay.setDirections(response);
+        } else {
+            alert('ルートが見つかりませんでした…');
+        }
+    });
+}
+
+// キック
+google.maps.event.addDomListener(window, 'load', function() {
+    initialize(begin, end);
+    calcRoute(begin, end);
+});
+</script>
+
+<style>
+#map_canvas {
+    margin: 0;
+    padding: 0;
+    margin-bottom: 1em;
+    height: 550px;
+}
+
+#inputBegin, #inputEnd{
+    width: 200px;
+}
+</style>
+</head>
+<body>
+
+
+<div class="parentBox1Column">
+        <div class="searchbox">
+            <form method="post" action="./index6.html">
+            <p><span class="bold">住所･地名から検索</span></p>
+            Begin:<input type="text" name="sp" id="inputBegin">
+            End:<input type="text" name="ep" id="inputEnd">
+            <input type="submit" name="regist" value="検索" id="searchButton">
+            <a href="./index6.html">初期化</a>
+            </form>
+        </div>
+
+        <h3><span id="begin"></span> → <span id="end"></span></h3>
+
+        <div id="map_canvas"></div>
+
+        <div id="directionsPanel"></div>
+
+
+
+
+    </div><!--//.child1-->
+
+</div><!--//.parentBox1Column-->
+
+
+
+
+</body>
 </html>

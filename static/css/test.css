@@ -1,0 +1,45 @@
+@charset "utf-8";
+
+/**
+ * ２カラムレイアウト用
+ * 
+ */
+.parentBox {
+    display: flex;
+    margin: 0 auto;
+    width: 90%;
+}
+
+.childLeft {
+    background: #fff;
+    border: 1px solid #dfe0e4;
+    border-radius: 3px;
+    padding: 1em 1.5em 1em 1.5em;
+    text-align: left;
+    width: 75%;
+}
+
+.childRight {
+    background-color: #e9eaed;
+    text-align: center;
+    width: 25%;
+}
+
+
+
+/**
+ * １カラムレイアウト用
+ * 
+ */
+.parentBox1Column {
+    margin: 0 auto;
+    width: 90%;
+}
+
+.child1 {
+    background: #fff;
+    border: 1px solid #dfe0e4;
+    border-radius: 3px;
+    padding: 1em 1.5em 1em 1.5em;
+    text-align: left;
+}
