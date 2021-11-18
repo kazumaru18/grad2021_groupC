@@ -11,7 +11,7 @@ function gmap(){
 // parameter when you first load the API. For example:
 // <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places">
 function initMap() {
-  map = new google.maps.Map(document.getElementById('map'), {
+  var map = new google.maps.Map(document.getElementById('map'), {
     center: {lat: 35.859766, lng: 139.971014},
     zoom: 15,
     heading: 0,
@@ -72,7 +72,7 @@ function initMap() {
         // console.log(data); // 成功時 この処理はダミーなので変更してください
         var res = data['results']['shop'];
         for (var k in res) {
-          gourmetMarker(res[k]);
+          gourmetMarker(res[k],pos);
         }
       }).fail(function(data) {
         console.log("no"); // 失敗時
@@ -113,7 +113,7 @@ function initMap() {
 
   
   let list = [];
-  function gourmetMarker(res) {
+  function gourmetMarker(res,pos) {
     //var placeLoc = place.geometry.location; 
     var marker = new google.maps.Marker({
       map: map,
@@ -122,12 +122,17 @@ function initMap() {
  
     //マーカーにイベントリスナを設定
     marker.addListener('click', function() {
-      var i = "<img src=res['logo_image']>" + res['name'] + "<br>" + res['address'] + "<br>" + res['access'] + "<br>" + "<img src=res['photo']['mobile']['s']>";
+      var i = "<img src=res['logo_image']>" + res['name'] + "<br>" + res['address'] + "<br>" + res['access'] + "<br>" + "<img src=res['photo']['mobile']['s']>"　+ "<br>" +
+      "<a href='javascript:;' onclick='Display_JS()'>ナビ</a>"
+      // "<a href='https://www.google.com/maps/search/?api=1'>ナビ</a>"
+      ;
       infowindow.setContent(i);  //results[i].name
       infowindow.open(map, this);
     });
+    console.log(pos['lat']);
     list.push(marker);
   }
+
 
   const buttons = [
     ["Rotate Left", "rotate", 20, google.maps.ControlPosition.LEFT_CENTER],
@@ -222,7 +227,7 @@ function initMap() {
         }),
 
         search.addListener('click', function() {
-          var i = place.name + "<br>★：" + place.rating + "<br>" + place.formatted_address;
+          var i = place.name + "<br>★：" + place.rating + "<br>" + place.formatted_address + "<br>" ;
           infowindow.setContent(i);  //results[i].name
           infowindow.open(map, this);
         })
@@ -239,6 +244,23 @@ function initMap() {
 });
 // [END maps_places_searchbox_getplaces]
 }
+
+
+function Display_JS(){
+     
+
+      // document.getElementById("map").innerHTML = "<p>「元に戻す」をクリックすると元に戻ります。</p>";
+      document.getElementById("map").style.display ="none";
+
+      // document.getElementById("directionsPanel").style.display ="none";
+      
+      
+      // document.getElementById("map").innerHTML = "<p>上記「切り替え」をクリックすると、ここの内容が切り替わります。</p>";
+      // document.getElementById("map").style.display ="block";
+      // document.getElementById("directionsPanel").style.display ="block";
+
+}
+
 
 function getMyPlace() {
   var output = document.getElementById("result");
@@ -364,3 +386,91 @@ function getMyPlace() {
 //     });
 //   });
 // }
+var map, begin, end;
+var directionsDisplay;
+var directionsService;
+
+begin = '東京駅';
+end = '東京スカイツリー';
+
+// $(function() {
+//     $('#searchButton').click(function(e) {
+//         e.preventDefault();         // hrefが無効になり、画面遷移が行わない
+
+//         begin = $('#inputBegin').val();
+//         end   = $('#inputEnd').val();
+
+//         // ルート説明をクリア
+//         $('#directionsPanel').text(' ');
+
+//         google.maps.event.addDomListener(window, 'load', initialize(begin, end));
+//         google.maps.event.addDomListener(window, 'load', calcRoute(begin, end));
+//     });
+// });
+
+
+function initialize(begin, end) {
+    // インスタンス[geocoder]作成
+    var geocoder = new google.maps.Geocoder();
+
+    geocoder.geocode({
+        // 起点のキーワード
+        'address': begin
+
+    }, function(result, status) {
+        if (status == google.maps.GeocoderStatus.OK) {
+            // 中心点を指定
+            var latlng = result[0].geometry.location;
+
+            // オプション
+            var myOptions = {
+                zoom: 14,
+                center: latlng,
+                scrollwheel: false,     // ホイールでの拡大・縮小
+                mapTypeId: google.maps.MapTypeId.ROADMAP,
+            };
+
+            // #map_canvasを取得し、[mapOptions]の内容の、地図のインスタンス([map])を作成する
+            map = new google.maps.Map(document.getElementById('map-canvas'), myOptions);
+            // 経路を取得
+            directionsDisplay = new google.maps.DirectionsRenderer();
+            directionsDisplay.setMap(map);
+            directionsDisplay.setPanel(document.getElementById('directionsPanel'));     // 経路詳細
+
+            // 場所
+            $('#begin').text(begin);
+            $('#end').text(end);
+
+        } else {
+            alert('取得できませんでした…');
+        }
+    });
+}
+
+// ルート取得
+function calcRoute(begin, end) {
+
+    var request = {
+        origin: begin,         // 開始地点
+        destination: end,      // 終了地点
+        travelMode: google.maps.TravelMode.DRIVING,     // [自動車]でのルート
+        avoidHighways: false,        // 高速道路利用フラグ
+    };
+
+    // インスタンス作成
+    directionsService = new google.maps.DirectionsService();
+
+    directionsService.route(request, function(response, status) {
+        if (status == google.maps.DirectionsStatus.OK) {
+            directionsDisplay.setDirections(response);
+        } else {
+            alert('ルートが見つかりませんでした…');
+        }
+    });
+}
+
+// キック
+  // google.maps.event.addDomListener(window, 'load', function() {  
+  //   initialize(begin, end);
+  //   calcRoute(begin, end);
+  // });
