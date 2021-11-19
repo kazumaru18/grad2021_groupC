@@ -70,10 +70,10 @@ function initMap() {
       }).done(function(data) {
       // console.log(data['results']['shop'][0]['address']); // 成功時 この処理はダミーなので変更してください
         // console.log(data); // 成功時 この処理はダミーなので変更してください
-        var res = data['results']['shop'];
-        for (var k in res) {
-          gourmetMarker(res[k],pos);
-        }
+      var res = data['results']['shop'];
+      for (var k in res) {
+        gourmetMarker(res[k],pos);
+      }
       }).fail(function(data) {
         console.log("no"); // 失敗時
       });
@@ -122,103 +122,124 @@ function initMap() {
  
     //マーカーにイベントリスナを設定
     marker.addListener('click', function() {
-      var i = "<img src=res['logo_image']>" + res['name'] + "<br>" + res['address'] + "<br>" + res['access'] + "<br>" + "<img src=res['photo']['mobile']['s']>"　+ "<br>" +
-      "<a href='javascript:;' onclick='Display_JS()'>ナビ</a>"
+      var r = res;
+      var p = pos;
+      var i = "<img src=res['logo_image']>" + res['name'] + "<br>" + res['address'] + "<br>" + res['access'] + "<br>" + "<img src=../../res['photo']['mobile']['s']>"　+ "<br>" +
+      "<a href='javascript:;' onclick='Display_JS(r,p)'>ナビ</a>"
       // "<a href='https://www.google.com/maps/search/?api=1'>ナビ</a>"
       ;
       infowindow.setContent(i);  //results[i].name
       infowindow.open(map, this);
     });
-    console.log(pos['lat']);
+    // console.log(pos['lat']);
     list.push(marker);
   }
 
 
-  const buttons = [
-    ["Rotate Left", "rotate", 20, google.maps.ControlPosition.LEFT_CENTER],
-    ["Rotate Right", "rotate", -20, google.maps.ControlPosition.RIGHT_CENTER],
-    ["Tilt Down", "tilt", 20, google.maps.ControlPosition.TOP_CENTER],
-    ["Tilt Up", "tilt", -20, google.maps.ControlPosition.BOTTOM_CENTER],
-  ];
+  // const buttons = [
+  //   ["Rotate Left", "rotate", 20, google.maps.ControlPosition.LEFT_CENTER],
+  //   ["Rotate Right", "rotate", -20, google.maps.ControlPosition.RIGHT_CENTER],
+  //   ["Tilt Down", "tilt", 20, google.maps.ControlPosition.TOP_CENTER],
+  //   ["Tilt Up", "tilt", -20, google.maps.ControlPosition.BOTTOM_CENTER],
+  // ];
 
-  buttons.forEach(([text, mode, amount, position]) => {
-    const controlDiv = document.createElement("div");
-    const controlUI = document.createElement("button");
+  // buttons.forEach(([text, mode, amount, position]) => {
+  //   const controlDiv = document.createElement("div");
+  //   const controlUI = document.createElement("button");
 
-    controlUI.classList.add("ui-button");
-    controlUI.innerText = `${text}`;
-    controlUI.addEventListener("click", () => {
-      adjustMap(mode, amount);
-    });
-    controlDiv.appendChild(controlUI);
-    map.controls[position].push(controlDiv);
-  });
+  //   controlUI.classList.add("ui-button");
+  //   controlUI.innerText = `${text}`;
+  //   controlUI.addEventListener("click", () => {
+  //     adjustMap(mode, amount);
+  //   });
+  //   controlDiv.appendChild(controlUI);
+  //   map.controls[position].push(controlDiv);
+  // });
 
-  const adjustMap = function (mode, amount) {
-    switch (mode) {
-      case "tilt":
-        map.setTilt(map.getTilt() + amount);
-        break;
-      case "rotate":
-        map.setHeading(map.getHeading() + amount);
-        break;
-      default:
-        break;
-    }
-  };
+  // const adjustMap = function (mode, amount) {
+  //   switch (mode) {
+  //     case "tilt":
+  //       map.setTilt(map.getTilt() + amount);
+  //       break;
+  //     case "rotate":
+  //       map.setHeading(map.getHeading() + amount);
+  //       break;
+  //     default:
+  //       break;
+  //   }
+  // };
   
-  // Create the search box and link it to the UI element.
-  const input = document.getElementById("pac-input");
-  const searchBox = new google.maps.places.SearchBox(input);
 
-  map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
-  // Bias the SearchBox results towards current map's viewport.
-  map.addListener("bounds_changed", () => {
-    searchBox.setBounds(map.getBounds());
-  });
-
+  // initAutocomplete(map);
+  
   let markers = [];
-
-  // [START maps_places_searchbox_getplaces]
-  // Listen for the event fired when the user selects a prediction and retrieve
-  // more details for that place.
-  searchBox.addListener("places_changed", () => {
-    const places = searchBox.getPlaces();
-
-    if (places.length == 0) {
-      return;
-    }
-
-    // Clear out the old markers.
-    markers.forEach((marker) => {
-      marker.setMap(null);
+  const input = document.getElementById("pac-input");
+    const searchBox = new google.maps.places.SearchBox(input);
+  
+    map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+    // Bias the SearchBox results towards current map's viewport.
+    map.addListener("bounds_changed", () => {
+      searchBox.setBounds(map.getBounds());
     });
-    markers = [];
-    list.forEach((marker) => {
-      marker.setMap(null);
-    });
-    list = [];
-
-    // For each place, get the icon, name and location.
-    const bounds = new google.maps.LatLngBounds();
-
-    places.forEach((place) => {
-      if (!place.geometry || !place.geometry.location) {
-        console.log("Returned place contains no geometry");
+  
+    // let markers = [];
+  
+    // Listen for the event fired when the user selects a prediction and retrieve
+    // more details for that place.
+    searchBox.addListener("places_changed", () => {
+      const places = searchBox.getPlaces();
+  
+      if (places.length == 0) {
         return;
       }
 
-      const icon = {
-        url: place.icon,
-        size: new google.maps.Size(71, 71),
-        origin: new google.maps.Point(0, 0),
-        anchor: new google.maps.Point(17, 34),
-        scaledSize: new google.maps.Size(25, 25),
-      };
+  
+      // if(markers != null){
+		  //   // markers.shift();
+      //   markers = null;
+		  // }
+      // markers = [];
 
-      var search;
+
+      // if(markers.length!=0){
+      //   for(var i =0; i<=markers.length-2; i=i+2){
+      //     markers[i].setMap(null);
+      //   }
+      // }
+      // markers = [];
+
+      // Clear out the old markers.
+      markers.forEach((marker) => {
+        marker.setMap(null);
+      });
+      // markers.length = 0;
+      markers = [];
+      list.forEach((marker) => {
+        infowindow.setContent(null);
+        marker.setMap(null);
+      });
+      list = [];
+  
+      // For each place, get the icon, name and location.
+      const bounds = new google.maps.LatLngBounds();
+  
+      places.forEach((place) => {
+        if (!place.geometry || !place.geometry.location) {
+          console.log("Returned place contains no geometry");
+          return;
+        }
+  
+        const icon = {
+          url: place.icon,
+          size: new google.maps.Size(71, 71),
+          origin: new google.maps.Point(0, 0),
+          anchor: new google.maps.Point(17, 34),
+          scaledSize: new google.maps.Size(25, 25),
+        };
+  
+        var search;
       // Create a marker for each place.
-      markers.push(
+      
         search = new google.maps.Marker({
           map,
           // icon,
@@ -230,27 +251,156 @@ function initMap() {
           var i = place.name + "<br>★：" + place.rating + "<br>" + place.formatted_address + "<br>" ;
           infowindow.setContent(i);  //results[i].name
           infowindow.open(map, this);
+          // console.log(infowindow);
         })
-
-      );
-      if (place.geometry.viewport) {
-        // Only geocodes have viewport.
-        bounds.union(place.geometry.viewport);
-      } else {
-        bounds.extend(place.geometry.location);
-      }
+        
+        markers.push(search)
+      
+        if (place.geometry.viewport) {
+          // Only geocodes have viewport.
+          bounds.union(place.geometry.viewport);
+        } else {
+          bounds.extend(place.geometry.location);
+        }
+      });
+      map.fitBounds(bounds);
     });
-  map.fitBounds(bounds);
-});
+
+
+
+
+
+  // Create the search box and link it to the UI element.
+//   const input = document.getElementById("pac-input");
+//   const searchBox = new google.maps.places.SearchBox(input);
+
+//   map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+//   // Bias the SearchBox results towards current map's viewport.
+//   map.addListener("bounds_changed", () => {
+//     searchBox.setBounds(map.getBounds());
+//   });
+
+//   let markers = [];
+
+//   // [START maps_places_searchbox_getplaces]
+//   // Listen for the event fired when the user selects a prediction and retrieve
+//   // more details for that place.
+//   searchBox.addListener("places_changed", () => {
+//     const places = searchBox.getPlaces();
+
+//     if (places.length == 0) {
+//       return;
+//     }
+
+//     // Clear out the old markers.
+//     markers.forEach((marker) => {
+//       marker.setMap(null);
+//     });
+//     markers = [];
+//     list.forEach((marker) => {
+//       marker.setMap(null);
+//     });
+//     list = [];
+
+//     // For each place, get the icon, name and location.
+//     const bounds = new google.maps.LatLngBounds();
+
+//     places.forEach((place) => {
+//       if (!place.geometry || !place.geometry.location) {
+//         console.log("Returned place contains no geometry");
+//         return;
+//       }
+
+//       const icon = {
+//         url: place.icon,
+//         size: new google.maps.Size(71, 71),
+//         origin: new google.maps.Point(0, 0),
+//         anchor: new google.maps.Point(17, 34),
+//         scaledSize: new google.maps.Size(25, 25),
+//       };
+
+//       var search;
+//       // Create a marker for each place.
+//       markers.push(
+//         search = new google.maps.Marker({
+//           map,
+//           // icon,
+//           title: place.name,
+//           position: place.geometry.location,
+//         }),
+
+//         search.addListener('click', function() {
+//           var i = place.name + "<br>★：" + place.rating + "<br>" + place.formatted_address + "<br>" ;
+//           infowindow.setContent(i);  //results[i].name
+//           infowindow.open(map, this);
+//         })
+
+//       );
+//       if (place.geometry.viewport) {
+//         // Only geocodes have viewport.
+//         bounds.union(place.geometry.viewport);
+//       } else {
+//         bounds.extend(place.geometry.location);
+//       }
+//     });
+//   map.fitBounds(bounds);
+// });
 // [END maps_places_searchbox_getplaces]
 }
 
 
-function Display_JS(){
+function Display_JS(r,p){
      
 
       // document.getElementById("map").innerHTML = "<p>「元に戻す」をクリックすると元に戻ります。</p>";
-      document.getElementById("map").style.display ="none";
+      // document.getElementById("map").style.display ="none";
+      // getMyPlace();
+      // intMap();
+
+
+      console.log(r);
+      console.log(p);
+      initialize();
+      calcRoute();
+      // callback();
+ 
+          // initialize();
+          // calcRoute();
+      
+
+    // var geocoder = new google.maps.Geocoder();
+
+    // geocoder.geocode({
+    //     // 起点のキーワード
+    //     'address': '柏駅'
+
+    // }, function(result, status) {
+    //     if (status == google.maps.GeocoderStatus.OK) {
+    //         // 中心点を指定
+    //         var latlng = result[0].geometry.location;
+
+    //         // オプション
+    //         var myOptions = {
+    //             zoom: 14,
+    //             center: latlng,
+    //             scrollwheel: false,     // ホイールでの拡大・縮小
+    //             mapTypeId: google.maps.MapTypeId.ROADMAP,
+    //         };
+
+    //         // #map_canvasを取得し、[mapOptions]の内容の、地図のインスタンス([map])を作成する
+    //         map = new google.maps.Map(document.getElementById('map'), myOptions);
+    //         // 経路を取得
+    //         directionsDisplay = new google.maps.DirectionsRenderer();
+    //         directionsDisplay.setMap(map);
+    //         directionsDisplay.setPanel(document.getElementById('directionsPanel'));
+    //       }
+    //     });
+
+
+
+
+
+
 
       // document.getElementById("directionsPanel").style.display ="none";
       
@@ -271,7 +421,7 @@ function getMyPlace() {
   function success(position) {
     var latitude  = position.coords.latitude;//緯度
     var longitude = position.coords.longitude;//経度
-    output.innerHTML = '<p>緯度 ' + latitude + '° <br>経度 ' + longitude + '°</p>';
+    // output.innerHTML = '<p>緯度 ' + latitude + '° <br>経度 ' + longitude + '°</p>';
     // 位置情報
     var latlng = new google.maps.LatLng( latitude , longitude ) ;
     // Google Mapsに書き出し
@@ -409,13 +559,13 @@ end = '東京スカイツリー';
 // });
 
 
-function initialize(begin, end) {
+function initialize() {
     // インスタンス[geocoder]作成
     var geocoder = new google.maps.Geocoder();
 
     geocoder.geocode({
         // 起点のキーワード
-        'address': begin
+        'address': '柏駅'
 
     }, function(result, status) {
         if (status == google.maps.GeocoderStatus.OK) {
@@ -431,7 +581,7 @@ function initialize(begin, end) {
             };
 
             // #map_canvasを取得し、[mapOptions]の内容の、地図のインスタンス([map])を作成する
-            map = new google.maps.Map(document.getElementById('map-canvas'), myOptions);
+            var map = new google.maps.Map(document.getElementById('map'), myOptions);
             // 経路を取得
             directionsDisplay = new google.maps.DirectionsRenderer();
             directionsDisplay.setMap(map);
@@ -448,17 +598,17 @@ function initialize(begin, end) {
 }
 
 // ルート取得
-function calcRoute(begin, end) {
+function calcRoute() {
 
     var request = {
-        origin: begin,         // 開始地点
-        destination: end,      // 終了地点
+        origin: '柏駅',         // 開始地点
+        destination: '東京駅',      // 終了地点
         travelMode: google.maps.TravelMode.DRIVING,     // [自動車]でのルート
         avoidHighways: false,        // 高速道路利用フラグ
     };
 
     // インスタンス作成
-    directionsService = new google.maps.DirectionsService();
+    var directionsService = new google.maps.DirectionsService();
 
     directionsService.route(request, function(response, status) {
         if (status == google.maps.DirectionsStatus.OK) {
@@ -474,3 +624,86 @@ function calcRoute(begin, end) {
   //   initialize(begin, end);
   //   calcRoute(begin, end);
   // });
+
+
+
+  function intMap(){
+    var map = new google.maps.Map( document.getElementById( 'map' ) , {
+      zoom: 15 ,// ズーム値
+      center:  {lat: 35.859766, lng: 139.971014},// 中心座標
+  } ) ;
+  // マーカーの新規出力
+  new google.maps.Marker( {
+      map: map ,
+      position: latlng ,
+  } ) ;
+  }
+
+
+
+
+
+  function initAutocomplete(map) {
+    // Create the search box and link it to the UI element.
+    const input = document.getElementById("pac-input");
+    const searchBox = new google.maps.places.SearchBox(input);
+  
+    map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+    // Bias the SearchBox results towards current map's viewport.
+    map.addListener("bounds_changed", () => {
+      searchBox.setBounds(map.getBounds());
+    });
+  
+    // let markers = [];
+  
+    // Listen for the event fired when the user selects a prediction and retrieve
+    // more details for that place.
+    searchBox.addListener("places_changed", () => {
+      const places = searchBox.getPlaces();
+  
+      if (places.length == 0) {
+        return;
+      }
+  
+      // Clear out the old markers.
+      markers.forEach((marker) => {
+        marker.setMap(null);
+      });
+      markers = [];
+  
+      // For each place, get the icon, name and location.
+      const bounds = new google.maps.LatLngBounds();
+  
+      places.forEach((place) => {
+        if (!place.geometry || !place.geometry.location) {
+          console.log("Returned place contains no geometry");
+          return;
+        }
+  
+        const icon = {
+          url: place.icon,
+          size: new google.maps.Size(71, 71),
+          origin: new google.maps.Point(0, 0),
+          anchor: new google.maps.Point(17, 34),
+          scaledSize: new google.maps.Size(25, 25),
+        };
+  
+        // Create a marker for each place.
+        markers.push(
+          new google.maps.Marker({
+            map,
+            // icon,
+            title: place.name,
+            position: place.geometry.location,
+          })
+        );
+        if (place.geometry.viewport) {
+          // Only geocodes have viewport.
+          bounds.union(place.geometry.viewport);
+        } else {
+          bounds.extend(place.geometry.location);
+        }
+      });
+      map.fitBounds(bounds);
+    });
+  }
