@@ -161,25 +161,43 @@ function initMap() {
     //マーカーにイベントリスナを設定
     marker.addListener('click', function() {
       start = pos['lat']+','+pos['lng'];
-      end = res['lat']+','+res['lng'];
-      var i = "<img src=res['logo_image']>" + res['name'] + "<br>" + res['address'] + "<br>" + res['access'] + "<br>" + "<img src=../../res['photo']['mobile']['s']>"　+ "<br>" +
-      "<a href='javascript:;' id='navi'>ナビ</a>"+"<br>"
+      // end = res['lat']+','+res['lng'];
+      end = res['address'];
+      var positio ={lat:res['lat'],lng:res['lng']};
+      // console.log(pos);
+      // console.log(end);
+      var i = "<img src=res['logo_image']>" + res['name'] + "<br>" + res['address'] + "<br>" + res['access'] + "<br>" + "<img src=../../res['photo']['mobile']['s']>"　+ "<br>" 
+      // +
+      // "<a href='javascript:;' id='navi'>ナビ</a>"+"<br>"
       // "<a href='https://www.google.com/maps/search/?api=1'>ナビ</a>"
       ;
       // let button = document.getElementById('navi');
       // $('navi').on('click', Display_JS(start,end));
-      
 
-      infowindow.setContent(i);  //results[i].name
-      infowindow.open(map, this);
+      var dom = document.createElement("div");
+      // dom.innerHTML = "<h1>クリックイベント発生テスト</h1>";
+      dom.innerHTML = i+"<button id='navi'>navi</button>";
+      // dom.addEventListener("click", function() {
+      //   console.log("clicked");
+      //   Display_JS('東京駅','柏駅');
+      // });
+      dom.addEventListener("mousemove", () => {
+        $('#navi').on('click',function(){
+          // console.log("clicked");
+          Display_JS(start,end);
+        });
+      });
+
+      infoWindow = new google.maps.InfoWindow({
+        position: positio,
+        content: dom
+      });
+      // infowindow.setContent(i);  //results[i].name
+      // infowindo.open(map, this);
+      infoWindow.open(map);
     });
     // addMarker(marker);
     // console.log(pos['lat']);
-    
-    
-
-
-
     markers.push(marker);
   }
   // $('a').on('click', function() {        
@@ -205,20 +223,11 @@ function initMap() {
       if (places.length == 0) {
         return;
       }
-
-  
-   
-
-     
-
       // Clear out the old markers.
       markers.forEach((marker) => {
         marker.setMap(null);
       });
-   
       markers = [];
-  
-  
       // For each place, get the icon, name and location.
       const bounds = new google.maps.LatLngBounds();
   
@@ -230,7 +239,6 @@ function initMap() {
         }
         var search;
       // Create a marker for each place.
-      
         search = new google.maps.Marker({
           map,
           title: place.name,
@@ -239,12 +247,24 @@ function initMap() {
 
         search.addListener('click', function() {
           start = pos['lat']+','+pos['lng'];
-          var i = place.name + "<br>★：" + place.rating + "<br>" + place.formatted_address + "<br>" +
-          "<a href='javascript:;' id='navi'>ナビ</a>"+"<br>" ;
+          var i = place.name + "<br>★：" + place.rating + "<br>" + place.formatted_address + "<br>" ;
+          // "<a href='javascript:;' id='navi'>ナビ</a>"+"<br>" ;
           // let button = document.getElementById('navi');
-          $('navi').on('click', Display_JS(start,place.name));
-          infowindow.setContent(i);  //results[i].name
-          infowindow.open(map, this);
+          // $('navi').on('click', Display_JS(start,place.name));
+
+          var dom = document.createElement("div");
+          dom.innerHTML = i+"<button id='navi'>navi</button>";
+          dom.addEventListener("mousemove", () => {
+            $('#navi').on('click',function(){
+              Display_JS(start,place.formatted_address);
+            });
+          });
+    
+          infoWindow = new google.maps.InfoWindow({
+            position: place.geometry.location,
+            content: dom
+          });
+          infoWindow.open(map);
         })
         markers.push(search)
       
@@ -529,3 +549,41 @@ function goStation() {
     // ※※※ここにボタンクリック時のイベント※※※
     console.log('go station');
 }
+
+
+// var num = 0;
+// var watch_id;
+
+// function test() {
+//     watch_id = navigator.geolocation.watchPosition(test2, function(e) { alert(e.message); }, {"enableHighAccuracy": true, "timeout": 200000, "maximumAge": 2000});
+// }
+
+// function clear() {
+//     navigator.geolocation.clearWatch(watch_id);
+// }
+
+// function test2(position) {
+
+//     var geo_text = "緯度:" + position.coords.latitude + "\n";
+//     geo_text += "経度:" + position.coords.longitude + "\n";
+//     geo_text += "高度:" + position.coords.altitude + "\n";
+//     geo_text += "位置精度:" + position.coords.accuracy + "\n";
+//     geo_text += "高度精度:" + position.coords.altitudeAccuracy  + "\n";
+//     geo_text += "移動方向:" + position.coords.heading + "\n";
+//     geo_text += "速度:" + position.coords.speed + "\n";
+
+//     var date = new Date(position.timestamp);
+
+//     geo_text += "取得時刻:" + date.toLocaleString() + "\n";
+//     geo_text += "取得回数:" + (++num) + "\n";
+
+//     document.getElementById('position_view').innerHTML = geo_text;
+
+
+//     var latlng = {lat:position.coords.latitude,lng:position.coords.longitude};
+//     new google.maps.Marker( {
+//       map: map ,
+//       position: latlng ,
+//   } ) ;
+// }
+
