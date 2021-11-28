@@ -166,7 +166,7 @@ function initMap() {
       var positio ={lat:res['lat'],lng:res['lng']};
       // console.log(pos);
       // console.log(end);
-      var i = "<img src=res['logo_image']>" + res['name'] + "<br>" + res['address'] + "<br>" + res['access'] + "<br>" + "<img src=../../res['photo']['mobile']['s']>"　+ "<br>" 
+      var i = "<img src='" + res['logo_image'] + "'>" + "<br>" + res['name'] + "<br>" + res['address'] + "<br>" + res['access'] + "<br>" + "<img src='" + res['photo']['mobile']['s'] + "'>"　+ "<br>" 
       // +
       // "<a href='javascript:;' id='navi'>ナビ</a>"+"<br>"
       // "<a href='https://www.google.com/maps/search/?api=1'>ナビ</a>"
