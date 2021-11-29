@@ -45,28 +45,44 @@
         lng: position.coords.longitude
       };
       //情報ウィンドウに現在位置を指定
-      infowindow.setPosition(pos);
+      // infowindow.setPosition(pos);
       //情報ウィンドウのコンテンツを設定
-      infowindow.setContent('現在位置を取得しました。');
+      // infowindow.setContent('現在位置を取得しました。');
       //情報ウィンドウを表示
-      infowindow.open(map);
+      // infowindow.open(map);
       //マップの中心位置を指定
       map.setCenter(pos);
-      
+
+
+      // URLを取得
+      var url = new URL(window.location.href);
+      // URLSearchParamsオブジェクトを取得
+      var params = url.searchParams;
+      // getメソッド
+      var category = params.get('q');
+      // if(category==null){
+      //   console.log("sss");
+      // }
+
       //種類（タイプ）やキーワードをもとに施設を検索（プレイス検索）するメソッド nearbySearch()
       service.nearbySearch({
         location: pos,  //検索するロケーション
         radius: 2500,  //検索する半径（メートル）
         // type: ['store'],  //タイプで検索。文字列またはその配列で指定
-        name: ['食料品'],
+        name: category,
         //キーワードで検索する場合は name:'レストラン' や ['レストラン','中華'] のように指定
         
-      }, 
+      },
       
-      callback);  //コールバック関数（callback）は別途定義
+      callback
+      );  //コールバック関数（callback）は別途定義
       
       //コールバック関数には results, status が渡されるので、status により条件分岐
       function callback(results, status) {
+        if(category==null){
+          console.log("sss");
+          return;
+        }
         // status は以下のような定数で判定（OK の場合は results が配列で返ってきます）
         if (status === google.maps.places.PlacesServiceStatus.OK) {
           //results の数だけ for 文で繰り返し処理

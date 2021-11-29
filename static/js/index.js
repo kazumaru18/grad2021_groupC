@@ -16,7 +16,7 @@ var r,p;
 function initMap() {
   var map = new google.maps.Map(document.getElementById('map'), {
     center: {lat: 35.859766, lng: 139.971014},
-    zoom: 15,
+    zoom: 14,
     heading: 0,
     tilt: 0,
     // mapId: "90f87356969d889c",
@@ -52,43 +52,42 @@ function initMap() {
     // infowindow.open(map);
     //マップの中心位置を指定
     map.setCenter(pos);
+
+    // URLを取得
+    var url = new URL(window.location.href);
+    // URLSearchParamsオブジェクトを取得
+    var params = url.searchParams;
+    // getメソッド
+    var category = params.get('c');
+    // if(category==null){
+    //   console.log("sss");
+    // }
     
     //種類（タイプ）やキーワードをもとに施設を検索（プレイス検索）するメソッド nearbySearch()
     service.nearbySearch({
       location: pos,  //検索するロケーション
-      radius: 500,  //検索する半径（メートル）
-      type: ['store'],  //タイプで検索。文字列またはその配列で指定
+      radius: 2500,  //検索する半径（メートル）
+      // type: ['store'],  //タイプで検索。文字列またはその配列で指定
+      name: category,
       //キーワードで検索する場合は name:'レストラン' や ['レストラン','中華'] のように指定
-    }, );  //コールバック関数（callback）は別途定義
+    }, cate);  //コールバック関数（callback）は別途定義
 
     // console.log(pos['lat']);
     //コールバック関数には results, status が渡されるので、status により条件分岐
-    // function callback(results, status) {
-    //   var urlw ='http://webservice.recruit.co.jp/hotpepper/gourmet/v1/?key='+conf.GOURMET_KEY+'&lat='+pos["lat"]+'&lng='+pos["lng"]+'&range=3&order=4&count=50&format=jsonp';
-    //   $.ajax({
-    //     url: urlw,
-    //     type: 'GET',
-    //     dataType: 'jsonp',
-    //     jsonpCallback: 'callback'
-    //   }).done(function(data) {
-    //   // console.log(data['results']['shop'][0]['address']); // 成功時 この処理はダミーなので変更してください
-    //     // console.log(data); // 成功時 この処理はダミーなので変更してください
-    //   var res = data['results']['shop'];
-    //   for (var k in res) {
-    //     gourmetMarker(res[k],pos);
-    //   }
-    //   }).fail(function(data) {
-    //     console.log("no"); // 失敗時
-    //   });
-    //   // // status は以下のような定数で判定（OK の場合は results が配列で返ってきます）
-    //   // if (status === google.maps.places.PlacesServiceStatus.OK) {
-    //   //   //results の数だけ for 文で繰り返し処理
-    //   //   for (var i = 0; i < results.length; i++) {
-    //   //     //createMarker() はマーカーを生成する関数（別途定義）
-    //   //     createMarker(results[i]);
-    //   //   }
-    //   // }
-    // }
+    function cate(results, status) {
+      if(category==null){
+        // console.log("sss");
+        return;
+      }
+      // status は以下のような定数で判定（OK の場合は results が配列で返ってきます）
+      if (status === google.maps.places.PlacesServiceStatus.OK) {
+        //results の数だけ for 文で繰り返し処理
+        for (var i = 0; i < results.length; i++) {
+          //createMarker() はマーカーを生成する関数（別途定義）
+          createMarker(results[i]);
+        }
+      }
+    }
   }, function() {  //位置情報の取得をユーザーがブロックした場合のコールバック
     //情報ウィンドウの位置をマップの中心位置に指定
     infowindow.setPosition(map.getCenter());
@@ -132,6 +131,21 @@ function initMap() {
     // }
   }
   
+
+  function createMarker(place) {
+    //var placeLoc = place.geometry.location; 
+    var marker = new google.maps.Marker({
+      map: map,
+      position: place.geometry.location  //results[i].geometry.location
+    });
+ 
+    //マーカーにイベントリスナを設定
+    marker.addListener('click', function() {
+      infowindow.setContent(place.name);  //results[i].name
+      infowindow.open(map, this);
+    });
+  }
+
   // //マーカーを生成する関数（引数には検索結果の配列 results[i] が入ってきます）
   // function createMarker(place) {
   //   //var placeLoc = place.geometry.location; 
@@ -205,9 +219,27 @@ function initMap() {
   // })
   // $('a').on('click', {res:r,pos:p},Display_JS);
 
+  function enter(){
+    var input = document.getElementById("pac-input");
+    input.focus();
+    let KEvent = new KeyboardEvent( "keydown", { keyCode: 13 });
+    input.dispatchEvent( KEvent );
+  }
+  // window.onload=aaaaaaa();
+  window.addEventListener('load',function(){
+    enter();
+    // var o = this.document.getElementById('pac-input');
+    // o.sandkeys({ENTER});
+  });
+// MapLoadedEvent Loaded = new MapLoadedEvent();
 
+
+  var url = new URL(window.location.href);
+  // URLSearchParamsオブジェクトを取得
+  var params = url.searchParams;
 
   const input = document.getElementById("pac-input");
+  input.value = params.get('q');
   const searchBox = new google.maps.places.SearchBox(input);
   map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
   // Bias the SearchBox results towards current map's viewport.
