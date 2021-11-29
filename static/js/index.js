@@ -389,7 +389,7 @@ function initialize(s,e) {
         'address': s
 
     }, function(result, status) {
-        if (status == google.maps.GeocoderStatus.OK) {
+        // if (status == google.maps.GeocoderStatus.OK) {
             // 中心点を指定
             var latlng = result[0].geometry.location;
 
@@ -412,9 +412,9 @@ function initialize(s,e) {
             $('#begin').text(s);
             $('#end').text(e);
 
-        } else {
-            alert('取得できませんでした…');
-        }
+        // } else {
+        //     alert('取得できませんでした…');
+        // }
     });
 }
 
@@ -431,11 +431,11 @@ function calcRoute(s,e) {
     var directionsService = new google.maps.DirectionsService();
 
     directionsService.route(request, function(response, status) {
-        if (status == google.maps.DirectionsStatus.OK) {
+        // if (status == google.maps.DirectionsStatus.OK) {
             directionsDisplay.setDirections(response);
-        } else {
-            alert('ルートが見つかりませんでした…');
-        }
+        // } else {
+        //     alert('ルートが見つかりませんでした…');
+        // }
     });
 }
 

@@ -125,22 +125,34 @@ function initMap() {
     // }
 }
 
-function test(){
+function aaaaaaa(){
+    document.getElementById("pac-input").focus();
+}
+// window.onload=aaaaaaa();
+window.addEventListener('load',function(){
+    aaaaaaa();
+    // var o = this.document.getElementById('pac-input');
+    // o.sandkeys({ENTER});
+});
+// MapLoadedEvent Loaded = new MapLoadedEvent();
 
+
+
+function test(){
     const input = document.getElementById("pac-input");
     input.value='琵琶湖';
-    console.log(input);
-  const searchBox = new google.maps.places.SearchBox(input);
-  map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
-  // Bias the SearchBox results towards current map's viewport.
-  map.addListener("bounds_changed", () => {
-    searchBox.setBounds(map.getBounds());
-  });
-  
-  
-  // Listen for the event fired when the user selects a prediction and retrieve
-  // more details for that place.
-  searchBox.addListener("places_changed", () => {
+    const searchBox = new google.maps.places.SearchBox(input);
+    // map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+    map.addListener("bounds_changed", () => {
+        searchBox.setBounds(map.getBounds());
+      });
+    // Bias the SearchBox results towards current map's viewport.
+    
+    
+    
+    // Listen for the event fired when the user selects a prediction and retrieve
+    // more details for that place.
+    searchBox.addListener("places_changed", () => {
       const places = searchBox.getPlaces();
     //   if (places.length == 0) {
     //     return;
@@ -198,7 +210,73 @@ function test(){
         }
       });
       map.fitBounds(bounds);
-    })};
+    })
+};
 
 
   };
+
+
+function Display_JS(start,end){
+    initialize(start,end);
+    calcRoute(start,end);
+}
+
+function initialize(s,e) {
+    // インスタンス[geocoder]作成
+    var geocoder = new google.maps.Geocoder();
+
+    geocoder.geocode({
+        // 起点のキーワード
+        'address': s
+
+    }, function(result, status) {
+        // if (status == google.maps.GeocoderStatus.OK) {
+            // 中心点を指定
+            var latlng = result[0].geometry.location;
+
+            // オプション
+            var myOptions = {
+                zoom: 14,
+                center: latlng,
+                scrollwheel: false,     // ホイールでの拡大・縮小
+                mapTypeId: google.maps.MapTypeId.ROADMAP,
+            };
+
+            // #map_canvasを取得し、[mapOptions]の内容の、地図のインスタンス([map])を作成する
+            var map = new google.maps.Map(document.getElementById('map'), myOptions);
+            // 経路を取得
+            directionsDisplay = new google.maps.DirectionsRenderer();
+            directionsDisplay.setMap(map);
+            directionsDisplay.setPanel(document.getElementById('directionsPanel'));     // 経路詳細
+
+            // 場所
+            $('#begin').text(s);
+            $('#end').text(e);
+
+        // } else {
+        //     alert('取得できませんでした…');
+        // }
+    });
+}
+
+// ルート取得
+function calcRoute(s,e) {
+    var request = {
+        origin: s,         // 開始地点
+        destination: e,      // 終了地点
+        travelMode: google.maps.TravelMode.DRIVING,     // [自動車]でのルート
+        avoidHighways: false,        // 高速道路利用フラグ
+    };
+
+    // インスタンス作成
+    var directionsService = new google.maps.DirectionsService();
+
+    directionsService.route(request, function(response, status) {
+        // if (status == google.maps.DirectionsStatus.OK) {
+            directionsDisplay.setDirections(response);
+        // } else {
+        //     alert('ルートが見つかりませんでした…');
+        // }
+    });
+}
