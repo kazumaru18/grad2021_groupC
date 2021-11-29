@@ -126,7 +126,10 @@ function initMap() {
 }
 
 function aaaaaaa(){
-    document.getElementById("pac-input").focus();
+    var input = document.getElementById("pac-input");
+    input.focus();
+    let KEvent = new KeyboardEvent( "keydown", { keyCode: 13 });
+    input.dispatchEvent( KEvent );
 }
 // window.onload=aaaaaaa();
 window.addEventListener('load',function(){
@@ -142,7 +145,7 @@ function test(){
     const input = document.getElementById("pac-input");
     input.value='琵琶湖';
     const searchBox = new google.maps.places.SearchBox(input);
-    // map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+    map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
     map.addListener("bounds_changed", () => {
         searchBox.setBounds(map.getBounds());
       });
