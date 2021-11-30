@@ -225,6 +225,14 @@ $('#cate4').on('click',function(){
 });
 
 
+$('#navi-end').on('click',function(){
+  directionsDisplay.setMap(null);
+  directionsDisplay.setPanel(null);
+  directionsDisplay.setDirections(null);
+  $('#navi-end').hide();
+});
+
+
 
 var url = new URL(window.location.href);
 // URLSearchParamsオブジェクトを取得
@@ -311,6 +319,8 @@ searchBox.addListener("places_changed", () => {
 }
 
 function Display_JS(start,end){
+  const input = document.getElementById("pac-input");
+  input.value = null;
   if(info != null){
     info.close();
   }
@@ -320,6 +330,7 @@ function Display_JS(start,end){
   markers = [];
   initialize(start,end);
   calcRoute(start,end);
+  $('#navi-end').show();
 }
 
 var directionsDisplay;
@@ -354,8 +365,8 @@ geocoder.geocode({
         directionsDisplay.setPanel(document.getElementById('directionsPanel'));     // 経路詳細
 
         // 場所
-        $('#begin').text(s);
-        $('#end').text(e);
+        // $('#begin').text(s);
+        // $('#end').text(e);
 
     // } else {
     //     alert('取得できませんでした…');
