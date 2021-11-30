@@ -194,6 +194,38 @@ window.addEventListener('load',function(){
   enter();
 });
 
+var cate;
+$('#cate1').on('click',function(){
+  cate = document.querySelector('#cate1').dataset["value"];
+  const input = document.getElementById("pac-input");
+  input.value = cate;
+  enter();
+  input.blur()
+});
+$('#cate2').on('click',function(){
+  cate = document.querySelector('#cate2').dataset["value"];
+  const input = document.getElementById("pac-input");
+  input.value = cate;
+  enter();
+  input.blur()
+});
+$('#cate3').on('click',function(){
+  cate = document.querySelector('#cate3').dataset["value"];
+  const input = document.getElementById("pac-input");
+  input.value = cate;
+  enter();
+  input.blur()
+});
+$('#cate4').on('click',function(){
+  cate = document.querySelector('#cate4').dataset["value"];
+  const input = document.getElementById("pac-input");
+  input.value = cate;
+  enter();
+  input.blur()
+});
+
+
+
 var url = new URL(window.location.href);
 // URLSearchParamsオブジェクトを取得
 var params = url.searchParams;
@@ -213,6 +245,9 @@ searchBox.addListener("places_changed", () => {
     const places = searchBox.getPlaces();
     if (places.length == 0) {
       return;
+    }
+    if(info != null){
+      info.close();
     }
     // Clear out the old markers.
     markers.forEach((marker) => {
