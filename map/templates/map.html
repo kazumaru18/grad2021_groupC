@@ -7,6 +7,7 @@
     <meta charset="utf-8">
     <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
     <link href="{% static 'css/sakata.css' %}" rel="stylesheet" />
+    <link href="{% static 'css/style.css' %}" rel="stylesheet" />
     <script src="{% static 'js/index.js' %}"></script>
     <script src="{% static 'js/apikey.js' %}"></script>
     <!-- <script src="{% static 'js/hozonyou.js' %}"></script> -->
@@ -14,16 +15,44 @@
   </head>
   <body>
     <header>
-      <h3>かんこーすいしんまっぷ🐰</h3>
-    </header>
-    <hr>
-    <p><button id="mise">飲食店</button></p>
+      <h1>
+          <a href="../">観光推進MAP</a>
+      </h1>
+      <nav class="pc-nav">
+          <ul>
+              <!-- <li><a id="mise">飲食店</a></li> -->
+              <li><a href="#">システム概要</a></li>
+              <li><a href="map">マップ</a></li>
+              <li><a href="#">ログイン</a></li>
+              <li><a href="#">お問い合わせ</a></li>
+          </ul>
+      </nav>
+      <section>
+          <div class="btn-trigger" id="btn03">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+      </section>
+  </header>
+    
     <input
       id="pac-input"
       class="controls"
       type="text"
       placeholder="Google マップを検索する"
     />
+    <div id="cate">
+      <ul>
+        <li class="kara"><a href="http://localhost:3000/">音声検索</a></li>
+        <li><a id="mise">飲食店</a></li>
+        <li><a href="../map/?q=atm">ATM</a></li>
+        <li><a href="../map/?q=スーパー">スーパー</a></li>
+        <li><a href="../map/?q=ホテル">ホテル</a></li>
+        <li><a href="../map/?q=病院">病院</a></li>
+        <a href="http://webservice.recruit.co.jp/" class="gu" ><img src="http://webservice.recruit.co.jp/banner/hotpepper-s.gif" alt="ホットペッパー Webサービス" width="135" height="17" border="0" title="ホットペッパー Webサービス"></a>
+      </ul>
+    </div>
     <!-- <p><button onclick="getMyPlace()">現在位置を取得</button></p> -->
       <!-- <button id="button">ボタン</button> -->
     <!-- <input type="text" onKeyUp="callback()" /> -->
@@ -46,6 +75,7 @@
 
 
     <!-- <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script> -->
-    <a href="http://webservice.recruit.co.jp/"><img src="http://webservice.recruit.co.jp/banner/hotpepper-m.gif" alt="ホットペッパー Webサービス" width="88" height="35" border="0" title="ホットペッパー Webサービス"></a>
+    <!-- <a href="http://webservice.recruit.co.jp/"><img src="http://webservice.recruit.co.jp/banner/hotpepper-m.gif" alt="ホットペッパー Webサービス" width="88" height="35" border="0" title="ホットペッパー Webサービス"></a> -->
+    <!-- <a href="http://webservice.recruit.co.jp/"><img src="http://webservice.recruit.co.jp/banner/hotpepper-s.gif" alt="ホットペッパー Webサービス" width="135" height="17" border="0" title="ホットペッパー Webサービス"></a> -->
   </body>
 </html>

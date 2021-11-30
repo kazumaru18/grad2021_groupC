@@ -124,3 +124,15 @@
       .controls input[type="text"]:focus {
         outline: 0;
       }
+
+      #cate{
+        margin-left: 35%;
+      }
+
+      .gu{
+        margin: 0 0 0 auto;
+      }
+
+      .kara{
+        margin-right: 8em;
+      }

@@ -1,23 +1,23 @@
 * {
-    box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 body {
-    margin: 0;
-    padding: 0;
-    font-family: "Hiragino Kaku Gothic Pro", "ヒラギノ角ゴ Pro W3", メイリオ, Meiryo, "ＭＳ Ｐゴシック", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  font-family: "Hiragino Kaku Gothic Pro", "ヒラギノ角ゴ Pro W3", メイリオ, Meiryo, "ＭＳ Ｐゴシック", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
 header {
-    margin: 0px 0px 5px 0px;
-    border-bottom: solid 1px #d8d6d6;
-    padding: 20px 10% 20px;
-    position: static;
-    top: 0;
-    width: 100%;
-    background-color: #fff;
-    display: flex;
-    align-items: center;
+  margin: 0px 0px 5px 0px;
+  border-bottom: solid 1px #d8d6d6;
+  padding: 20px 10% 20px;
+  position: static;
+  top: 0;
+  width: 100%;
+  background-color: #fff;
+  display: flex;
+  align-items: center;
 }
 
 .btn-trigger{
@@ -25,7 +25,6 @@ header {
 }
 
 @media screen and (max-width: 680px) {
-
   .pc-nav{
     display:none;
   }
@@ -61,7 +60,7 @@ header {
   .btn-trigger span:nth-of-type(3) {
     bottom: 0;
   }
-  
+
   #btn03.active {
     -webkit-transform: rotate(360deg);
     transform: rotate(360deg);
@@ -80,82 +79,91 @@ header {
 }
 
 h1 {
-    margin: 0; padding: 0;
-    font-size: 30px;
+  margin: 0; padding: 0;
+  font-size: 30px;
 }
 
 a {	
-    text-decoration: none;
-    color: #4b4b4b;
+  text-decoration: none;
+  color: #4b4b4b;
 }
 
 nav {
-    margin: 0 0 0 auto;
+  margin: 0 0 0 auto;
 }
 
 ul {
-    list-style: none;
-    margin: 0;
-    display: flex;
+  list-style: none;
+  margin: 0;
+  display: flex;
 }
 
 li {
-    margin: 0 0 0 15px;
-    font-size: 14px;
+  margin: 0 0 0 15px;
+  font-size: 14px;
 }
 
 main {
-    margin: 10px auto;
-    padding: 0;
-    width: 80%;
+  margin: 10px auto;
+  padding: 0;
+  width: 80%;
 }
 
 .top-search {
-    border-top: solid 1px #808080;
-    border-bottom: solid 1px #808080;
-    padding: 20px 0px 20px 0px;
+  border-top: solid 1px #808080;
+  border-bottom: solid 1px #808080;
+  padding: 20px 0px 20px 0px;
 }
 
 .search_container{
-    box-sizing: border-box;
-    position: relative;
-    border: 1px solid #999;
-    display: block;
-    margin: 0 auto;
-    padding: 3px 10px ;
-    border-radius: 20px;
-    height: 2.3em;
-    width: 90%;
-    overflow: hidden;
+  box-sizing: border-box;
+  position: relative;
+  border: 1px solid #999;
+  display: block;
+  margin: 0 auto;
+  padding: 3px 10px ;
+  border-radius: 20px;
+  height: 2.3em;
+  width: 90%;
+  overflow: hidden;
 }
 
 .search_container input[type="text"]{
-    border: none;
-    height: 2.0em;
+  border: none;
+  height: 2.0em;
 }
 
 .search_container input[type="text"]:focus {
-    outline: 0;
+  outline: 0;
 }
 
 .musimegane[type="submit"]{
-    cursor: pointer;
-    font-family: FontAwesome;
-    font-size: 1.3em;
-    border: none;
-    background: none;
-    color: #3879D9;
-    position: absolute;
-    width: 2.5em;
-    height: 2.5em;
-    right: 0;
-    top: -10px;
-    outline : none;
+  cursor: pointer;
+  font-family: FontAwesome;
+  font-size: 1.3em;
+  border: none;
+  background: none;
+  color: #3879D9;
+  position: absolute;
+  width: 2.5em;
+  height: 2.5em;
+  right: 0;
+  top: -10px;
+  outline : none;
 }
 
 .search-title {
-    text-align: center;
-    padding: 0px 0px 15px 0px;
+  text-align: center;
+  padding: 0px 0px 15px 0px;
+}
+
+.ons {
+  text-align: center;
+}
+
+.ons button {
+  padding: 15px 30px;
+  font-size: 35px;
 }
 
 .search-subtitle {
@@ -163,9 +171,6 @@ main {
   padding: 30px 0px 15px 0px;
 }
 
-*{
-  box-sizing: border-box;
-}
 ul,li{
   list-style: none;
   margin: 0;
@@ -206,58 +211,57 @@ ul.menu > li > ul > li > a{
   border-top: 1px solid #fff;
 }
 
-
 .news {
-    margin: 0 auto;
-    padding: 20px 0px 20px 0px;
+  margin: 0 auto;
+  padding: 20px 0px 20px 0px;
 }
 
 .news-title {
-    text-align: center;
-    position: static;
+  text-align: center;
+  position: static;
 }
 
 dl{
-    background:rgb(240, 240, 240);
-    padding:10px;
-    width:100%;
-    height: 160px;
-    overflow-y: scroll;  
+  background:rgb(240, 240, 240);
+  padding:10px;
+  width:100%;
+  height: 160px;
+  overflow-y: scroll;  
 }
-  
+
 dt{
-    color:black;
-    font-weight:bold;
-    padding:0 10px 0 0;
-    width:120px;
-    float:left;
-    margin-bottom:7px;
+  color:black;
+  font-weight:bold;
+  padding:0 10px 0 0;
+  width:120px;
+  float:left;
+  margin-bottom:7px;
 }
-  
+
 dd{
-    color:#333;
-    margin-bottom:7px;
+  color:#333;
+  margin-bottom:7px;
 }
-  
+
 dl::after {
-      content: '';
-      display: block;
-      clear: both;
+  content: '';
+  display: block;
+  clear: both;
 }
-  
+
 @media screen and (max-width: 480px) {
 	/* 480px以下に適用されるCSS（スマホ用） */
 }
 
 #footer {
-    position: relative;
-    margin-top: 40px;
-    color: #fff;
+  position: relative;
+  margin-top: 40px;
+  color: #fff;
 }
 
 .footer {
-    width: 80%;
-    margin: 0 auto;
+  width: 80%;
+  margin: 0 auto;
 }
 
 #footer a {
@@ -321,9 +325,9 @@ dl::after {
     font-size: 12px;
   }
 }
-  
+
 /* navi */
-  
+
 .navi-row {
   display: flex;
   margin-top: 40px;
@@ -344,7 +348,7 @@ dl::after {
 #footer .navi li:first-child {
   margin-left: 0;
 }
-  
+
 @media screen and (max-width: 767px) {
   .navi-row {
     display: block;
@@ -360,9 +364,9 @@ dl::after {
     font-size: 12px;
   }
 }
-  
+
 /* sns-navi */
-  
+
 #footer .sns-navi {
   margin: 0 0 0 auto;
   padding: 0;
@@ -391,9 +395,9 @@ dl::after {
     font-size: 18px;
   }
 }
-  
+
 /* sitenavi */
-  
+
 #footer .sitenavi {
   width: 50%;
   margin: 0;
@@ -410,7 +414,7 @@ dl::after {
 #footer .sitenavi li:first-child {
   margin-left: 0;
 }
-  
+
 @media screen and (max-width: 767px) {
   #footer .sitenavi {
     width: 100%;
@@ -418,9 +422,9 @@ dl::after {
     font-size: 12px;
   }
 }
-  
+
 /* copyright */
-  
+
 #footer .copyright {
   width: 50%;
   margin: 0;
