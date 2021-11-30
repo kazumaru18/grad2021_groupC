@@ -97,7 +97,14 @@ function initMap() {
     infowindow.open(map);
   });   
 
-  $('#mise').on('click', callback);
+  $('#mise').on('click', function(){
+    const input = document.getElementById("pac-input");
+    input.value = '飲食店';
+    var url = new URL(window.location.href);
+    var params = url.searchParams;
+    params.set('q','飲食店');
+    callback();
+  });
 
   function callback(results, status) {
     markers.forEach((marker) => {
