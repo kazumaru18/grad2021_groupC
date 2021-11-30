@@ -106,7 +106,6 @@ function initMap() {
     callback();
   });
 
-  
   function callback(results, status) {
     markers.forEach((marker) => {
       marker.setMap(null);
@@ -139,7 +138,7 @@ function initMap() {
     // }
   }
   
-
+  
   function createMarker(place) {
     //var placeLoc = place.geometry.location; 
     var marker = new google.maps.Marker({
@@ -173,6 +172,7 @@ function initMap() {
   
   
   // let list = [];
+  var info = null;
   function gourmetMarker(res,pos) {
     //var placeLoc = place.geometry.location; 
     var marker = new google.maps.Marker({
@@ -182,6 +182,9 @@ function initMap() {
  
     //マーカーにイベントリスナを設定
     marker.addListener('click', function() {
+      if(info != null){
+        info.close();
+      }
       start = pos['lat']+','+pos['lng'];
       // end = res['lat']+','+res['lng'];
       end = res['address'];
@@ -210,13 +213,13 @@ function initMap() {
         });
       });
 
-      infoWindow = new google.maps.InfoWindow({
+      info = new google.maps.InfoWindow({
         position: positio,
         content: dom
       });
       // infowindow.setContent(i);  //results[i].name
       // infowindo.open(map, this);
-      infoWindow.open(map);
+      info.open(map);
     });
     // addMarker(marker);
     // console.log(pos['lat']);
@@ -271,6 +274,8 @@ function initMap() {
       // For each place, get the icon, name and location.
       const bounds = new google.maps.LatLngBounds();
   
+      var ginfo = null;
+      
       places.forEach((place) => {
         // console.log(place);
         if (!place.geometry || !place.geometry.location) {
@@ -286,6 +291,9 @@ function initMap() {
         }),
 
         search.addListener('click', function() {
+          if(ginfo != null){
+            ginfo.close();
+          }
           start = pos['lat']+','+pos['lng'];
           var i = place.name + "<br>★：" + place.rating + "<br>" + place.formatted_address + "<br>" ;
           // "<a href='javascript:;' id='navi'>ナビ</a>"+"<br>" ;
@@ -300,11 +308,11 @@ function initMap() {
             });
           });
     
-          infoWindow = new google.maps.InfoWindow({
+          ginfo = new google.maps.InfoWindow({
             position: place.geometry.location,
             content: dom
           });
-          infoWindow.open(map);
+          ginfo.open(map);
         })
         markers.push(search)
       
@@ -498,11 +506,9 @@ function calcRoute(s,e) {
   function initAutocomplete(map) {
     // Create the search box and link it to the UI element.
     const input = document.getElementById("pac-input");
-    const cate = document.getElementById("cate");
     const searchBox = new google.maps.places.SearchBox(input);
   
     map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
-    map.controls[google.maps.ControlPosition.TOP_CENTER].push(cate);
     // Bias the SearchBox results towards current map's viewport.
     map.addListener("bounds_changed", () => {
       searchBox.setBounds(map.getBounds());
