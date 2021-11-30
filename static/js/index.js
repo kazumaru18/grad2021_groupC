@@ -97,6 +97,9 @@ $('#mise').on('click', function(){
 });
 
 function callback(results, status) {
+  var latlng = map.getCenter();
+var lat = latlng.lat();
+var lng = latlng.lng();
   if(info != null){
     info.close();
   }
@@ -104,7 +107,7 @@ function callback(results, status) {
     marker.setMap(null);
   });
   markers = [];
-  var urlw ='http://webservice.recruit.co.jp/hotpepper/gourmet/v1/?key='+conf.GOURMET_KEY+'&lat='+pos["lat"]+'&lng='+pos["lng"]+'&range=3&order=4&count=50&format=jsonp';
+  var urlw ='http://webservice.recruit.co.jp/hotpepper/gourmet/v1/?key='+conf.GOURMET_KEY+'&lat='+lat+'&lng='+lng+'&range=4&order=4&count=50&format=jsonp';
   $.ajax({
     url: urlw,
     type: 'GET',
