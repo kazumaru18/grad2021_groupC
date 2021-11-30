@@ -106,6 +106,7 @@ function initMap() {
     callback();
   });
 
+  
   function callback(results, status) {
     markers.forEach((marker) => {
       marker.setMap(null);
