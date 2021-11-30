@@ -136,3 +136,7 @@
       .kara{
         margin-right: 8em;
       }
+
+      #mise{
+        cursor: pointer;
+      }

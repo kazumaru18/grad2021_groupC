@@ -13,8 +13,10 @@ function gmap(){
 var pos;
 let markers = [];
 var r,p;
+var info = null;
+var map;
 function initMap() {
-  var map = new google.maps.Map(document.getElementById('map'), {
+  map = new google.maps.Map(document.getElementById('map'), {
     center: {lat: 35.859766, lng: 139.971014},
     zoom: 14,
     heading: 0,
@@ -172,7 +174,7 @@ function initMap() {
   
   
   // let list = [];
-  var info = null;
+  
   function gourmetMarker(res,pos) {
     //var placeLoc = place.geometry.location; 
     var marker = new google.maps.Marker({
@@ -274,7 +276,7 @@ function initMap() {
       // For each place, get the icon, name and location.
       const bounds = new google.maps.LatLngBounds();
   
-      var ginfo = null;
+      // var ginfo = null;
       
       places.forEach((place) => {
         // console.log(place);
@@ -291,8 +293,8 @@ function initMap() {
         }),
 
         search.addListener('click', function() {
-          if(ginfo != null){
-            ginfo.close();
+          if(info != null){
+            info.close();
           }
           start = pos['lat']+','+pos['lng'];
           var i = place.name + "<br>★：" + place.rating + "<br>" + place.formatted_address + "<br>" ;
@@ -308,11 +310,11 @@ function initMap() {
             });
           });
     
-          ginfo = new google.maps.InfoWindow({
+          info = new google.maps.InfoWindow({
             position: place.geometry.location,
             content: dom
           });
-          ginfo.open(map);
+          info.open(map);
         })
         markers.push(search)
       
@@ -336,6 +338,13 @@ function Display_JS(start,end){
       // var end = r['lat']+','+r['lng'];
       // console.log(start);
       // console.log(end);
+      if(info != null){
+        info.close();
+      }
+      markers.forEach((marker) => {
+        marker.setMap(null);
+      });
+      markers = [];
       initialize(start,end);
       calcRoute(start,end);
       // callback();
@@ -450,7 +459,7 @@ function initialize(s,e) {
             };
 
             // #map_canvasを取得し、[mapOptions]の内容の、地図のインスタンス([map])を作成する
-            var map = new google.maps.Map(document.getElementById('map'), myOptions);
+            // var map = new google.maps.Map(document.getElementById('map'), myOptions);
             // 経路を取得
             directionsDisplay = new google.maps.DirectionsRenderer();
             directionsDisplay.setMap(map);
