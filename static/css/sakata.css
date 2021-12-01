@@ -125,7 +125,7 @@
         outline: 0;
       }
 
-      #cate{
+      #category{
         margin-left: 35%;
       }
 
@@ -137,6 +137,21 @@
         margin-right: 8em;
       }
 
-      #mise{
+      #mise {
+        cursor: pointer;
+      }
+      #navi-end {
+        cursor: pointer;
+      }
+      #cate1 {
+        cursor: pointer;
+      }
+      #cate2 {
+        cursor: pointer;
+      }
+      #cate3 {
+        cursor: pointer;
+      }
+      #cate4{
         cursor: pointer;
       }
