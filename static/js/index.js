@@ -376,14 +376,37 @@ geocoder.geocode({
     // }
 });
 }
-
+var mode,highways;
 // ルート取得
 function calcRoute(s,e) {
+  switch($("#mode").val()){
+    case "driving":
+       mode=google.maps.DirectionsTravelMode.DRIVING;
+       break;
+    case "bicycling":
+       mode=google.maps.DirectionsTravelMode.BICYCLING;
+       break;
+    case "transit":
+       mode=google.maps.DirectionsTravelMode.TRANSIT;
+       break;
+    case "walking":
+       mode=google.maps.DirectionsTravelMode.WALKING;
+       break;
+ }
+
+ if($('#highways').val()== 'yes'){
+   highways= false;
+  }else if($('#highways').val()== 'no'){
+    highways=true;
+  }
 var request = {
     origin: s,         // 開始地点
     destination: e,      // 終了地点
-    travelMode: google.maps.TravelMode.DRIVING,     // [自動車]でのルート
-    avoidHighways: false,        // 高速道路利用フラグ
+    // travelMode: google.maps.TravelMode.DRIVING,     // [自動車]でのルート
+    // travelMode: google.maps.TravelMode.BICYCLING,
+    // travelMode: google.maps.TravelMode.WALKING,
+    travelMode: mode,
+    avoidHighways: highways,        // 高速道路利用フラグ
 };
 
 // インスタンス作成
@@ -444,9 +467,28 @@ window.onload = function(){
   // getMyPlace();
 }
 
-var m;
+
+var timeId;
+
+function time(){
+  timeId = setInterval(() => {
+    getMyPlace();
+  }, 1000);
+}
+
+function clearTime(){
+  clearInterval(timeId);
+  // c();
+}
+
+
+var ms=[];
 function c(){
-  m.setMap(null);
+  ms.forEach((m) => {
+    m.setMap(null);
+  });
+  ms = [];
+  // m.setMap(null);
 }
  
 // //現在時刻を表示する関数
@@ -457,8 +499,8 @@ function c(){
 
 
 function getMyPlace() {
-  console.log('sss');
-  var output = document.getElementById("result");
+  // console.log('sss');
+  // var output = document.getElementById("result");
   if (!navigator.geolocation){//Geolocation apiがサポートされていない場合
     output.innerHTML = "<p>Geolocationはあなたのブラウザーでサポートされておりません</p>";
     return;
@@ -479,6 +521,7 @@ function getMyPlace() {
         map: map ,
         position: latlng ,
     } ) ;
+    ms.push(m);
   };
   function error() {
     //エラーの場合

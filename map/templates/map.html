@@ -61,13 +61,33 @@
 <!-- <div id="map" style="width:100%;height:300px;"></div> -->
     <div id="map"></div>
     <div id="map-canvas"></div>
-    <div id="directionsPanel"></div>
+    <!-- <div id="directionsPanel"></div> -->
 
 
     
-<!-- <button onclick="test()">test</button>
-<button onclick="clear()">clear</button>
-<pre id="position_view"></pre> -->
+<button onclick="time()">start</button>
+<button onclick="clearTime()">stop</button>
+<button onclick="c()">clear</button>
+
+<p>
+  <label for="mode">モード：<select id="mode" name="mode">
+    <option value="driving" selected>DRIVING（自動車）</option>
+    <option value="bicycling">BICYCLING （自転車）</option>
+    <!-- <option value="transit">TRANSIT（電車）</option> -->
+    <option value="walking">WALKING（徒歩）</option>
+  </select></label>
+</p>
+
+<p>
+  <label for="highways">高速道路：<select id="highways" name="highways">
+    <option value="yes" selected>使用する</option>
+    <option value="no">使用しない</option>
+  </select></label>
+</p>
+
+
+<div id="directionsPanel"></div>
+<pre id="position_view"></pre>
 
     <script>
       gmap();
