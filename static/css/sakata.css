@@ -124,3 +124,34 @@
       .controls input[type="text"]:focus {
         outline: 0;
       }
+
+      #category{
+        margin-left: 35%;
+      }
+
+      .gu{
+        margin: 0 0 0 auto;
+      }
+
+      .kara{
+        margin-right: 8em;
+      }
+
+      #mise {
+        cursor: pointer;
+      }
+      #navi-end {
+        cursor: pointer;
+      }
+      #cate1 {
+        cursor: pointer;
+      }
+      #cate2 {
+        cursor: pointer;
+      }
+      #cate3 {
+        cursor: pointer;
+      }
+      #cate4{
+        cursor: pointer;
+      }

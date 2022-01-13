@@ -12,7 +12,9 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.min.js"></script>
-    
+    <script src="{% static 'js/test.js' %}"></script>
+
+
     <script type="text/javascript">
             $(document).ready(function(){
                 $('.slider').bxSlider({
@@ -34,7 +36,6 @@
         <ul>
             <li><a href="#">システム概要</a></li>
             <li><a href="map">マップ</a></li>
-            <li><a href="test">test</a></li>
             <li><a href="#">ログイン</a></li>
             <li><a href="#">お問い合わせ</a></li>
         </ul>
@@ -56,14 +57,23 @@
         <img src="{% static 'images/03.jpg' %}" width="" height="auto" alt="">
     </div>
     <div class="top-search">
-        <h1 class="search-title">検索</h1>
-        <form method="get" action="#" class="search_container">
-            <input type="text" size="55%" placeholder="キーワード検索">
+        <h1 class="search-title">キーワード検索</h1>
+        <form method="get" action="./map/?" class="search_container">
+            <input type="text" size="55%" name="q" placeholder="キーワード検索">
             <input class="musimegane" type="submit" value="&#xf002">
         </form>
+        <h1 class="search-title">5W1Hテスト</h1>
+        <form method="get" action="./test2" class="search_container">
+            <input type="text" size="55%" name="q" placeholder="キーワード検索">
+            <input class="musimegane" type="submit" value="&#xf002">
+        </form>
+        <h1 class="search-subtitle">音声検索</h1>
+        <div class="ons">
+          <a href="http://localhost:3000/"><button>音声検索ページへ</button></a>
+        </div>
         <h1 class="search-subtitle">カテゴリー検索</h1>
         <ul class="menu">
-            <li><a href='test2'><strong>飲食店</strong></a>
+            <li><a href='map?q=食料品'><strong>食料品</strong></a>
                 <!-- <ul>
                     <li><a href="#">子カテゴリ1</a></li>
                     <li><a href="#">子カテゴリ2</a></li>
@@ -71,7 +81,7 @@
                     <li><a href="#">子カテゴリ4</a></li>
                 </ul> -->
             </li>
-            <li><a href="test3"><strong>レストラン</strong></a>
+            <li><a href="map?q=レストラン"><strong>レストラン</strong></a>
                 <!-- <ul>
                     <li><a href="#">子カテゴリ5</a></li>
                     <li><a href="#">子カテゴリ6</a></li>
@@ -79,9 +89,9 @@
                     <li><a href="#">子カテゴリ8</a></li>
                 </ul> -->
             </li>
-            <li><a href="test4"><strong>ホテル</strong></a></li>
-            <li><a href="test5"><strong>ガソリン</strong></a></li>
-            <li><a href="test6"><strong>ATM</strong></a></li>
+            <li><a href="map?q=ホテル"><strong>ホテル</strong></a></li>
+            <li><a href="map?q=ガソリン"><strong>ガソリン</strong></a></li>
+            <li><a href="map?q=atm"><strong>ATM</strong></a></li>
         </ul>
     </div>
     <div class="news">

@@ -157,6 +157,15 @@ main {
   padding: 0px 0px 15px 0px;
 }
 
+.ons {
+  text-align: center;
+}
+
+.ons button {
+  padding: 15px 30px;
+  font-size: 35px;
+}
+
 .search-subtitle {
   text-align: center;
   padding: 30px 0px 15px 0px;
