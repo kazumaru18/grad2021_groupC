@@ -350,15 +350,15 @@ geocoder.geocode({
 }, function(result, status) {
     // if (status == google.maps.GeocoderStatus.OK) {
         // 中心点を指定
-        var latlng = result[0].geometry.location;
+        // var latlng = result[0].geometry.location;
 
-        // オプション
-        var myOptions = {
-            zoom: 14,
-            center: latlng,
-            scrollwheel: false,     // ホイールでの拡大・縮小
-            mapTypeId: google.maps.MapTypeId.ROADMAP,
-        };
+        // // オプション
+        // var myOptions = {
+        //     zoom: 14,
+        //     center: latlng,
+        //     scrollwheel: false,     // ホイールでの拡大・縮小
+        //     mapTypeId: google.maps.MapTypeId.ROADMAP,
+        // };
 
         // #map_canvasを取得し、[mapOptions]の内容の、地図のインスタンス([map])を作成する
         // var map = new google.maps.Map(document.getElementById('map'), myOptions);
