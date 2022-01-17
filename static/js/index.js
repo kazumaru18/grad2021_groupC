@@ -334,6 +334,11 @@ function Display_JS(start,end){
   initialize(start,end);
   calcRoute(start,end);
   $('#navi-end').show();
+  $('#searchbox').show();
+  var sp = document.getElementById('sp');
+  sp.value = '現在地';
+  var ep = document.getElementById('ep');
+  ep.value = end;
 }
 
 var directionsDisplay;
@@ -366,6 +371,8 @@ geocoder.geocode({
         directionsDisplay = new google.maps.DirectionsRenderer();
         directionsDisplay.setMap(map);
         directionsDisplay.setPanel(document.getElementById('directionsPanel'));     // 経路詳細
+        console.log(directionsDisplay);
+        console.log(directionsDisplay['panel']);
 
         // 場所
         // $('#begin').text(s);
