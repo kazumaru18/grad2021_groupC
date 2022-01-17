@@ -334,6 +334,11 @@ function Display_JS(start,end){
   initialize(start,end);
   calcRoute(start,end);
   $('#navi-end').show();
+  $('#searchbox').show();
+  var sp = document.getElementById('sp');
+  sp.value = '現在地';
+  var ep = document.getElementById('ep');
+  ep.value = end;
 }
 
 var directionsDisplay;
@@ -350,15 +355,15 @@ geocoder.geocode({
 }, function(result, status) {
     // if (status == google.maps.GeocoderStatus.OK) {
         // 中心点を指定
-        var latlng = result[0].geometry.location;
+        // var latlng = result[0].geometry.location;
 
-        // オプション
-        var myOptions = {
-            zoom: 14,
-            center: latlng,
-            scrollwheel: false,     // ホイールでの拡大・縮小
-            mapTypeId: google.maps.MapTypeId.ROADMAP,
-        };
+        // // オプション
+        // var myOptions = {
+        //     zoom: 14,
+        //     center: latlng,
+        //     scrollwheel: false,     // ホイールでの拡大・縮小
+        //     mapTypeId: google.maps.MapTypeId.ROADMAP,
+        // };
 
         // #map_canvasを取得し、[mapOptions]の内容の、地図のインスタンス([map])を作成する
         // var map = new google.maps.Map(document.getElementById('map'), myOptions);
@@ -366,6 +371,8 @@ geocoder.geocode({
         directionsDisplay = new google.maps.DirectionsRenderer();
         directionsDisplay.setMap(map);
         directionsDisplay.setPanel(document.getElementById('directionsPanel'));     // 経路詳細
+        console.log(directionsDisplay);
+        console.log(directionsDisplay['panel']);
 
         // 場所
         // $('#begin').text(s);
@@ -376,14 +383,37 @@ geocoder.geocode({
     // }
 });
 }
-
+var mode,highways;
 // ルート取得
 function calcRoute(s,e) {
+  switch($("#mode").val()){
+    case "driving":
+       mode=google.maps.DirectionsTravelMode.DRIVING;
+       break;
+    case "bicycling":
+       mode=google.maps.DirectionsTravelMode.BICYCLING;
+       break;
+    case "transit":
+       mode=google.maps.DirectionsTravelMode.TRANSIT;
+       break;
+    case "walking":
+       mode=google.maps.DirectionsTravelMode.WALKING;
+       break;
+ }
+
+ if($('#highways').val()== 'yes'){
+   highways= false;
+  }else if($('#highways').val()== 'no'){
+    highways=true;
+  }
 var request = {
     origin: s,         // 開始地点
     destination: e,      // 終了地点
-    travelMode: google.maps.TravelMode.DRIVING,     // [自動車]でのルート
-    avoidHighways: false,        // 高速道路利用フラグ
+    // travelMode: google.maps.TravelMode.DRIVING,     // [自動車]でのルート
+    // travelMode: google.maps.TravelMode.BICYCLING,
+    // travelMode: google.maps.TravelMode.WALKING,
+    travelMode: mode,
+    avoidHighways: highways,        // 高速道路利用フラグ
 };
 
 // インスタンス作成
@@ -433,3 +463,76 @@ directionsService.route(request, function(response, status) {
 //       position: latlng ,
 //   } ) ;
 // }
+
+
+window.onload = function(){
+  //1000ミリ秒（1秒）毎に関数「showNowDate()」を呼び出す
+  // setInterval("showNowDate()", 1000);
+  // setInterval("getMyPlace()", 1000);
+  // setInterval("c()", 1000);
+  
+  // getMyPlace();
+}
+
+
+var timeId;
+
+function time(){
+  timeId = setInterval(() => {
+    getMyPlace();
+  }, 1000);
+}
+
+function clearTime(){
+  clearInterval(timeId);
+  // c();
+}
+
+
+var ms=[];
+function c(){
+  ms.forEach((m) => {
+    m.setMap(null);
+  });
+  ms = [];
+  // m.setMap(null);
+}
+ 
+// //現在時刻を表示する関数
+// function showNowDate(){
+//   var dt = new Date();
+//   document.write(dt);
+// }
+
+
+function getMyPlace() {
+  // console.log('sss');
+  // var output = document.getElementById("result");
+  if (!navigator.geolocation){//Geolocation apiがサポートされていない場合
+    output.innerHTML = "<p>Geolocationはあなたのブラウザーでサポートされておりません</p>";
+    return;
+  }
+  function success(position) {
+    var latitude  = position.coords.latitude;//緯度
+    var longitude = position.coords.longitude;//経度
+    // output.innerHTML = '<p>緯度 ' + latitude + '° <br>経度 ' + longitude + '°</p>';
+    // 位置情報
+    var latlng = new google.maps.LatLng( latitude , longitude ) ;
+    // Google Mapsに書き出し
+    // var map = new google.maps.Map( document.getElementById( 'map' ) , {
+    //     zoom: 15 ,// ズーム値
+    //     center: latlng ,// 中心座標
+    // } ) ;
+    // マーカーの新規出力
+     m = new google.maps.Marker( {
+        map: map ,
+        position: latlng ,
+    } ) ;
+    ms.push(m);
+  };
+  function error() {
+    //エラーの場合
+    output.innerHTML = "座標位置を取得できません";
+  };
+  navigator.geolocation.getCurrentPosition(success, error);//成功と失敗を判断
+}
