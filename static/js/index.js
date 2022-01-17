@@ -115,6 +115,7 @@ var lng = latlng.lng();
     jsonpCallback: 'callback'
   }).done(function(data) {
     var res = data['results']['shop'];
+    console.log(res);
     for (var k in res) {
       gourmetMarker(res[k],pos);
     }
@@ -286,6 +287,7 @@ searchBox.addListener("places_changed", () => {
         if(info != null){
           info.close();
         }
+        console.log(place);
         start = pos['lat']+','+pos['lng'];
         var i = place.name + "<br>★：" + place.rating + "<br>" + place.formatted_address + "<br>"
       //    + "<a href='" + 'https://www.google.com/maps/search/?api=1&query=' + place.name +"'><button>GoogleMapで見る</button></a>"
