@@ -115,7 +115,7 @@ var lng = latlng.lng();
     jsonpCallback: 'callback'
   }).done(function(data) {
     var res = data['results']['shop'];
-    console.log(res);
+    // console.log(res);
     for (var k in res) {
       gourmetMarker(res[k],pos);
     }
@@ -287,7 +287,7 @@ searchBox.addListener("places_changed", () => {
         if(info != null){
           info.close();
         }
-        console.log(place);
+        // console.log(place);
         start = pos['lat']+','+pos['lng'];
         var i = place.name + "<br>★：" + place.rating + "<br>" + place.formatted_address + "<br>"
       //    + "<a href='" + 'https://www.google.com/maps/search/?api=1&query=' + place.name +"'><button>GoogleMapで見る</button></a>"
@@ -373,8 +373,8 @@ geocoder.geocode({
         directionsDisplay = new google.maps.DirectionsRenderer();
         directionsDisplay.setMap(map);
         directionsDisplay.setPanel(document.getElementById('directionsPanel'));     // 経路詳細
-        console.log(directionsDisplay);
-        console.log(directionsDisplay['panel']);
+        // console.log(directionsDisplay);
+        // console.log(directionsDisplay['panel']);
 
         // 場所
         // $('#begin').text(s);
@@ -403,8 +403,8 @@ function calcRoute(s,e) {
        break;
  }
 
- if($('#highways').val()== 'yes'){
-   highways= false;
+  if($('#highways').val()== 'yes'){
+    highways= false;
   }else if($('#highways').val()== 'no'){
     highways=true;
   }

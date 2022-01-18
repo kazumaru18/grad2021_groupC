@@ -1,0 +1,50 @@
+.overlay-modal{
+    display: none;
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    z-index: 1000;
+  }
+  .overlay-modal__overlay{
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: rgba(0,0,0,0.6);
+  }
+  .overlay-modal__body{
+    width: 100%;
+    position: absolute;
+    top: 50px;
+    -webkit-transition: .4s;
+    transition: .4s;
+  }
+  .overlay-modal__inner{
+    margin: 0 auto;
+    width: 80%;
+    max-height: calc(100vh - 180px);
+    position: relative;
+    background-color: #fff;
+    border-radius: 8px;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    -webkit-overflow-scrolling: touch;
+  }
+  .overlay-modal__inner p{
+    font-size: 13px;
+    padding: 20px;
+  }
+  .overlay-modal__close{
+    position: absolute;
+    top: 10px;
+    right: 10px;
+  }
+  body.modal-open{
+    width: 100%;
+    height: 100%;
+    position: fixed;
+  }
