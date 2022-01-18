@@ -253,6 +253,7 @@ map.addListener("bounds_changed", () => {
 // Listen for the event fired when the user selects a prediction and retrieve
 // more details for that place.
 searchBox.addListener("places_changed", () => {
+    
     const places = searchBox.getPlaces();
     if (places.length == 0) {
       return;
@@ -276,6 +277,11 @@ searchBox.addListener("places_changed", () => {
       }
       var search;
     // Create a marker for each place.
+    
+    if (place['opening_hours']) {
+    if (place['opening_hours']['open_now'] == false) {
+      ;
+    } else {
       search = new google.maps.Marker({
         map,
         title: place.name,
@@ -286,6 +292,8 @@ searchBox.addListener("places_changed", () => {
         if(info != null){
           info.close();
         }
+        console.log(place)
+        // console.log(place['opening_hours']['open_now'])
         start = pos['lat']+','+pos['lng'];
         var i = place.name + "<br>★：" + place.rating + "<br>" + place.formatted_address + "<br>"
       //    + "<a href='" + 'https://www.google.com/maps/search/?api=1&query=' + place.name +"'><button>GoogleMapで見る</button></a>"
@@ -316,8 +324,53 @@ searchBox.addListener("places_changed", () => {
       } else {
         bounds.extend(place.geometry.location);
       }
-    });
+    }} else {
+      search = new google.maps.Marker({
+        map,
+        title: place.name,
+        position: place.geometry.location,
+      }),
+
+      search.addListener('click', function() {
+        if(info != null){
+          info.close();
+        }
+        console.log(place)
+        // console.log(place['opening_hours']['open_now'])
+        start = pos['lat']+','+pos['lng'];
+        var i = place.name + "<br>★：" + place.rating + "<br>" + place.formatted_address + "<br>"
+      //    + "<a href='" + 'https://www.google.com/maps/search/?api=1&query=' + place.name +"'><button>GoogleMapで見る</button></a>"
+        // "<a href='javascript:;' id='navi'>ナビ</a>"+"<br>" 
+        ;
+        // let button = document.getElementById('navi');
+        // $('navi').on('click', Display_JS(start,place.name));
+
+        var dom = document.createElement("div");
+        dom.innerHTML = i+"<button id='navi'>ナビ</button>";
+        dom.addEventListener("mousemove", () => {
+          $('#navi').on('click',function(){
+            Display_JS(start,place.formatted_address);
+          });
+        });
+  
+        info = new google.maps.InfoWindow({
+          position: place.geometry.location,
+          content: dom
+        });
+        info.open(map);
+      })
+      markers.push(search)
+    
+      if (place.geometry.viewport) {
+        // Only geocodes have viewport.
+        bounds.union(place.geometry.viewport);
+      } else {
+        bounds.extend(place.geometry.location);
+      }
+    }
+  });
     map.fitBounds(bounds);
+
   });
 }
 

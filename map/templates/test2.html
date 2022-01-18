@@ -12,10 +12,14 @@
     <title>Document</title>
 </head>
 <body>
-    <form method="get" class="search_container">
-        <input type="text" size="55%" name="q" placeholder="キーワード検索">
-        <textarea id="5w1h" name="comment" cols="50" rows="5" maxlength="15" placeholder="キーワード検索"></textarea >
-        <input class="musimegane" type="button" value="&#xf002">
+    <?php
+        header("Access-Control-Allow-Origin: *");
+    ?>
+    <form method="get" action="../../map/map/?" class="search_container">
+        <!-- <input type="text" size="55%" name="q" placeholder="キーワード検索"> -->
+        <textarea id="5w1h" name="q" cols="50" rows="5" maxlength="200" placeholder="キーワード検索"></textarea >
+        <input class="musimegane" type="submit" value="&#xf002">
     </form>
+    <input type="button" onclick="window.history.back();" value="直前のページに戻る">
 </body>
 </html>
