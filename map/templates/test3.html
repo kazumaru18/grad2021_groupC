@@ -217,7 +217,7 @@ $(function(){
         <a href="javascript:void(0);" class="js-overlay-modal-open">飲食店詳細検索</a>
     </p>
     <div class="overlay-modal js-overlay-modal">
-        <div class="overlay-modal__overlay"></div>
+      <div class="overlay-modal__overlay"></div>
         <div class="overlay-modal__body">
             <div class="overlay-modal__inner">
                 <a href="javascript:void(0);" class="overlay-modal__close js-overlay-modal-close"><i class="fas fa-times"></i></a>
@@ -271,6 +271,24 @@ $(function(){
                         <option value="">あり</option>
                     </select></label>
                     <input type="button" class="js-overlay-modal-close" value="閉じる">
+                    <div>
+                      <input type="checkbox" id="highways" name="highways">
+                      <label for="highways">高速道路</label>
+                      <br>
+                      <label>
+                      <input type="checkbox" id="card" name="card">
+                        カード支払い</label>
+                      <br>
+                      <input type="checkbox" id="lunch" name="lunch">
+                      <label for="lunch">ランチ</label>
+                      <br>
+                      <input type="checkbox" id="wifi" name="wifi">
+                      <label for="wifi">WiFi</label>
+                      <br>
+                      <input type="checkbox" id="private_room" name="private_room">
+                      <label for="private_room">個室</label>
+                      <br>
+                    </div>
                 </p>
             </div>
         </div>

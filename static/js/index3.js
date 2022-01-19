@@ -107,7 +107,8 @@ function gmap(){
       marker.setMap(null);
     });
     markers = [];
-    var urlw ='http://webservice.recruit.co.jp/hotpepper/gourmet/v1/?key='+conf.GOURMET_KEY+'&lat='+lat+'&lng='+lng+'&range=3&order=4&count=50&format=jsonp';
+    var renge = 3;
+    var urlw ='http://webservice.recruit.co.jp/hotpepper/gourmet/v1/?key='+conf.GOURMET_KEY+'&lat='+lat+'&lng='+lng+'&range='+renge+'&order=4&count=50&format=jsonp';
     // &genre=
     $.ajax({
       url: urlw,
@@ -283,7 +284,7 @@ function gmap(){
         // if(!(place['opening_hors'])){
         //     continue;
         // }
-        // console.log(place);
+        // console.log(place['opening_hours']);
         var search;
       // Create a marker for each place.
         search = new google.maps.Marker({
