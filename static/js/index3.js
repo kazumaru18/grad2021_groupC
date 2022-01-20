@@ -108,7 +108,8 @@ function gmap(){
     });
     markers = [];
     var renge = 3;
-    var urlw ='http://webservice.recruit.co.jp/hotpepper/gourmet/v1/?key='+conf.GOURMET_KEY+'&lat='+lat+'&lng='+lng+'&range='+renge+'&order=4&count=50&format=jsonp';
+    var wifi = 0;
+    var urlw ='http://webservice.recruit.co.jp/hotpepper/gourmet/v1/?key='+conf.GOURMET_KEY+'&lat='+lat+'&lng='+lng+'&range='+renge+'&wifi='+wifi+'&order=4&count=50&format=jsonp';
     // &genre=
     $.ajax({
       url: urlw,
