@@ -18,3 +18,5 @@ class Test5View(generic.TemplateView):
     template_name="test5.html"
 class Test6View(generic.TemplateView):
     template_name="test6.html"
+class CalendarView(generic.TemplateView):
+    template_name="calendar.html"

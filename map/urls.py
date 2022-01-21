@@ -10,4 +10,5 @@ urlpatterns = [
     path('test4', views.Test4View.as_view(), name='test4'),
     path('test5', views.Test5View.as_view(), name='test5'),
     path('test6', views.Test6View.as_view(), name='test6'),
+    path('calendar', views.CalendarView.as_view(), name='calendar')
 ]
