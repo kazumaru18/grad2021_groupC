@@ -270,69 +270,65 @@ $(function(){
                         <option value="" selected>指定しない</option>
                         <option value="">あり</option>
                     </select></label> -->
-                    <input type="button" class="js-overlay-modal-close" value="閉じる">
-                    <div>
-                      <label for="highways"><input type="checkbox" id="highways" name="highways">
-                        高速道路</label>
-                  
-                      <label><input type="checkbox" id="card" name="card">
+                    <input type="button" class="js-overlay-modal-close" onclick="syousai()" value="検索">
+                    <form name="ca">
+                      <label><input type="checkbox" id="card" name="syousai">
                         カード支払い</label>
                       
-                      <label for="lunch"><input type="checkbox" id="lunch" name="lunch">
+                      <label for="lunch"><input type="checkbox" id="lunch" name="syousai">
                         ランチ</label>
                       
-                      <label for="wifi"><input type="checkbox" id="wifi" name="wifi">
+                      <label for="wifi"><input type="checkbox" id="wifi" name="syousai">
                         WiFi</label>
                       
-                      <label for="private_room"><input type="checkbox" id="private_room" name="private_room">
+                      <label for="private_room"><input type="checkbox" id="private_room" name="syousai">
                         個室</label>
                       
-                      <label for="midnight_meal"><input type="checkbox" id="midnight_meal" name="midnight_meal">
+                      <label for="midnight_meal"><input type="checkbox" id="midnight_meal" name="syousai">
                         23時以降食事OK</label>
                       
-                      <label for="pet"><input type="checkbox" id="pet" name="pet">
+                      <label for="pet"><input type="checkbox" id="pet" name="syousai">
                         ペット可</label>
                       
-                      <label for="cocktail"><input type="checkbox" id="cocktail" name="cocktail">
+                      <label for="cocktail"><input type="checkbox" id="cocktail" name="syousai">
                         カクテル充実</label>
                       
-                      <label for="shochu"><input type="checkbox" id="shochu" name="shochu">
+                      <label for="shochu"><input type="checkbox" id="shochu" name="syousai">
                         焼酎充実</label>
                       
-                      <label for="sake"><input type="checkbox" id="sake" name="sake">
+                      <label for="sake"><input type="checkbox" id="sake" name="syousai">
                         日本酒充実</label>
                       
-                      <label for="wine"><input type="checkbox" id="wine" name="wine">
+                      <label for="wine"><input type="checkbox" id="wine" name="syousai">
                         ワイン充実</label>
                       
-                      <label for="parking"><input type="checkbox" id="parking" name="parking">
+                      <label for="parking"><input type="checkbox" id="parking" name="syousai">
                         駐車場あり</label>
                       
-                      <label for="barrier_free"><input type="checkbox" id="barrier_free" name="barrier_free">
+                      <label for="barrier_free"><input type="checkbox" id="barrier_free" name="syousai">
                         バリアフリー</label>
                       
-                      <label for="free_food"><input type="checkbox" id="free_food" name="free_food">
+                      <label for="free_food"><input type="checkbox" id="free_food" name="syousai">
                         食べ放題</label>
                       
-                      <label for="free_drink"><input type="checkbox" id="free_drink" name="free_drink">
+                      <label for="free_drink"><input type="checkbox" id="free_drink" name="syousai">
                         飲み放題</label>
                       
-                      <label for="child"><input type="checkbox" id="child" name="child">
+                      <label for="child"><input type="checkbox" id="child" name="syousai">
                         お子様連れOK</label>
                       
-                      <label for="non_smoking"><input type="checkbox" id="non_smoking" name="non_smoking">
+                      <label for="non_smoking"><input type="checkbox" id="non_smoking" name="syousai">
                         禁煙席</label>
                       
-                      <label for="tatami"><input type="checkbox" id="tatami" name="tatami">
+                      <label for="tatami"><input type="checkbox" id="tatami" name="syousai">
                         座敷あり</label>
                       
-                      <label for="course"><input type="checkbox" id="course" name="course">
+                      <label for="course"><input type="checkbox" id="course" name="syousai">
                         コースあり</label>
                       
                       <label for="keyword"><input type="text" id="keyword" name="keyword">
                         キーワード</label>
-                      
-                    </div>
+                  </form>
                 </p>
             </div>
         </div>

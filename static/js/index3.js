@@ -298,6 +298,7 @@ function gmap(){
           if(info != null){
             info.close();
           }
+          console.log(place);
           // console.log(place);
           start = pos['lat']+','+pos['lng'];
           var i = place.name + "<br>★：" + place.rating + "<br>" + place.formatted_address + "<br>"
@@ -549,3 +550,98 @@ function gmap(){
     };
     navigator.geolocation.getCurrentPosition(success, error);//成功と失敗を判断
   }
+
+  function syousai(){
+    var latlng = map.getCenter();
+    var lat = latlng.lat();
+    var lng = latlng.lng();
+    var r = document.getElementById('range');
+    var range = r.value;
+    var g = document.getElementById('genre');
+    var genre = g.value;
+    var url ='http://webservice.recruit.co.jp/hotpepper/gourmet/v1/?key='+conf.GOURMET_KEY+'&lat='+lat+'&lng='+lng+'&range='+range+'&genre='+genre;
+    var arr = ['&card=1','&lunch=1','&wifi=1','&private_room=1','&midnight_meal=1','&pet=1','&cocktail=1','&shochu=1','&sake=1','&wine=1','&parking=1','&barrier_free=1','&free_food=1','&free_drink=1','&child=1','&non_smoking=1','&tatami=1','&course=1'];
+
+
+    
+
+    const syousai = document.ca.syousai;
+
+    for (let i = 0; i < syousai.length; i++) {
+      if (syousai[i].checked) {
+        url+=arr[i];
+      }
+    }
+    url+='&order=4&count=50&format=jsonp';
+
+    console.log(url);
+    if(info != null){
+      info.close();
+    }
+    markers.forEach((marker) => {
+      marker.setMap(null);
+    });
+    markers = [];
+    
+    // &genre=
+    $.ajax({
+      url: url,
+      type: 'GET',
+      dataType: 'jsonp',
+      jsonpCallback: 'callback'
+    }).done(function(data) {
+      var res = data['results']['shop'];
+      // console.log(res);
+      for (var k in res) {
+        syousaiMarker(res[k],pos);
+      }
+    }).fail(function(data) {
+      console.log("no"); // 失敗時
+    });
+  }
+
+  function syousaiMarker(res,pos) {
+    //var placeLoc = place.geometry.location; 
+    var marker = new google.maps.Marker({
+      map: map,
+      position: {lat: res['lat'], lng: res['lng']}  //results[i].geometry.location
+    });
+  
+    //マーカーにイベントリスナを設定
+    marker.addListener('click', function() {
+      if(info != null){
+        info.close();
+      }
+      console.log(res);
+      start = pos['lat']+','+pos['lng'];
+      end = res['address'];
+      var positio ={lat:res['lat'],lng:res['lng']};
+      var i = "<img src='" + res['logo_image'] + "'>" + "<br>" + res['name'] + "<br>" + res['sub_genre']['name'] + "<br>" + res['address'] + "<br>" + res['access'] + "<br>" + "<img src='" + res['photo']['mobile']['s'] + "'>"　+ "<br>"
+       + '営業時間：' + res['open'] + "<br>" 
+       + '定休日：' + res['close'] + "<br>" 
+    //    + "<a href='" + res['urls']['pc'] + "'><button>ホットペッパーグルメで見る</button></a>" 
+      ;
+      // let button = document.getElementById('navi');
+      // $('navi').on('click', Display_JS(start,end));
+  
+      var dom = document.createElement("div");
+      dom.innerHTML = i+"<button id='navi'>ナビ</button>";
+      dom.addEventListener("mousemove", () => {
+        $('#navi').on('click',function(){
+          Display_JS(start,end);
+        });
+      });
+  
+      info = new google.maps.InfoWindow({
+        position: positio,
+        content: dom
+      });
+      // infowindow.setContent(i);  //results[i].name
+      // infowindo.open(map, this);
+      info.open(map);
+    });
+    markers.push(marker);
+  }
+
+
+
