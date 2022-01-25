@@ -11,11 +11,13 @@
 
 <script>
 
-	
   (function(){
     $(function(){
       // calendarエレメント取得
       var calendarEl = $('#calendar')[0];
+
+      var calendar_events = JSON.parse(localStorage.getItem('calendar_events'));
+      
       // full-calendar生成する。
       var calendar = new FullCalendar.Calendar(calendarEl, {
         height: '700px', // calendarの高さ設定
@@ -34,7 +36,9 @@
         selectable: true, // カレンダーのドラッグ設定可能	
         nowIndicator: true, // 現在時間マーク
         dayMaxEvents: true, // イベントの数がオバーすると高さの制限(+のマークと何個式で表現)
-        locale: 'ja', // 日本語設定
+        locale: 'ja', // 日本語設定  
+
+        //console ni hyouji 
         eventAdd: function(obj) { // イベントが追加すると発生するイベント
           console.log(obj);
         },
@@ -44,19 +48,33 @@
         eventRemove: function(obj){ // イベントが削除すると発生するイベント
           console.log(obj);	
         },
+
         select: function(arg) { // カレンダーでドラックでイベントを生成することが可能。
           var title = prompt('予定を入力してください:');//popup表示にしたい
-          if (title) {
-            calendar.addEvent({//ここでlocationstorageで保存できるようにしたい
+          if (title) {//カレンダー表示(localstorageのデータは表示できない)
+            calendar.addEvent({
               title: title,
               start: arg.start,
               end: arg.end,
               allDay: arg.allDay
-            })
-          }
+              })
+
+              var calendar_events;
+              
+              calendar_events = [{//配列でlocalstorageに保存
+                title: title,
+                start: arg.start,
+                end: arg.end,
+            }];
+            
+            calendar_events.push(calendar_events);
+            localStorage.setItem('calendar_events', JSON.stringify(calendar_events));
+
           calendar.unselect()
         }
-            });
+        },
+
+      });
       // カレンダーレンダリング
       calendar.render();
     });
