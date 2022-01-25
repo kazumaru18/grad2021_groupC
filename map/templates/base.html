@@ -10,21 +10,8 @@
     <link href="{% static 'css/style.css' %}" rel="stylesheet" />
     <link href="{% static 'css/plus.css' %}" rel="stylesheet" />
     <!-- <link href="{% static 'css/responsive.css' %}" rel="stylesheet" /> -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.css">
-    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.min.js"></script>
+    
     <script src="{% static 'js/index.js' %} defer"></script>
-
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $('.slider').bxSlider({
-                auto: true,
-                pause: 3000,
-            });
-        });
-    </script>
 </head>
 
 <body>
@@ -32,26 +19,22 @@
     <!-- ヘッダー ---------------------------------->
     <header>
         <h1>
-            <a href="/">観光推進MAP</a>
+            <a href="{% url 'index' %}">観光推進MAP</a>
         </h1>
         <section>
-            <div class="btn-trigger" id="btn03">
-                <div class="icon">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </div>
-            </div>
+          <div class="btn-trigger" id="btn03">
+              <div class="icon">
+                  <span></span>
+                  <span></span>
+                  <span></span>
+              </div>
+          </div>
         </section>
         <nav id="sm" class="pc-nav">
             <ul id="ham_nav">
                 <li><a href="#">システム概要</a></li>
-                <li><a href="map">マップ</a></li>
-                <li><a href="{% url 'account_logout'%}">ログアウト</a></li>
-                <li><a href="{% url 'account_signup'%}">会員登録</a></li>
-                <li><a href="{% url 'account_login'%}">ログイン</a></li>
-                <li><a href="#">マイページ</a></li>
-                <li><a href="{% url 'inquiry'%}">お問い合わせ</a></li>
+                <li><a href="{% url 'map' %}">マップ</a></li>
+                <li><a href="{% url 'calendar' %}">予定表</a></li>
             </ul>
         </nav>
     </header>
@@ -89,17 +72,17 @@
                     </ul>
                     <ul class="sns-navi">
                         <li><a href="https://twitter.com/ohara_kashiwa"><i class="fa fa-twitter"></i></a></li>
-                        <li><a href="#"><i class="fa fa-map"></i></a></li>
+                        <li><a href="{% url 'map' %}"><i class="fa fa-map"></i></a></li>
                         <li><a href="https://github.com/kazumaru18/grad2021_groupC"><i class="fa fa-github"></i></a>
                         </li>
-                        <li><a href="#"><i class="fa fa-home"></i></a></li>
+                        <li><a href="{% url 'index' %}"><i class="fa fa-home"></i></a></li>
                     </ul>
                 </div>
             </div>
         </section>
         <section class="secondary">
             <div class="footer">
-                <p class="copyright">Copyright.</p>
+                <p class="copyright">Copyright 2022 GroupC.</p>
             </div>
         </section>
     </footer>

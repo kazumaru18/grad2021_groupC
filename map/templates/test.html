@@ -1,34 +1,45 @@
-{% load static %}
 <!DOCTYPE html>
-<html lang="ja">
-  <head>
-    <meta charset="utf-8">
-    <title>Simple Map</title>
-    <meta name="viewport" content="initial-scale=1.0">
-    <meta charset="utf-8">
-    <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
-    <link href="{% static 'css/sakata.css' %}" rel="stylesheet" />
-    <!-- <script src="{% static 'js/index.js' %}"></script> -->
-    <script src="{% static 'js/apikey.js' %}"></script>
-    <!-- <script src="{% static 'js/hozonyou.js' %}"></script> -->
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-  </head>
+<html>
+<head>
+<meta charset="utf-8">
+<script>
+var num = 0;
+var watch_id;
 
-  <body>
+function test() {
+    watch_id = navigator.geolocation.watchPosition(test2, function(e) { alert(e.message); }, {"enableHighAccuracy": true, "timeout": 20000, "maximumAge": 2000});
+}
 
-    <input
-      id="pac-input"
-      class="controls"
-      type="text"
-      placeholder="Google マップを検索する"
-    />
-    <div id="map"></div>
-    <div id="map-canvas"></div>
-    <div id="directionsPanel"></div>
-    <script>
-        gmap();
+function clear() {
+    navigator.geolocation.clearWatch(watch_id);
+}
 
-      </script>
+function test2(position) {
 
-  </body>
+    var geo_text = "緯度:" + position.coords.latitude + "\n";
+    geo_text += "経度:" + position.coords.longitude + "\n";
+    geo_text += "高度:" + position.coords.altitude + "\n";
+    geo_text += "位置精度:" + position.coords.accuracy + "\n";
+    geo_text += "高度精度:" + position.coords.altitudeAccuracy  + "\n";
+    geo_text += "移動方向:" + position.coords.heading + "\n";
+    geo_text += "速度:" + position.coords.speed + "\n";
+
+    var date = new Date(position.timestamp);
+
+    geo_text += "取得時刻:" + date.toLocaleString() + "\n";
+    geo_text += "取得回数:" + (++num) + "\n";
+
+    document.getElementById('position_view').innerHTML = geo_text;
+
+}
+</script>
+</head>
+<body>
+
+<button onclick="test()">test</button>
+<button onclick="clear()">clear</button>
+
+<pre id="position_view"></pre>
+
+</body>
 </html>
