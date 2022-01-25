@@ -287,6 +287,7 @@ searchBox.addListener("places_changed", () => {
         if(info != null){
           info.close();
         }
+        console.log(place);
         // console.log(place);
         start = pos['lat']+','+pos['lng'];
         var i = place.name + "<br>★：" + place.rating + "<br>" + place.formatted_address + "<br>"
@@ -430,41 +431,41 @@ directionsService.route(request, function(response, status) {
 });
 }
 
-// var num = 0;
-// var watch_id;
+var num = 0;
+var watch_id;
 
-// function test() {
-//     watch_id = navigator.geolocation.watchPosition(test2, function(e) { alert(e.message); }, {"enableHighAccuracy": true, "timeout": 200000, "maximumAge": 2000});
-// }
+function test() {
+    watch_id = navigator.geolocation.watchPosition(test2, function(e) { alert(e.message); }, {"enableHighAccuracy": true, "timeout": 200000, "maximumAge": 2000});
+}
 
-// function clear() {
-//     navigator.geolocation.clearWatch(watch_id);
-// }
+function clear() {
+    navigator.geolocation.clearWatch(watch_id);
+}
 
-// function test2(position) {
+function test2(position) {
 
-//     var geo_text = "緯度:" + position.coords.latitude + "\n";
-//     geo_text += "経度:" + position.coords.longitude + "\n";
-//     geo_text += "高度:" + position.coords.altitude + "\n";
-//     geo_text += "位置精度:" + position.coords.accuracy + "\n";
-//     geo_text += "高度精度:" + position.coords.altitudeAccuracy  + "\n";
-//     geo_text += "移動方向:" + position.coords.heading + "\n";
-//     geo_text += "速度:" + position.coords.speed + "\n";
+  var geo_text = "緯度:" + position.coords.latitude + "\n";
+  geo_text += "経度:" + position.coords.longitude + "\n";
+  geo_text += "高度:" + position.coords.altitude + "\n";
+  geo_text += "位置精度:" + position.coords.accuracy + "\n";
+  geo_text += "高度精度:" + position.coords.altitudeAccuracy  + "\n";
+  geo_text += "移動方向:" + position.coords.heading + "\n";
+  geo_text += "速度:" + position.coords.speed + "\n";
 
-//     var date = new Date(position.timestamp);
+  // var date = new Date(position.timestamp);
 
-//     geo_text += "取得時刻:" + date.toLocaleString() + "\n";
-//     geo_text += "取得回数:" + (++num) + "\n";
+  // geo_text += "取得時刻:" + date.toLocaleString() + "\n";
+  // geo_text += "取得回数:" + (++num) + "\n";
 
-//     document.getElementById('position_view').innerHTML = geo_text;
+  document.getElementById('position_view').innerHTML = geo_text;
 
 
-//     var latlng = {lat:position.coords.latitude,lng:position.coords.longitude};
-//     new google.maps.Marker( {
-//       map: map ,
-//       position: latlng ,
-//   } ) ;
-// }
+  var latlng = {lat:position.coords.latitude,lng:position.coords.longitude};
+  new google.maps.Marker( {
+    map: map ,
+    position: latlng ,
+  } ) ;
+}
 
 
 window.onload = function(){
@@ -511,7 +512,7 @@ function getMyPlace() {
   // console.log('sss');
   // var output = document.getElementById("result");
   if (!navigator.geolocation){//Geolocation apiがサポートされていない場合
-    output.innerHTML = "<p>Geolocationはあなたのブラウザーでサポートされておりません</p>";
+    console.log("Geolocationはあなたのブラウザーでサポートされておりません");
     return;
   }
   function success(position) {
@@ -531,10 +532,32 @@ function getMyPlace() {
         position: latlng ,
     } ) ;
     ms.push(m);
+    document.getElementById('position_view').innerHTML =   (++num) ;
+
   };
   function error() {
     //エラーの場合
     output.innerHTML = "座標位置を取得できません";
   };
   navigator.geolocation.getCurrentPosition(success, error);//成功と失敗を判断
+}
+
+
+function se(){
+  directionsDisplay.setMap(null);
+  directionsDisplay.setPanel(null);
+  directionsDisplay.setDirections(null);
+  var s,e;
+  if($('#sp').val()=='現在地'){
+    console.log(pos);
+  }else{
+    s = $('#sp').val();
+  }
+  e = $('#ep').val();
+  // console.log(s);
+  // console.log(e);
+  // ini(s,e);
+  // cal(s,e);   
+  initialize(s,e);
+  calcRoute(s,e);
 }

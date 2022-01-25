@@ -10,6 +10,7 @@
     <link href="{% static 'css/style.css' %}" rel="stylesheet" />
     <link href="{% static 'css/test3.css' %}" rel="stylesheet" />
     <script src="{% static 'js/index3.js' %}"></script>
+    <script src="{% static 'js/index.js' %}"></script>
     <script src="{% static 'js/apikey.js' %}"></script>
     <!-- <script src="{% static 'js/hozonyou.js' %}"></script> -->
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
@@ -80,20 +81,6 @@
     
 </div>
 <script>
-    function se(){
-      directionsDisplay.setMap(null);
-      directionsDisplay.setPanel(null);
-      directionsDisplay.setDirections(null);
-      var s,e;
-      s = $('#sp').val();
-      e = $('#ep').val();
-      console.log(s);
-      console.log(e);
-      // ini(s,e);
-      // cal(s,e);   
-      initialize(s,e);
-      calcRoute(s,e);
-    }
 
 
     var map, begin, end;
