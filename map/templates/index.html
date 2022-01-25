@@ -28,13 +28,13 @@
 <!-- ヘッダー ---------------------------------->
 <header>
     <h1>
-        <a href="/">観光推進MAP</a>
+        <a href="{% url 'index' %}">観光推進MAP</a>
     </h1>
     <nav class="pc-nav">
         <ul>
             <li><a href="#">システム概要</a></li>
-            <li><a href="map">マップ</a></li>
-            <li><a href="#">ログイン</a></li>
+            <li><a href="{% url 'map' %}">マップ</a></li>
+            <li><a href="{% url 'calendar' %}">予定表</a></li>
             <li><a href="#">お問い合わせ</a></li>
         </ul>
     </nav>

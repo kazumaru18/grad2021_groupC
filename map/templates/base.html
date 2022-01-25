@@ -1,0 +1,108 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title%}{% endblock %}</title>
+    <link href="{% static 'css/style.css' %}" rel="stylesheet" />
+    <link href="{% static 'css/plus.css' %}" rel="stylesheet" />
+    <!-- <link href="{% static 'css/responsive.css' %}" rel="stylesheet" /> -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.css">
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.min.js"></script>
+    <script src="{% static 'js/index.js' %} defer"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('.slider').bxSlider({
+                auto: true,
+                pause: 3000,
+            });
+        });
+    </script>
+</head>
+
+<body>
+
+    <!-- ヘッダー ---------------------------------->
+    <header>
+        <h1>
+            <a href="/">観光推進MAP</a>
+        </h1>
+        <section>
+            <div class="btn-trigger" id="btn03">
+                <div class="icon">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </section>
+        <nav id="sm" class="pc-nav">
+            <ul id="ham_nav">
+                <li><a href="#">システム概要</a></li>
+                <li><a href="map">マップ</a></li>
+                <li><a href="{% url 'account_logout'%}">ログアウト</a></li>
+                <li><a href="{% url 'account_signup'%}">会員登録</a></li>
+                <li><a href="{% url 'account_login'%}">ログイン</a></li>
+                <li><a href="#">マイページ</a></li>
+                <li><a href="{% url 'inquiry'%}">お問い合わせ</a></li>
+            </ul>
+        </nav>
+    </header>
+    <script>
+        $("#btn03").on('click', function () {
+            $('.btn-trigger').toggleClass('.btn-trigger');
+            $('.pc-nav').slideToggle();
+        });
+        $(function () {
+            $('.btn-trigger').on('click', function () {
+                $(this).toggleClass('active');
+                return false;
+            });
+        });
+    </script>
+
+    <!-- メイン ------------------------------------>
+        {% block contents%}{% endblock %}
+
+    <!-- フッター ---------------------------------->
+    <footer id="footer">
+        <section class="primary">
+            <div class="footer">
+                <p class="logo"><a href="#">GroupC</a></p>
+                <p class="address">
+                    〒277-0842 千葉県柏市末広町10-1<br>
+                    TEL : 04-7147-1008　/　二号館 : 04-7167-2601
+                </p>
+                <div class="navi-row">
+                    <ul class="navi">
+                        <li><a href="#">ホーム</a></li>
+                        <li><a href="#">システム概要</a></li>
+                        <li><a href="#">マップ</a></li>
+                        <li><a href="#">お問い合わせ</a></li>
+                    </ul>
+                    <ul class="sns-navi">
+                        <li><a href="https://twitter.com/ohara_kashiwa"><i class="fa fa-twitter"></i></a></li>
+                        <li><a href="#"><i class="fa fa-map"></i></a></li>
+                        <li><a href="https://github.com/kazumaru18/grad2021_groupC"><i class="fa fa-github"></i></a>
+                        </li>
+                        <li><a href="#"><i class="fa fa-home"></i></a></li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+        <section class="secondary">
+            <div class="footer">
+                <p class="copyright">Copyright.</p>
+            </div>
+        </section>
+    </footer>
+
+</body>
+</html>
