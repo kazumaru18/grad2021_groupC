@@ -249,6 +249,10 @@ function initMap() {
         marker.setMap(null);
     });
     markers = [];
+    directionsDisplay.setMap(null);
+    directionsDisplay.setPanel(null);
+    directionsDisplay.setDirections(null);
+    $('#navi-end').hide();
   });
 
   $('#navi-end').on('click', function () {
@@ -417,22 +421,33 @@ function clear() {
     navigator.geolocation.clearWatch(watch_id);
 }
 
-// function test2(position) {
+function test2(position) {
 
-//     var geo_text = "緯度:" + position.coords.latitude + "\n";
-//     geo_text += "経度:" + position.coords.longitude + "\n";
-//     geo_text += "高度:" + position.coords.altitude + "\n";
-//     geo_text += "位置精度:" + position.coords.accuracy + "\n";
-//     geo_text += "高度精度:" + position.coords.altitudeAccuracy  + "\n";
-//     geo_text += "移動方向:" + position.coords.heading + "\n";
-//     geo_text += "速度:" + position.coords.speed + "\n";
+    var geo_text = "緯度:" + position.coords.latitude + "\n";
+    geo_text += "経度:" + position.coords.longitude + "\n";
+    geo_text += "高度:" + position.coords.altitude + "\n";
+    geo_text += "位置精度:" + position.coords.accuracy + "\n";
+    geo_text += "高度精度:" + position.coords.altitudeAccuracy  + "\n";
+    geo_text += "移動方向:" + position.coords.heading + "\n";
+    geo_text += "速度:" + position.coords.speed + "\n";
 
-//     var date = new Date(position.timestamp);
+    var date = new Date(position.timestamp);
 
-//     geo_text += "取得時刻:" + date.toLocaleString() + "\n";
-//     geo_text += "取得回数:" + (++num) + "\n";
+    geo_text += "取得時刻:" + date.toLocaleString() + "\n";
+    geo_text += "取得回数:" + (++num) + "\n";
 
-//     document.getElementById('position_view').innerHTML = geo_text;
+    var latitude = position.coords.latitude;//緯度
+    var longitude = position.coords.longitude;
 
-// }
+    var latlng = new google.maps.LatLng(latitude, longitude);
+
+    m = new google.maps.Marker({
+        map: map,
+        position: latlng,
+    });
+    ms.push(m);
+
+    document.getElementById('position_view').innerHTML = geo_text;
+
+}
 
