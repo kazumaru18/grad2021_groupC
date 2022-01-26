@@ -4195,11 +4195,11 @@ var FullCalendar = (function (exports) {
           prevYear: 'prev year',
           nextYear: 'next year',
           year: 'year',
-          today: 'today',
-          month: 'month',
-          week: 'week',
-          day: 'day',
-          list: 'list',
+          today: '今月',
+          month: '月',
+          week: '週',
+          day: '日',
+          list: 'リスト',
       },
       weekText: 'W',
       weekTextLong: 'Week',
@@ -9470,7 +9470,7 @@ var FullCalendar = (function (exports) {
   var DAY_NUM_FORMAT = createFormatter({ day: 'numeric' });
   var DayCellContent = /** @class */ (function (_super) {
       __extends(DayCellContent, _super);
-      function DayCellContent() {
+      function DayCellContent(e) {
           return _super !== null && _super.apply(this, arguments) || this;
       }
       DayCellContent.prototype.render = function () {

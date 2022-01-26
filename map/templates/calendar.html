@@ -6,18 +6,40 @@
 
 <link href="{% static 'css/calendar.css' %}" rel="stylesheet" />
 <style>
-  body {
-    /* margin: 40px 10px; */
+* {
+    margin: 0;
     padding: 0;
-    font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
-    font-size: 14px;
+}
+body {
+    height: 100vh;
+    width: 100%;
+}
+@media screen and (max-width:768px) {
+  body {
+    font-size: 62.5%;
   }
-
-  #calendar {
-    max-width: 90%;
-    /* height: auto; */
-    margin: 0 auto;
-  }
+}
+.custom-view table{
+  width: 100%;
+}
+.custom-view thead th {
+  padding: 10px;
+  text-align: left;
+}
+.custom-view tbody th,
+.custom-view tbody td {
+  padding: 10px;
+  text-align: left;
+}
+.no-data {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  padding: 80px;
+  background: #d0d0d04d;
+  border: 1px solid #ddd;
+}
 </style>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="{% static 'js/calendar.js' %}"></script>
@@ -30,7 +52,7 @@
       var events = JSON.parse(localStorage.getItem('events'));
       // full-calendar生成する。
       var calendar = new FullCalendar.Calendar(calendarEl, {
-        height: '700px', // calendarの高さ設定
+        height: 'auto', // calendarの高さ設定
         expandRows: true, // 画面に合わせて高さを再設定
         slotMinTime: '08:00', // Dayカレンダーに開始時間
         slotMaxTime: '20:00', // Dayカレンダーに終了時間
@@ -42,11 +64,15 @@
         },
         initialView: 'dayGridMonth', // 初期ロードする時、見えるカレンダーの画面(基本設定:月)	
         navLinks: true, // 日付を選択するとDayカレンダーやWeekカレンダーにリンク
+        businessHours: true,　// 休日表記
         editable: true, // 修正可能
         selectable: true, // カレンダーのドラッグ設定可能	
         nowIndicator: true, // 現在時間マーク
         dayMaxEvents: true, // イベントの数がオバーすると高さの制限(+のマークと何個式で表現)
         locale: 'ja', // 日本語設定  
+        dayCellContent: function(e) {
+        e.dayNumberText = e.dayNumberText.replace('日', '');
+        }, //　カレンダーの'日'を削除
 
         //console ni hyouji 
         eventAdd: function(obj) { // イベントが追加すると発生するイベント
