@@ -1,5 +1,7 @@
 from django.shortcuts import render
 from django.views import generic
+from .forms import InquiryForm
+
 
 # Create your views here.
 class IndexView(generic.TemplateView):
@@ -20,3 +22,6 @@ class Test5View(generic.TemplateView):
     template_name="test5.html"
 class Test6View(generic.TemplateView):
     template_name="test6.html"
+class InquiryView(generic.FormView):
+    template_name="inquiry.html"
+    form_class = InquiryForm

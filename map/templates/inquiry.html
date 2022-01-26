@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% block title %}観光推進MAP|お問い合わせ{% endblock%}
+{% load static %}
+
+{% block contents%}
+    <!-- メイン ------------------------------------>
+    <main>
+        <div class="bg_pattern Paper_v2"></div>
+        <div class="container">
+            <h1 class="inquiry_title">お問い合わせフォーム</h1>
+            <div class="row">
+                <div class="my-div-style">
+                    <form action="post">
+                        {% csrf_token %}
+                        {{ form.non_field_errors }}
+                        {% for field in form%}
+                        <div class="form-group">
+                            <label for="{{ field.id_for_label }}" class="col-form-label">
+                                <strong class="Form-Item-Label">{{ field.label_tag }}</strong>
+                            </label>
+                            <div class="col-sm-8">
+                                {{ field }}
+                                {{ field.errors}}
+                            </div>
+                        </div>
+                        {% endfor %}
+                        <div class="fm_button">
+                            <button class="Form-Btn" type="submit">確認画面</button>
+                            <button class="Form-Btn" type="reset">リセットする</button>
+                            <!-- <button class="Form-Btn" type="submit">戻る</button>
+                            <button class="Form-Btn" type="submit">送信</button> -->
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+    {% endblock %}
