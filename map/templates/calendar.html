@@ -16,7 +16,7 @@
       // calendarエレメント取得
       var calendarEl = $('#calendar')[0];
 
-      var events = JSON.parse(localStorage.getItem('events'));
+      // var events = JSON.parse(localStorage.getItem('events'));
       // full-calendar生成する。
       var calendar = new FullCalendar.Calendar(calendarEl, {
         height: '700px', // calendarの高さ設定
@@ -66,13 +66,13 @@
                 end: arg.end,
             }];
 
-            calendar_events.push(calendar_events);
-            localStorage.setItem('events', JSON.stringify(calendar_events ));
+            localStorage.setItem('events', JSON.stringify(calendar_events));
+            calendar_events.push('events');
 
           calendar.unselect()
         }
         },
-
+        
       });
       // カレンダーレンダリング
       calendar.render();
