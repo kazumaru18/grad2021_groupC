@@ -3,7 +3,6 @@
 <html lang="ja">
 
 <head>
-    <title>案内マップ</title>
     <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
     <link href="{% static 'css/sakata.css' %}" rel="stylesheet" />
     <link href="{% static 'css/style.css' %}" rel="stylesheet" />
@@ -56,7 +55,7 @@
     <div id="category">
         <ul>
             <li class="kara"><a href="http://localhost:3000/">音声検索</a></li>
-            <li><a id="mise">飲食店</a></li>
+            <li><a id="mise" class="map_button">飲食店</a></li>
             <li><a id="cate1" data-value="atm">ATM</a></li>
             <li><a id="cate2" data-value="スーパー">スーパー</a></li>
             <li><a id="cate3" data-value="ホテル">ホテル</a></li>
@@ -102,7 +101,6 @@
     <script>
         gmap();
     </script>
-    
-    <div class="bg_pattern Paper_v2"></div>
+
 </body>
 </html>

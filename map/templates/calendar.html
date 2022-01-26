@@ -14,11 +14,6 @@ body {
     height: 100vh;
     width: 100%;
 }
-@media screen and (max-width:768px) {
-  body {
-    font-size: 62.5%;
-  }
-}
 .custom-view table{
   width: 100%;
 }
@@ -41,11 +36,30 @@ body {
   border: 1px solid #ddd;
 }
 #calendar{
+  margin-top: 30px;
   background-color: #ffff;
 }
 .cal_block{
   margin-top: 30px;
 }
+.cal_title{
+  background: #696969; /*背景色*/
+  padding: 10px;/*文字周りの余白*/
+  color: white;/*文字を白に*/
+  border-radius: 0.5em;/*角の丸み*/
+  width: 25%;
+  margin: 0 auto;
+  text-align: center;
+}
+@media screen and (max-width:768px) {
+  body {
+    font-size: 62.5%;
+  }
+  .cal_title{
+  width: 100%;
+}
+}
+
 </style>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="{% static 'js/calendar.js' %}"></script>
@@ -123,6 +137,7 @@ body {
   })();	
 </script>
 <div class="cal_block">
+  <h1 class="cal_title">予定表</h1>
   <div id='calendar'></div>
 </div>
 <div class="bg_pattern Paper_v2"></div>
