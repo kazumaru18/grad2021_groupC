@@ -1,147 +1,89 @@
+{% extends 'base.html' %}
+{% block title %}観光推進MAP{% endblock%}
 {% load static %}
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>観光推進MAP</title>
-    <link href="{% static 'css/style.css' %}" rel="stylesheet" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.css">
-    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.min.js"></script>
-    
-    <script type="text/javascript">
-            $(document).ready(function(){
-                $('.slider').bxSlider({
-                    auto: true,
-                    pause: 3000,
-                });
-            });
-    </script>
-</head>
 
-<body>
+{% block contents%}
 
-<!-- ヘッダー ---------------------------------->
-<header>
-    <h1>
-        <a href="/">観光推進MAP</a>
-    </h1>
-    <nav class="pc-nav">
-        <ul>
-            <li><a href="#">システム概要</a></li>
-            <li><a href="map">マップ</a></li>
-            <li><a href="#">ログイン</a></li>
-            <li><a href="#">お問い合わせ</a></li>
-        </ul>
-    </nav>
-    <section>
-        <div class="btn-trigger" id="btn03">
-          <span></span>
-          <span></span>
-          <span></span>
-        </div>
-    </section>
-</header>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.css">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.min.js"></script>
 
-<!-- メイン ------------------------------------>
+<script type="text/javascript">
+  $(document).ready(function () {
+    $('.slider').bxSlider({
+      auto: true,
+      pause: 3000,
+    });
+  });
+</script>
+
 <main>
-    <div class="slider">
-        <img src="{% static 'images/01.jpg' %}" width="" height="auto" alt="">
-        <img src="{% static 'images/02.jpg' %}" width="" height="auto" alt="">
-        <img src="{% static 'images/03.jpg' %}" width="" height="auto" alt="">
+  <div class="slider">
+    <img src="{% static 'images/01.jpg' %}" width="" height="auto" alt="">
+    <img src="{% static 'images/02.jpg' %}" width="" height="auto" alt="">
+    <img src="{% static 'images/03.jpg' %}" width="" height="auto" alt="">
+  </div>
+  <div class="top-search">
+    <h1 class="search-title">キーワード検索</h1>
+    <form method="get" action="./map/?" class="search_container">
+      <input type="text" size="55%" name="q" placeholder="キーワード検索">
+      <input class="musimegane" type="submit" value="&#xf002">
+    </form>
+    <h1 class="search-subtitle">音声検索</h1>
+    <div class="ons">
+      <a href="http://localhost:3000/"><button>音声検索ページへ</button></a>
     </div>
-    <div class="top-search">
-        <h1 class="search-title">キーワード検索</h1>
-        <form method="get" action="./map/?" class="search_container">
-            <input type="text" size="55%" name="q" placeholder="キーワード検索">
-            <input class="musimegane" type="submit" value="&#xf002">
-        </form>
-        
-        <h1 class="search-subtitle">音声検索</h1>
-        <div class="ons">
-          <a href="http://localhost:3000/"><button>音声検索ページへ</button></a>
-        </div>
-        <h1 class="search-subtitle">カテゴリー検索</h1>
-        <ul class="menu">
-            <li><a href='map?q=食料品'><strong>食料品</strong></a>
-                <!-- <ul>
-                    <li><a href="#">子カテゴリ1</a></li>
-                    <li><a href="#">子カテゴリ2</a></li>
-                    <li><a href="#">子カテゴリ3</a></li>
-                    <li><a href="#">子カテゴリ4</a></li>
-                </ul> -->
-            </li>
-            <li><a href="map?q=レストラン"><strong>レストラン</strong></a>
-                <!-- <ul>
-                    <li><a href="#">子カテゴリ5</a></li>
-                    <li><a href="#">子カテゴリ6</a></li>
-                    <li><a href="#">子カテゴリ7</a></li>
-                    <li><a href="#">子カテゴリ8</a></li>
-                </ul> -->
-            </li>
-            <li><a href="map?q=ホテル"><strong>ホテル</strong></a></li>
-            <li><a href="map?q=ガソリン"><strong>ガソリン</strong></a></li>
-            <li><a href="map?q=atm"><strong>ATM</strong></a></li>
-        </ul>
-    </div>
-    <div class="news">
-        <h1 class="news-title">お知らせ</h1>
-        <dl>
-            <dt>2020/1/6</dt>
-            <dd>株式会社◯◯◯◯と資本提携しました。ここにテキストが入ります。</dd>
-            <dt>2019/12/30</dt>
-            <dd>XXXが日経新聞で取り上げられました。ここにテキストが入ります。</dd>
-            <dt>2019/12/10</dt>
-            <dd>自社サービスXXXがリリースされました。ここにテキストが入ります。</dd>
-            <dt>2019/10/6</dt>
-            <dd>本社移転しました。ここにテキストが入ります。</dd>
-            <dt>2020/1/6</dt>
-            <dd>株式会社◯◯◯◯と資本提携しました。ここにテキストが入ります。</dd>
-            <dt>2019/12/30</dt>
-            <dd>XXXが日経新聞で取り上げられました。ここにテキストが入ります。</dd>
-            <dt>2019/12/10</dt>
-            <dd>自社サービスXXXがリリースされました。ここにテキストが入ります。</dd>
-            <dt>2019/10/6</dt>
-            <dd>本社移転しました。ここにテキストが入ります。</dd>
-        </dl>
-    </div>
+    <h1 class="search-subtitle">カテゴリー検索</h1>
+    <ul class="menu">
+      <li><a href='map?q=食料品'><strong>食料品</strong></a>
+        <!-- <ul>
+          <li><a href="#">子カテゴリ1</a></li>
+          <li><a href="#">子カテゴリ2</a></li>
+          <li><a href="#">子カテゴリ3</a></li>
+          <li><a href="#">子カテゴリ4</a></li>
+        </ul> -->
+      </li>
+      <li><a href="map?q=レストラン"><strong>レストラン</strong></a>
+        <!-- <ul>
+          <li><a href="#">子カテゴリ5</a></li>
+          <li><a href="#">子カテゴリ6</a></li>
+          <li><a href="#">子カテゴリ7</a></li>
+          <li><a href="#">子カテゴリ8</a></li>
+        </ul> -->
+      </li>
+      <li><a href="map?q=ホテル"><strong>ホテル</strong></a></li>
+      <li><a href="map?q=ガソリン"><strong>ガソリン</strong></a></li>
+        <!-- <ul>
+          <li><a href="map?=ENEOS">ENEOS</a></li>
+          <li><a href="map?=出光">出光</a></li>
+          <li><a href="map?=コスモ">コスモ</a></li>
+        </ul> -->
+      <li><a href="map?q=atm"><strong>ATM</strong></a></li>
+    </ul>
+  </div>
+  <div class="news">
+    <h1 class="news-title">お知らせ</h1>
+    <dl>
+      <dt>2020/01/06</dt>
+      <dd>株式会社◯◯◯◯と資本提携しました。ここにテキストが入ります。</dd>
+      <dt>2019/12/30</dt>
+      <dd>XXXが日経新聞で取り上げられました。ここにテキストが入ります。</dd>
+      <dt>2019/12/10</dt>
+      <dd>自社サービスXXXがリリースされました。ここにテキストが入ります。</dd>
+      <dt>2019/10/06</dt>
+      <dd>本社移転しました。ここにテキストが入ります。</dd>
+      <dt>2020/01/06</dt>
+      <dd>株式会社◯◯◯◯と資本提携しました。ここにテキストが入ります。</dd>
+      <dt>2019/12/30</dt>
+      <dd>XXXが日経新聞で取り上げられました。ここにテキストが入ります。</dd>
+      <dt>2019/12/10</dt>
+      <dd>自社サービスXXXがリリースされました。ここにテキストが入ります。</dd>
+      <dt>2019/10/06</dt>
+      <dd>本社移転しました。ここにテキストが入ります。</dd>
+    </dl>
+  </div>
 </main>
 
-<!-- フッター ---------------------------------->
-<footer id="footer">
-    <section class="primary">
-    <div class="footer">
-      <p class="logo"><a href="#">GroupC</a></p>
-      <p class="address">
-        〒277-0842 千葉県柏市末広町10-1<br>
-        TEL : 04-7147-1008　/　二号館 : 04-7167-2601
-      </p>
-      <div class="navi-row">
-        <ul class="navi">
-          <li><a href="#">ホーム</a></li>
-          <li><a href="#">システム概要</a></li>
-          <li><a href="#">マップ</a></li>
-          <li><a href="#">お問い合わせ</a></li>
-        </ul>
-        <ul class="sns-navi">
-          <li><a href="https://twitter.com/ohara_kashiwa"><i class="fa fa-twitter"></i></a></li>
-          <li><a href="#"><i class="fa fa-map"></i></a></li>
-          <li><a href="https://github.com/kazumaru18/grad2021_groupC"><i class="fa fa-github"></i></a></li>
-          <li><a href="#"><i class="fa fa-home"></i></a></li>
-        </ul>
-      </div>
-    </div>
-    </section>
-    <section class="secondary">
-    <div class="footer">
-      <p class="copyright">Copyright.</p>
-    </div>
-    </section>
-</footer>
-
-</body>
-</html>
+{% endblock %}

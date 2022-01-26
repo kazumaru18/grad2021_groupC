@@ -1,94 +1,69 @@
+{% extends 'base.html' %}
+{% block title %}Simple Map{% endblock%}
 {% load static %}
-<!DOCTYPE html>
-<html>
 
-<head>
-    <title>Simple Map</title>
-    <meta name="viewport" content="initial-scale=1.0">
-    <meta charset="utf-8">
-    <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
-    <link href="{% static 'css/sakata.css' %}" rel="stylesheet" />
-    <link href="{% static 'css/style.css' %}" rel="stylesheet" />
-    <script src="{% static 'js/index.js' %}"></script>
-    <script src="{% static 'js/apikey.js' %}"></script>
-    <!-- <script src="{% static 'js/hozonyou.js' %}"></script> -->
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-</head>
+{% block contents%}
 
-<body>
-    <header>
-        <h1>
-            <a href="../">観光推進MAP</a>
-        </h1>
-        <nav class="pc-nav">
-            <ul>
-                <!-- <li><a id="mise">飲食店</a></li> -->
-                <li><a href="#">システム概要</a></li>
-                <li><a href="../map">マップ</a></li>
-                <li><a href="#">ログイン</a></li>
-                <li><a href="#">お問い合わせ</a></li>
-            </ul>
-        </nav>
-        <section>
-            <div class="btn-trigger" id="btn03">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-        </section>
-    </header>
+<script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+<link href="{% static 'css/map.css' %}" rel="stylesheet" />
+<link href="{% static 'css/style.css' %}" rel="stylesheet" />
+<script src="{% static 'js/index.js' %}"></script>
+<script src="{% static 'js/apikey.js' %}"></script>
+<!-- <script src="{% static 'js/index.js' %} defer"></script> -->
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 
-    <input id="pac-input" class="controls" type="text" placeholder="Google マップを検索する" />
-    <div id="category">
-        <ul>
-            <li class="kara"><a href="http://localhost:3000/">音声検索</a></li>
-            <li><a id="mise">飲食店</a></li>
-            <li><a id="cate1" data-value="atm">ATM</a></li>
-            <li><a id="cate2" data-value="スーパー">スーパー</a></li>
-            <li><a id="cate3" data-value="ホテル">ホテル</a></li>
-            <li><a id="cate4" data-value="病院">病院</a></li>
-            <li><a id="navi-end" style="display: none; margin-right: 8em;">ナビ終了</a></li>
-            <a href="http://webservice.recruit.co.jp/" class="gu"><img
-                    src="http://webservice.recruit.co.jp/banner/hotpepper-s.gif" alt="ホットペッパー Webサービス" width="135"
-                    height="17" border="0" title="ホットペッパー Webサービス"></a>
-        </ul>
-    </div>
+<input id="pac-input" class="controls" type="text" placeholder="Google マップを検索する" />
+<div id="category">
+  <ul>
+    <li class="kara"><a href="http://localhost:3000/">音声検索</a></li>
+    <li><a id="mise">飲食店</a></li>
+    <li><a id="cate1" data-value="atm">ATM</a></li>
+    <li><a id="cate2" data-value="スーパー">スーパー</a></li>
+    <li><a id="cate3" data-value="ホテル">ホテル</a></li>
+    <li><a id="cate4" data-value="病院">病院</a></li>
+    <li><a id="navi-end" style="display: none; margin-right: 8em;">ナビ終了</a></li>
+    <a href="http://webservice.recruit.co.jp/" class="gu"><img src="http://webservice.recruit.co.jp/banner/hotpepper-s.gif" alt="ホットペッパー Webサービス" width="135" height="17" border="0" title="ホットペッパー Webサービス"></a>
+  </ul>
+</div>
 
-    <div id="map"></div>
+<div id="map"></div>
 
-    <button onclick="time()">start</button>
-    <button onclick="clearTime()">stop</button>
-    <button onclick="c()">clear</button>
+<button onclick="time()">start</button>
+<button onclick="clearTime()">stop</button>
+<button onclick="c()">clear</button>
 
-    <p>
-        <label for="mode">モード：<select id="mode" name="mode">
-                <option value="driving" selected>自動車</option>
-                <option value="bicycling">自転車</option>
-                <!-- <option value="transit">電車</option> -->
-                <option value="walking">徒歩</option>
-            </select></label>
-    </p>
+<p>
+  <label for="mode">モード：
+    <select id="mode" name="mode">
+      <option value="driving" selected>自動車</option>
+      <option value="bicycling">自転車</option>
+      <!-- <option value="transit">電車</option> -->
+      <option value="walking">徒歩</option>
+    </select>
+  </label>
+</p>
 
-    <p>
-        <label for="highways">高速道路：<select id="highways" name="highways">
-                <option value="yes" selected>使用する</option>
-                <option value="no">使用しない</option>
-            </select></label>
-    </p>
+<p>
+  <label for="highways">高速道路：
+    <select id="highways" name="highways">
+      <option value="yes" selected>使用する</option>
+      <option value="no">使用しない</option>
+    </select>
+  </label>
+</p>
 
-    <div class="searchbox" style="display: none;" id="searchbox">
-        <p><span class="bold">住所･地名から検索</span></p>
-        <p>start:<input type="text" name="sp" id="sp"></p>
-        End:<input type="text" name="ep" id="ep">
-        <input type="submit" name="regist" value="検索" id="searchButton" onclick="se()">
-    </div>
+<div class="searchbox" style="display: none;" id="searchbox">
+  <p><span class="bold">住所･地名から検索</span></p>
+  <p>start:<input type="text" name="sp" id="sp"></p>
+  <p>End:<input type="text" name="ep" id="ep"></p>
+  <input type="submit" name="regist" value="検索" id="searchButton" onclick="se()">
+</div>
 
+<div id="directionsPanel"></div>
+<pre id="position_view"></pre>
 
-    <div id="directionsPanel"></div>
-    <pre id="position_view"></pre>
-    <script>
-        gmap();
-    </script>
-</body>
+<script>
+  gmap();
+</script>
 
-</html>
+{% endblock %}
