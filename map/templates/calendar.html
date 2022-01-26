@@ -40,6 +40,12 @@ body {
   background: #d0d0d04d;
   border: 1px solid #ddd;
 }
+#calendar{
+  background-color: #ffff;
+}
+.cal_block{
+  margin-top: 30px;
+}
 </style>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="{% static 'js/calendar.js' %}"></script>
@@ -116,6 +122,8 @@ body {
     });
   })();	
 </script>
-
-<div id='calendar'></div>
-{% endblock %}
+<div class="cal_block">
+  <div id='calendar'></div>
+</div>
+<div class="bg_pattern Paper_v2"></div>
+  {% endblock %}
