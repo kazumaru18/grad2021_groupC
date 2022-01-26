@@ -14957,3 +14957,71 @@ var FullCalendar = (function (exports) {
   return exports;
 
 }({}));
+
+(function(){
+  $(function(){
+    // calendarエレメント取得
+    var calendarEl = $('#calendar')[0];
+
+    // var events = JSON.parse(localStorage.getItem('events'));
+    // full-calendar生成する。
+    var calendar = new FullCalendar.Calendar(calendarEl, {
+      height: '700px', // calendarの高さ設定
+      expandRows: true, // 画面に合わせて高さを再設定
+      slotMinTime: '08:00', // Dayカレンダーに開始時間
+      slotMaxTime: '20:00', // Dayカレンダーに終了時間
+      // ヘッダーに表示するツールバー
+      headerToolbar: {
+        left: 'prev,next today',
+        center: 'title',
+        right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
+      },
+      initialView: 'dayGridMonth', // 初期ロードする時、見えるカレンダーの画面(基本設定:月)	
+      navLinks: true, // 日付を選択するとDayカレンダーやWeekカレンダーにリンク
+      editable: true, // 修正可能
+      selectable: true, // カレンダーのドラッグ設定可能	
+      nowIndicator: true, // 現在時間マーク
+      dayMaxEvents: true, // イベントの数がオバーすると高さの制限(+のマークと何個式で表現)
+      locale: 'ja', // 日本語設定  
+
+      //console ni hyouji 
+      eventAdd: function(obj) { // イベントが追加すると発生するイベント
+        console.log(obj);
+      },
+      eventChange: function(obj) { // イベントが修正されたら発生するイベント
+        console.log(obj);
+      },
+      eventRemove: function(obj){ // イベントが削除すると発生するイベント
+        console.log(obj);	
+      },
+
+      select: function(arg) { // カレンダーでドラックでイベントを生成することが可能。
+        var title = prompt('予定を入力してください:');//popup表示にしたい
+        if (title) {//カレンダー表示(localstorageのデータは表示できない)
+          calendar.addEvent({
+            title: title,
+            start: arg.start,
+            end: arg.end,
+            allDay: arg.allDay
+            })
+
+            var calendar_events;
+            
+            calendar_events = [{//配列でlocalstorageに保存
+              title: title,
+              start: arg.start,
+              end: arg.end,
+          }];
+
+          localStorage.setItem('events', JSON.stringify(calendar_events));
+          calendar_events.push('events');
+
+        calendar.unselect()
+      }
+      },
+
+    });
+    // カレンダーレンダリング
+    calendar.render();
+  });
+})();	

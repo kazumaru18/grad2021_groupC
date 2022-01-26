@@ -1,3 +1,16 @@
+body {
+  /* margin: 40px 10px; */
+  padding: 0;
+  font-family: "Hiragino Kaku Gothic Pro", "ヒラギノ角ゴ Pro W3", メイリオ, Meiryo, "ＭＳ Ｐゴシック", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 14px;
+}
+
+#calendar {
+  max-width: 90%;
+  /* height: auto; */
+  margin: 0 auto;
+}
+
 /* classes attached to <body> */
 /* TODO: make fc-event selector work when calender in shadow DOM */
 .fc-not-allowed,
