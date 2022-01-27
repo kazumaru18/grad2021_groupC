@@ -360,7 +360,8 @@ document.addEventListener("DOMContentLoaded", function () {
             button.textContent = " 位置情報の取得開始 ";
         } else {
             // リアルタイム監視を開始
-            watch_id = window.navigator.geolocation.watchPosition(successCallback);
+            // watch_id = window.navigator.geolocation.watchPosition(successCallback);
+            watch_id = window.navigator.geolocation.watchPosition(root);
             // ボタン表記を変更
             button.textContent = " 位置情報の取得停止 ";
         };
@@ -519,4 +520,33 @@ function se() {
     // cal(s,e);   
     initialize(s, e);
     calcRoute(s, e);
+}
+
+
+function root(position){
+    markers.forEach((marker) => {
+        marker.setMap(null);
+    });
+    markers = [];
+
+    var glLatitude = position.coords.latitude;
+
+    var glLongitude = position.coords.longitude;
+
+    var geo_text = "緯度:" + position.coords.latitude + "\n";
+    geo_text += "経度:" + position.coords.longitude + "\n";
+    // geo_text += "高度:" + position.coords.altitude + "\n";
+    geo_text += "位置精度:" + position.coords.accuracy + "\n";
+    // geo_text += "高度精度:" + position.coords.altitudeAccuracy  + "\n";
+    geo_text += "移動方向:" + position.coords.heading + "\n";
+    geo_text += "速度:" + position.coords.speed + "\n";
+
+
+    geo_text += "取得回数:" + (++num) + "\n";
+
+    document.getElementById('position_view').innerHTML = geo_text;
+
+    var start = position.coords.latitude+','+position.coords.longitude;
+    Display_JS(start,'柏駅');
+       
 }
