@@ -205,6 +205,81 @@
   </div>
 </div>
 
+<div id="slideL" class="off">
+  <div class="slide-inner">
+    <div id="directionsPanel"></div>
+    <pre id="position_view"></pre>
+  </div>
+</div>
+
+<style>
+#slideR {
+  z-index: 99;
+  cursor: pointer;
+  position: fixed;
+  top: 40%;
+  right: -140px;
+  background: #0DCEA8;
+  width: 300px;
+  color: #fff;
+  font-size: 16px;
+}
+
+#slideL {
+  z-index:100;
+  cursor: pointer;
+  position: fixed;
+  top: 0;
+  left: -400px;
+  width: 400px;
+  height: auto;
+  padding: 0 40px 0 0;
+  background: #999;
+}
+#slideL .slide-inner {
+  overflow: auto;
+  overflow-x: hidden;
+  background: #ddd;
+}
+</style>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+<script>
+//マウスオーバーで表示
+$(function() {
+      $('#slideR').hover(
+      function(){
+        $(this).animate({'marginRight':'140px'},500);
+      },
+      function () {
+        $(this).animate({'marginRight':'0'},500);
+      }
+    );
+});
+
+$('#slideL').on('click',function(){
+  if($('#slideL').hasClass('off')){
+    $('#slideL').removeClass('off');
+    $(this).animate({'marginLeft':'400px'},300).addClass('on');
+  }else{
+    $('#slideL').addClass('off');
+    $(this).animate({'marginLeft':'0px'},300);
+  }
+});
+
+$(document).ready(function(){
+  fit();
+  $(window).resize(function(){
+    fit();
+  })
+  function fit(){
+    var h = $(window).height();
+    $('.slide-inner').css("height",h);
+  }
+});
+</script>
+
 <div id="directionsPanel"></div>
 <pre id="position_view"></pre>
 
