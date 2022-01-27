@@ -416,8 +416,8 @@ function syousai() {
     var r = document.getElementById('range');
     var range = r.value;
     var g = document.getElementById('genre');
-    var genre = g.value;
-    var url = 'http://webservice.recruit.co.jp/hotpepper/gourmet/v1/?key=' + conf.GOURMET_KEY + '&lat=' + lat + '&lng=' + lng + '&range=' + range + '&genre=' + genre;
+    // var genre = g.value;
+    var url = 'http://webservice.recruit.co.jp/hotpepper/gourmet/v1/?key=' + conf.GOURMET_KEY + '&lat=' + lat + '&lng=' + lng + '&range=' + range;
     var arr = ['&card=1', '&lunch=1', '&wifi=1', '&private_room=1', '&midnight_meal=1', '&pet=1', '&cocktail=1', '&shochu=1', '&sake=1', '&wine=1', '&parking=1', '&barrier_free=1', '&free_food=1', '&free_drink=1', '&child=1', '&non_smoking=1', '&tatami=1', '&course=1'];
 
     const syousai = document.ca.syousai;
@@ -464,6 +464,7 @@ function syousaiMarker(res, pos) {
 
     //マーカーにイベントリスナを設定
     marker.addListener('click', function () {
+        console.log("sssss");
         if (info != null) {
             info.close();
         }
@@ -471,7 +472,7 @@ function syousaiMarker(res, pos) {
         start = pos['lat'] + ',' + pos['lng'];
         end = res['address'];
         var positio = { lat: res['lat'], lng: res['lng'] };
-        var i = "<img src='" + res['logo_image'] + "'>" + "<br>" + res['name'] + "<br>" + res['sub_genre']['name'] + "<br>" + res['address'] + "<br>" + res['access'] + "<br>" + "<img src='" + res['photo']['mobile']['s'] + "'>" + "<br>"
+        var i = "<img src='" + res['logo_image'] + "'>" + "<br>" + res['name'] + "<br>" + "<br>" + res['address'] + "<br>" + res['access'] + "<br>" + "<img src='" + res['photo']['mobile']['s'] + "'>" + "<br>"
             + '営業時間：' + res['open'] + "<br>"
             + '定休日：' + res['close'] + "<br>"
             //    + "<a href='" + res['urls']['pc'] + "'><button>ホットペッパーグルメで見る</button></a>" 
@@ -496,4 +497,26 @@ function syousaiMarker(res, pos) {
         info.open(map);
     });
     markers.push(marker);
+}
+
+
+
+
+function se() {
+    directionsDisplay.setMap(null);
+    directionsDisplay.setPanel(null);
+    directionsDisplay.setDirections(null);
+    var s, e;
+    if ($('#sp').val() == '現在地') {
+        s = pos['lat'] + ',' + pos['lng'];
+    } else {
+        s = $('#sp').val();
+    }
+    e = $('#ep').val();
+    // console.log(s);
+    // console.log(e);
+    // ini(s,e);
+    // cal(s,e);   
+    initialize(s, e);
+    calcRoute(s, e);
 }
