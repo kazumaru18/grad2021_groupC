@@ -150,7 +150,7 @@ function initMap() {
           marker.setMap(null);
       });
       markers = [];
-      var urlw = 'http://webservice.recruit.co.jp/hotpepper/gourmet/v1/?key=' + conf.GOURMET_KEY + '&lat=' + lat + '&lng=' + lng + '&range=4&order=4&count=50&format=jsonp';
+      var urlw = '//webservice.recruit.co.jp/hotpepper/gourmet/v1/?key=' + conf.GOURMET_KEY + '&lat=' + lat + '&lng=' + lng + '&range=4&order=4&count=50&format=jsonp';
       $.ajax({
           url: urlw,
           type: 'GET',
@@ -344,110 +344,67 @@ function calcRoute(s, e) {
 }
 
 
-
-function time() {
-  timeId = setInterval(() => {
-      getMyPlace();
-  }, 1000);
-}
-
-function clearTime() {
-  clearInterval(timeId);
-  // c();
-}
-
-var ms = [];
-function c() {
-  ms.forEach((m) => {
-      m.setMap(null);
-  });
-  ms = [];
-}
-
-var num = 0;
-function getMyPlace() {
-  if (!navigator.geolocation) {//Geolocation apiがサポートされていない場合
-      console.log("Geolocationはあなたのブラウザーでサポートされておりません");
-      return;
-  }
-  function success(position) {
-      var latitude = position.coords.latitude;//緯度
-      var longitude = position.coords.longitude;//経度
-      // output.innerHTML = '<p>緯度 ' + latitude + '° <br>経度 ' + longitude + '°</p>';
-      // 位置情報
-      var latlng = new google.maps.LatLng(latitude, longitude);
-      // Google Mapsに書き出し
-      m = new google.maps.Marker({
-          map: map,
-          position: latlng,
-      });
-      ms.push(m);
-      document.getElementById('position_view').innerHTML = latlng;
-  };
-  function error() {
-      //エラーの場合
-      console.log("座標位置を取得できません");
-  };
-  navigator.geolocation.getCurrentPosition(success, error);//成功と失敗を判断
-}
-
-
-function se() {
-  directionsDisplay.setMap(null);
-  directionsDisplay.setPanel(null);
-  directionsDisplay.setDirections(null);
-  var s, e;
-  if ($('#sp').val() == '現在地') {
-      s = pos['lat'] + ',' + pos['lng'];
-  } else {
-      s = $('#sp').val();
-  }
-  e = $('#ep').val();
-  initialize(s, e);
-  calcRoute(s, e);
-}
-
-
-
+document.addEventListener("DOMContentLoaded", function () {
+    // 監視識別ID
+    var watch_id = 0;
+    // ボタンにclickイベントのリスナーをセット
+    // var button = document.querySelector('button');
+    var button = document.getElementById('testbutton');
+    button.addEventListener("click", function () {
+        if (watch_id > 0) {
+            // リアルタイム監視を停止
+            window.navigator.geolocation.clearWatch(watch_id);
+            // 監視識別IDに0をセット
+            watch_id = 0;
+            // ボタン表記を変更
+            button.textContent = " 位置情報の取得開始 ";
+        } else {
+            // リアルタイム監視を開始
+            watch_id = window.navigator.geolocation.watchPosition(successCallback);
+            // ボタン表記を変更
+            button.textContent = " 位置情報の取得停止 ";
+        };
+    }, false);
+}, false);
 
 var num = 0;
-var watch_id;
 
-function test() {
-    watch_id = navigator.geolocation.watchPosition(test2, function(e) { alert(e.message); }, {"enableHighAccuracy": true, "timeout": 20000, "maximumAge": 2000});
-}
+// リアルタイム監視
+function successCallback(position) {
+    markers.forEach((marker) => {
+        marker.setMap(null);
+    });
+    markers = [];
+    // コンソールログは増え続けてしまうのでコメントアウト
+    // console.log(position);
+    // 緯度
+    var glLatitude = position.coords.latitude;
+    // document.querySelector('#latitude').textContent = glLatitude;
+    // 経度
+    var glLongitude = position.coords.longitude;
+    // document.querySelector('#longitude').textContent = glLongitude;
 
-function clear() {
-    navigator.geolocation.clearWatch(watch_id);
-}
-
-function test2(position) {
 
     var geo_text = "緯度:" + position.coords.latitude + "\n";
     geo_text += "経度:" + position.coords.longitude + "\n";
-    geo_text += "高度:" + position.coords.altitude + "\n";
+    // geo_text += "高度:" + position.coords.altitude + "\n";
     geo_text += "位置精度:" + position.coords.accuracy + "\n";
-    geo_text += "高度精度:" + position.coords.altitudeAccuracy  + "\n";
+    // geo_text += "高度精度:" + position.coords.altitudeAccuracy  + "\n";
     geo_text += "移動方向:" + position.coords.heading + "\n";
     geo_text += "速度:" + position.coords.speed + "\n";
 
-    var date = new Date(position.timestamp);
+    // var date = new Date(position.timestamp);
 
-    geo_text += "取得時刻:" + date.toLocaleString() + "\n";
+    // geo_text += "取得時刻:" + date.toLocaleString() + "\n";
     geo_text += "取得回数:" + (++num) + "\n";
-
-    var latitude = position.coords.latitude;//緯度
-    var longitude = position.coords.longitude;
-
-    var latlng = new google.maps.LatLng(latitude, longitude);
-
-    m = new google.maps.Marker({
-        map: map,
-        position: latlng,
-    });
-    ms.push(m);
 
     document.getElementById('position_view').innerHTML = geo_text;
 
-}
+    marker = new google.maps.Marker({
+        map,
+        // title: place.name,
+        position: { lat: glLatitude, lng: glLongitude },
+    });
+    markers.push(marker);
 
+};
