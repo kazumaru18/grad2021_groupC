@@ -3,6 +3,10 @@
 <html lang="ja">
 
 <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>マップ</title>
     <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
     <link href="{% static 'css/sakata.css' %}" rel="stylesheet" />
     <link href="{% static 'css/style.css' %}" rel="stylesheet" />
@@ -10,6 +14,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="{% static 'js/index.js' %}"></script>
     <script src="{% static 'js/apikey.js' %}"></script>
+    <link rel="shortcut icon" type="image/png" href="{% static 'images/favicon.png' %}">
 </head>
 
 <body>
@@ -54,13 +59,13 @@
     <input id="pac-input" class="controls" type="text" placeholder="Google マップを検索する" />
     <div id="category">
         <ul>
-            <li class="kara"><a href="http://localhost:3000/">音声検索</a></li>
-            <li><a id="mise" class="map_button">飲食店</a></li>
-            <li><a id="cate1" data-value="atm">ATM</a></li>
-            <li><a id="cate2" data-value="スーパー">スーパー</a></li>
-            <li><a id="cate3" data-value="ホテル">ホテル</a></li>
-            <li><a id="cate4" data-value="病院">病院</a></li>
-            <li><a id="navi-end" style="display: none; margin-right: 8em;">ナビ終了</a></li>
+            <li class="kara"><a href="http://localhost:3000/" class="mike"><img class="mike_png" src="{% static 'images/mike.png' %}" alt="音声ボタン">音声検索ページ</a></li>
+            <li><p class="textlink textlink01"><a id="mise">飲食店</a></p></li>
+            <li><p class="textlink textlink01"><a id="cate1" data-value="atm">ATM</a></p></li>
+            <li><p class="textlink textlink01"><a id="cate2" data-value="スーパー">スーパー</a></p></li>
+            <li><p class="textlink textlink01"><a id="cate3" data-value="ホテル">ホテル</a></p></li>
+            <li><p class="textlink textlink01"><a id="cate4" data-value="病院">病院</a></p></li>
+            <li><p class="textlink textlink01"><a id="navi-end" style="display: none; margin-right: 8em;">ナビ終了</a></p></li>
             <a href="http://webservice.recruit.co.jp/" class="gu"><img
                     src="http://webservice.recruit.co.jp/banner/hotpepper-s.gif" alt="ホットペッパー Webサービス" width="135"
                     height="17" border="0" title="ホットペッパー Webサービス"></a>
@@ -100,7 +105,7 @@
     <pre id="position_view"></pre>
     <script>
         gmap();
-    </script>
-
+    </script>    
+    <div class="bg_pattern Paper_v2"></div>
 </body>
 </html>
