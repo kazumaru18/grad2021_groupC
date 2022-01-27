@@ -1,9 +1,30 @@
 {% extends 'base.html' %}
-{% block title %}観光推進MAP{% endblock%}
+{% block title %}Simple Map{% endblock%}
 {% load static %}
 
 {% block contents%}
 
+<link href="{% static 'css/side.css' %}" rel="stylesheet" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+<script src="{% static 'js/side.js' %}"></script>
+  
+<div class="page_main">
+  <aside>
+    <button><img src="{% static 'images/icon.png' %}" width="30px" height="auto"></button>
+  </aside>
+</div>
 
+<div class="page_main2">
+  <aside>
+    <button><img src="{% static 'images/icon.png' %}" width="30px" height="auto"></button>
+  </aside>
+</div>
+
+<div class="page_main3">
+  <aside>
+    <button><img src="{% static 'images/icon.png' %}" width="30px" height="auto"></button>
+  </aside>
+</div>
 
 {% endblock %}

@@ -1,0 +1,93 @@
+.page_main {
+    position: relative;
+}
+.page_main > aside {
+    background-color: rgba(241, 201, 201, 0.6);
+    width: 350px;
+    height: 100%;
+    /* top: 0; */
+    left: -350px;
+    position: fixed;
+}
+/* .page_main > aside ul {
+    margin: 0;
+    padding: 0;
+    top: 50px;
+    left: 114px;
+    position: absolute;
+}
+.page_main > aside li {
+    margin: 0 0 20px;
+    list-style: none;
+} */
+.page_main > aside button {
+    background-color: rgba(241, 201, 201, 0.6);
+    display: block;
+    position: absolute;
+    top: 120px;
+    left: 350px;
+    width: 50px;
+    height: 90px;
+    margin: 0;
+    padding: 0;
+    border-radius: 0 5px 5px 0;
+}
+
+.page_main2 {
+  position: relative;
+}
+.page_main2 > aside {
+  background-color: rgba(201, 207, 241, 0.6);
+  width: 350px;
+  height: 100%;
+  /* top: 0; */
+  left: -350px;
+  position: fixed;
+}
+.page_main2 > aside button {
+  background-color: rgba(201, 207, 241, 0.6);
+  display: block;
+  position: absolute;
+  top: 215px;
+  left: 350px;
+  width: 50px;
+  height: 90px;
+  margin: 0;
+  padding: 0;
+  border-radius: 0 5px 5px 0;
+}
+
+.page_main3 {
+  position: relative;
+}
+.page_main3 > aside {
+  background-color: rgba(201, 241, 208, 0.6);
+  width: 350px;
+  height: 100%;
+  /* top: 0; */
+  left: -350px;
+  position: fixed;
+}
+.page_main3 > aside button {
+  background-color: rgba(201, 241, 208, 0.6);
+  display: block;
+  position: absolute;
+  top: 310px;
+  left: 350px;
+  width: 50px;
+  height: 90px;
+  margin: 0;
+  padding: 0;
+  border-radius: 0 5px 5px 0;
+}
+aside li a { color:#fff;}
+
+/* Clearfix */
+.clearfix:before,
+.clearfix:after {
+  content: " ";
+  display: table;
+}
+.clearfix:after {
+  clear: both;
+}
