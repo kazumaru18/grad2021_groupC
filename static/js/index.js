@@ -263,7 +263,7 @@ function initMap() {
     });
 }
 
-
+var endPoint;
 function Display_JS(start, end) {
     const input = document.getElementById("pac-input");
     input.value = null;
@@ -282,6 +282,7 @@ function Display_JS(start, end) {
     sp.value = '現在地';
     var ep = document.getElementById('ep');
     ep.value = end;
+    endPoint = end;
 }
 
 
@@ -547,6 +548,8 @@ function root(position){
     document.getElementById('position_view').innerHTML = geo_text;
 
     var start = position.coords.latitude+','+position.coords.longitude;
-    Display_JS(start,'柏駅');
-       
+    // Display_JS(start,'柏駅');
+
+    // initialize(start, '柏駅');
+    calcRoute(start, endPoint);
 }
