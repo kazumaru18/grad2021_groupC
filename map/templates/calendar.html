@@ -3,11 +3,9 @@
 <head>
 <html lang="ja">
     　<meta name="viewport" content="width=device-width, initial-scale=1">
-      <!-- <link href="{% static 'css/main.css' %}" rel="stylesheet" /> -->
       <link href="{% static 'css/style.css' %}" rel="stylesheet" />
-      <!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> -->
-      <!-- <script src="{% static 'js/main.js' %}"></script> -->
       <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
       <script type="text/javascript" src="https://underscorejs.org/underscore-min.js"></script>
       <script type="text/javascript" src="https://backbonejs.org/backbone-min.js"></script>
       <script type="text/javascript" src="https://momentjs.com/downloads/moment.min.js"></script>
@@ -64,8 +62,10 @@ $(function () {
             // full-calendar生成する。
             self.$el.fullCalendar({
                 
-                agenda: 'h:mm{ - h:mm}',
-                    '': 'h(:mm)t',
+                axisFormat: 'H:mm',
+	              timeFormat: {
+	              	agenda: 'H:mm{ - H:mm}'
+	              },
                 aspectRatio: 1.5,
                 droppable: true,
                 weekend: true,
@@ -73,8 +73,7 @@ $(function () {
                 eventStartEditable: true,
                 eventDurationEditable: true,
                 dragScroll: true,
-                
-
+            
                 buttonText: {
                     today:    '今日',
                     month:    '月',
@@ -82,16 +81,15 @@ $(function () {
                     day:      '日'
                 },
 
-
                 monthNames: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'],
                 monthNamesShort: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'],
                 dayNames: ['日曜日', '月曜日', '火曜日', '水曜日', '木曜日', '金曜日', '土曜日'],
                 dayNamesShort: ['日', '月', '火', '水', '木', '金', '土'],
 
                  
-                eventDrop: function (event) {
-                    console.log(event);
-                },
+                // eventDrop: function (event) {
+                //     console.log(event);
+                // },
                 
                 defaultView: 'month',
                 firstDay: 1,
@@ -108,8 +106,11 @@ $(function () {
                     center: 'title',
                     left: 'month,agendaWeek,agendaDay'
                 },
+                
                 selectable: true,
                 selectHelper: true,
+
+                //イベントの追加
                 select: function (start, end) {
                     var title = prompt('Event Title:');
                     var eventData;
@@ -119,16 +120,27 @@ $(function () {
                             start: start,
                             end: end
                         };
- 
                         self.$el.fullCalendar('renderEvent', eventData, true);
                         events.push(eventData);
                         localStorage.setItem('events', JSON.stringify(events));
                     }
                     self.$el.fullCalendar('unselect');
                 },
+
+                eventRender: function(calEvent, jsEvent, view,events) {
+                 (jsEvent).bind('dblclick', function() {
+                   if(!confirm('本当に削除しますか？')){
+                     return false;
+                    }else{
+                      $('#calendar').fullCalendar("removeEvents", calEvent._id);
+                      localStorage.removeItem('events', JSON.stringify(calEvent._id));
+                    }
+   				 });
+				},
+
                 events: function (start, end, timezone, callback) {
                     callback(jsevents);
-                }
+                },
             });
         }
     });
@@ -137,6 +149,7 @@ $(function () {
     });
     //view -> calender 
     view.render();
+    
 });
 </script>
 
