@@ -5,58 +5,46 @@
 <!-- メイン ------------------------------------>
 {% block contents%}
 <main>
-    
-<!-- メイン画像 -->
 <div id="mainBanner" class="mainImg">
     <div class="inner">
-          <img src="{% static 'images/01a.jpg' %}" alt="" width="930" height="290">
-      <div class="slogan">
-              <h2>自然との調和を目指す企業です</h2>
-              <h3>革新的な技術で世の中を動かす企業を目指します。</h3>
-          </div>
-      </div>
-  </div>
-  <!-- / メイン画像 -->
-  
-  <div id="wrapper">
-  
-      <!-- 4カラム -->
+        <img src="{% static 'images/01a.jpg' %}" alt="" width="930" height="290">
+        <div class="slogan">
+            <h2>観光推進マップ</h2>
+            <h3>初めて来た場所でも目的に合わせた店舗を検索出来るシステム</h3>
+        </div>
+    </div>
+</div>
+
+<div id="wrapper">
     <section class="gridWrapper">
-          <article class="grid">
-              <h3>自然との調和を目指す企業です</h3>
-              <p class="img"><img src="images/eyecatch1.jpg" width="220" height="300" alt=""></p>	
-              <p>ホームページサンプル株式会社では最新技術と自然との調和を目指します。革新的な技術で世の中を動かす企業を目指します。</p>
-              <p class="readmore"><a href="subpage.html">&raquo; 詳細を確認する</a></p>
+        <article class="grid">
+                <h3>店舗検索</h3>
+                <p class="img"><img src="{% static 'images/eyecatch1.jpg' %}" width="220" height="300" alt=""></p>
+                <p>情報伝達に重要なポイントである5W1Hを抽出し、目的に合った店舗を簡単検索</p>
+            </article>
+        <article class="grid">
+              <h3>周辺情報</h3>
+              <p class="img"><img src="{% static 'images/eyecatch2.jpg' %}" width="220" height="300" alt=""></p>	
+              <p>目的地、現在地周辺の店舗や施設をマップ上に素早く表示</p>
           </article>
           <article class="grid">
-              <h3>自然との調和を目指す企業です</h3>
-              <p class="img"><img src="images/eyecatch2.jpg" width="220" height="300" alt=""></p>
-              <p>ホームページサンプル株式会社では最新技術と自然との調和を目指します。革新的な技術で世の中を動かす企業を目指します。</p>
-              <p class="readmore"><a href="subpage.html">&raquo; 詳細を確認する</a></p>
+              <h3>ルート案内</h3>
+              <p class="img"><img src="{% static 'images/eyecatch3.jpg' %}" width="220" height="300" alt=""></p>
+              <p>サイト上でルートを表示することで、目的地まで向かうことが可能</p>
           </article>
           <article class="grid">
-        <h3>自然との調和を目指す企業です</h3>
-              <p class="img"><img src="images/eyecatch3.jpg" width="220" height="300" alt=""></p>
-              <p>ホームページサンプル株式会社では最新技術と自然との調和を目指します。革新的な技術で世の中を動かす企業を目指します。</p>
-              <p class="readmore"><a href="subpage.html">&raquo; 詳細を確認する</a></p>
-          </article>
-      <article class="grid">
-              <h3>自然との調和を目指す企業です</h3>
-              <p class="img"><img src="images/eyecatch4.jpg" width="220" height="300" alt=""></p>
-              <p>ホームページサンプル株式会社では最新技術と自然との調和を目指します。革新的な技術で世の中を動かす企業を目指します。</p>
-              <p class="readmore"><a href="subpage.html">&raquo; 詳細を確認する</a></p>
+        <h3>カレンダー</h3>
+              <p class="img"><img src="{% static 'images/eyecatch4.jpg' %}" width="220" height="300" alt=""></p>
+              <p>イベントや観光予定をシステム上に記載することで、行動計画をしやすくする</p>
           </article>
       </section>
-      <!-- / 4カラム -->
-        
+
       <section class="content">
-          <h3 class="heading">ホームページサンプル株式会社の取り組み</h3>
+          <h3 class="heading">サイト開発に至った目的</h3>
           <article>
-              <img src="images/sample2.jpg" width="320" height="240" alt="" class="alignleft frame">
-              <p>革新的な技術で世の中を動かす企業を目指します。ホームページサンプル株式会社では最新技術と自然との調和を目指します。革新的な技術で世の中を動かす企業を目指します。</p>
-              <p>ホームページサンプル株式会社では最新技術と自然との調和を目指します。革新的な技術で世の中を動かす企業を目指します。ホームページサンプル株式会社では最新技術と自然との調和を目指します。革新的な技術で世の中を動かす。革新的な技術で世の中を動かす。</p>
-        <p>革新的な技術で世の中を動かす企業を目指します。ホームページサンプル株式会社では最新技術と自然との調和を目指します。革新的な技術で世の中を動かす企業を目指します。</p>
-              <p>ホームページサンプル株式会社では最新技術と自然との調和を目指します。革新的な技術で世の中を動かす企業を目指します。ホームページサンプル株式会社では最新技術と自然との調和を目指します。革新的な技術で世の中を動かす。革新的な技術で世の中を動かす。</p>
+              <img src="{% static 'images/sample1.jpg' %}" width="320" height="240" alt="" class="alignleft frame">
+              <p>旅行先や出張先などの土地勘のない場所で、予定や気分に合わせた飲食店などがすぐに見つけられなくて困るのではないかという</p>
+              <p>今後、需要が高まるであろう、旅行業界における問題点を改善しようという意見が、グループ内であげられました。</p>
           </article>
       </section>
   

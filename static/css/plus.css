@@ -327,7 +327,7 @@ padding:5px 10px;
 line-height:1.4;
 z-index:100;
 color:#fff;
-background:url(images/tp2.png);
+background: rgba(128,128,128, 0.3);
 }
 
 .slogan h2{
@@ -349,7 +349,6 @@ overflow: hidden;
 .grid{
 float:left;
 background:#fff;
-border-top:5px solid #771f12;
 border-bottom:5px solid #771f12;
 box-shadow:0 0 3px #ddd;
 }
@@ -358,7 +357,7 @@ box-shadow:0 0 3px #ddd;
 padding:10px 0;
 font-weight:bold;
 color:#fff;
-background:#c30000;
+background:#696969;
 text-align:center;
 }
 
@@ -392,8 +391,8 @@ padding:5px 10px;
 margin:0 -10px 20px;
 font-size:16px;
 color:#fff;
-border-top:5px solid #771f12;
-background:#c30000;
+border-top:5px solid steelblue;
+background:#696969;
 }
 
 section.content img{
