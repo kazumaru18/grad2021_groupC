@@ -9,6 +9,12 @@
     left: -350px;
     position: fixed;
     z-index: 2;
+    text-align: center;
+    padding: 30px 0 0 0;
+}
+.side-text {
+  font-size: 22px;
+  color: black;
 }
 /* .page_main > aside ul {
     margin: 0;
@@ -16,11 +22,12 @@
     top: 50px;
     left: 114px;
     position: absolute;
-}
+} */
+
 .page_main > aside li {
     margin: 0 0 20px;
     list-style: none;
-} */
+}
 .page_main > aside button {
     background-color: rgba(241, 201, 201, 1);
     display: block;
@@ -47,6 +54,8 @@
   left: -350px;
   position: fixed;
   z-index: 4;
+  text-align: center;
+  padding: 30px 0 0 0;
 }
 .page_main2 > aside button {
   background-color: rgba(201, 207, 241, 1);
@@ -66,7 +75,7 @@
   position: relative;
 }
 .page_main3 > aside {
-  background-color: rgba(201, 241, 208, 0);
+  background-color: rgba(201, 241, 208, 0.9);
   width: 350px;
   height: 90%;
   top: 10%;
@@ -92,7 +101,7 @@ aside li a { color:#fff;}
 #side-dl {
   margin: 0 auto;
   /* margin-left: -70px; */
-  background-color: rgba(201, 241, 208, 0.9);
+  background-color: rgba(201, 241, 208, 0);
   width: 100%;
   height: 100%;
   overflow-y: scroll; 

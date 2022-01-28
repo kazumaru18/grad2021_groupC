@@ -131,11 +131,10 @@ body {
 .gu{
   margin: 0 0 0 auto;
 }
-.kara{
-  margin-right: 8em;
-}
+
 #mise {
   cursor: pointer;
+  padding-top: 10px;
 }
 #navi-end {
   cursor: pointer;
