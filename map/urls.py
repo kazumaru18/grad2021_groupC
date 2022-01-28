@@ -6,6 +6,7 @@ urlpatterns = [
     path('map/', views.MapView.as_view(), name='map'),
     path('calendar/', views.CalendarView.as_view(), name='calendar'),
     path('inquiry/', views.InquiryView.as_view(), name="inquiry"),
+    path('summary/', views.SummaryView.as_view(), name="summary"),
     path('test', views.TestView.as_view(), name='test'),
     path('test2', views.Test2View.as_view(), name='test2'),
     path('test3', views.Test3View.as_view(), name='test3'),

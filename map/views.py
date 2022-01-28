@@ -1,3 +1,4 @@
+from re import template
 from django.shortcuts import render
 from django.views import generic
 from .forms import InquiryForm
@@ -25,3 +26,5 @@ class Test6View(generic.TemplateView):
 class InquiryView(generic.FormView):
     template_name="inquiry.html"
     form_class = InquiryForm
+class SummaryView(generic.TemplateView):
+    template_name = "summary.html"
