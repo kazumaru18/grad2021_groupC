@@ -204,3 +204,6 @@ body.modal-open{
   height: 100%;
   position: fixed;
 }
+.rootbutton {
+  display: none;
+}

@@ -120,13 +120,14 @@ function initMap() {
                                 start = pos['lat'] + ',' + pos['lng'];
                                 var i = place.name + "<br>★：" + place.rating + "<br>" + place.formatted_address + "<br>"
                                     //    + "<a href='" + 'https://www.google.com/maps/search/?api=1&query=' + place.name +"'><button>GoogleMapで見る</button></a>"
-                                    + place['opening_hours']['weekday_text'][0] + '<br>'+ place['opening_hours']['weekday_text'][1] + '<br>'+ place['opening_hours']['weekday_text'][2] + '<br>'+ place['opening_hours']['weekday_text'][3] + '<br>'+ place['opening_hours']['weekday_text'][4] + '<br>'+ place['opening_hours']['weekday_text'][5] + '<br>'+ place['opening_hours']['weekday_text'][6] + '<br>'
+                                    + place['opening_hours']['weekday_text'][0] + '<br>' + place['opening_hours']['weekday_text'][1] + '<br>' + place['opening_hours']['weekday_text'][2] + '<br>' + place['opening_hours']['weekday_text'][3] + '<br>' + place['opening_hours']['weekday_text'][4] + '<br>' + place['opening_hours']['weekday_text'][5] + '<br>' + place['opening_hours']['weekday_text'][6] + '<br>'
                                     ;
                                 var dom = document.createElement("div");
                                 dom.innerHTML = i + "<button id='navi'>ナビ</button>";
                                 dom.addEventListener("mousemove", () => {
                                     $('#navi').on('click', function () {
                                         Display_JS(start, place.formatted_address);
+                                        document.getElementById("testroot").click();
                                     });
                                 });
                                 info = new google.maps.InfoWindow({
@@ -280,6 +281,7 @@ function initMap() {
         directionsDisplay.setMap(null);
         directionsDisplay.setPanel(null);
         directionsDisplay.setDirections(null);
+        gpsEmd();
         $('#navi-end').hide();
     });
 }
@@ -366,28 +368,29 @@ function calcRoute(s, e) {
 }
 
 
+var watch_id = 0;
 document.addEventListener("DOMContentLoaded", function () {
     // 監視識別ID
-    var watch_id = 0;
+    watch_id = 0;
     // ボタンにclickイベントのリスナーをセット
     // var button = document.querySelector('button');
-    var button = document.getElementById('testbutton');
-    button.addEventListener("click", function () {
-        if (watch_id > 0) {
-            // リアルタイム監視を停止
-            window.navigator.geolocation.clearWatch(watch_id);
-            // 監視識別IDに0をセット
-            watch_id = 0;
-            // ボタン表記を変更
-            button.textContent = " 位置情報の取得開始 ";
-        } else {
-            // リアルタイム監視を開始
-            // watch_id = window.navigator.geolocation.watchPosition(successCallback);
-            watch_id = window.navigator.geolocation.watchPosition(root);
-            // ボタン表記を変更
-            button.textContent = " 位置情報の取得停止 ";
-        };
-    }, false);
+    // var button = document.getElementById('testbutton');
+    // button.addEventListener("click", function () {
+    //     if (watch_id > 0) {
+    //         // リアルタイム監視を停止
+    //         window.navigator.geolocation.clearWatch(watch_id);
+    //         // 監視識別IDに0をセット
+    //         watch_id = 0;
+    //         // ボタン表記を変更
+    //         button.textContent = " 位置情報の取得開始 ";
+    //     } else {
+    //         // リアルタイム監視を開始
+    //         // watch_id = window.navigator.geolocation.watchPosition(successCallback);
+    //         watch_id = window.navigator.geolocation.watchPosition(root);
+    //         // ボタン表記を変更
+    //         button.textContent = " 位置情報の取得停止 ";
+    //     };
+    // }, false);
 }, false);
 
 var num = 0;
@@ -566,7 +569,7 @@ function root(position) {
 
     geo_text += "取得回数:" + (++num) + "\n";
 
-    document.getElementById('position_view').innerHTML = geo_text;
+    // document.getElementById('position_view').innerHTML = geo_text;
 
     var start = position.coords.latitude + ',' + position.coords.longitude;
     // Display_JS(start,'柏駅');
@@ -601,4 +604,17 @@ function testTime(place) {
             }
         }
     });
+}
+
+function gpsStart() {
+    if (watch_id <= 0) {
+        watch_id = window.navigator.geolocation.watchPosition(root);
+    }
+}
+
+function gpsEmd() {
+    if (watch_id > 0) {
+        window.navigator.geolocation.clearWatch(watch_id);
+        watch_id = 0;
+    }
 }
