@@ -69,6 +69,8 @@ function initMap() {
     // Listen for the event fired when the user selects a prediction and retrieve
     // more details for that place.
     searchBox.addListener("places_changed", () => {
+        var element = document.getElementById('openFlag');
+        var flag = element.checked;
         const places = searchBox.getPlaces();
         if (places.length == 0) {
             return;
@@ -102,42 +104,10 @@ function initMap() {
                 placeId: place['place_id'],
                 // fields: ['name', 'formatted_address', 'geometry', 'url']
             }, function (place, status) {
-                // if (status == google.maps.places.PlacesServiceStatus.OK) {
-                if (place['opening_hours']) {
-                    if (place['opening_hours']['weekday_text']) {
-                        // console.log(place['opening_hours']['weekday_text']);
-                        var search;
-                        // Create a marker for each place.
-                        search = new google.maps.Marker({
-                            map,
-                            title: place.name,
-                            position: place.geometry.location,
-                        }),
-                            search.addListener('click', function () {
-                                if (info != null) {
-                                    info.close();
-                                }
-                                start = pos['lat'] + ',' + pos['lng'];
-                                var i = place.name + "<br>★：" + place.rating + "<br>" + place.formatted_address + "<br>"
-                                    //    + "<a href='" + 'https://www.google.com/maps/search/?api=1&query=' + place.name +"'><button>GoogleMapで見る</button></a>"
-                                    + place['opening_hours']['weekday_text'][0] + '<br>' + place['opening_hours']['weekday_text'][1] + '<br>' + place['opening_hours']['weekday_text'][2] + '<br>' + place['opening_hours']['weekday_text'][3] + '<br>' + place['opening_hours']['weekday_text'][4] + '<br>' + place['opening_hours']['weekday_text'][5] + '<br>' + place['opening_hours']['weekday_text'][6] + '<br>'
-                                    ;
-                                var dom = document.createElement("div");
-                                dom.innerHTML = i + "<button id='navi'>ナビ</button>";
-                                dom.addEventListener("mousemove", () => {
-                                    $('#navi').on('click', function () {
-                                        Display_JS(start, place.formatted_address);
-                                        document.getElementById("testroot").click();
-                                    });
-                                });
-                                info = new google.maps.InfoWindow({
-                                    position: place.geometry.location,
-                                    content: dom
-                                });
-                                info.open(map);
-                            })
-                        markers.push(search);
-                    }
+                if (flag) {
+                    openMarker(place);
+                } else {
+                    marker(place);
                 }
             });
 
@@ -617,4 +587,79 @@ function gpsEmd() {
         window.navigator.geolocation.clearWatch(watch_id);
         watch_id = 0;
     }
+}
+
+function openMarker(place) {
+    // console.log('open');
+    if (place['opening_hours']) {
+        if (place['opening_hours']['weekday_text']) {
+            // console.log(place['opening_hours']['weekday_text']);
+            var search;
+            // Create a marker for each place.
+            search = new google.maps.Marker({
+                map,
+                title: place.name,
+                position: place.geometry.location,
+            }),
+                search.addListener('click', function () {
+                    if (info != null) {
+                        info.close();
+                    }
+                    start = pos['lat'] + ',' + pos['lng'];
+                    var i = place.name + "<br>★：" + place.rating + "<br>" + place.formatted_address + "<br>"
+                        //    + "<a href='" + 'https://www.google.com/maps/search/?api=1&query=' + place.name +"'><button>GoogleMapで見る</button></a>"
+                        + place['opening_hours']['weekday_text'][0] + '<br>' + place['opening_hours']['weekday_text'][1] + '<br>' + place['opening_hours']['weekday_text'][2] + '<br>' + place['opening_hours']['weekday_text'][3] + '<br>' + place['opening_hours']['weekday_text'][4] + '<br>' + place['opening_hours']['weekday_text'][5] + '<br>' + place['opening_hours']['weekday_text'][6] + '<br>'
+                        ;
+                    var dom = document.createElement("div");
+                    dom.innerHTML = i + "<button id='navi'>ナビ</button>";
+                    dom.addEventListener("mousemove", () => {
+                        $('#navi').on('click', function () {
+                            Display_JS(start, place.formatted_address);
+                            document.getElementById("testroot").click();
+                        });
+                    });
+                    info = new google.maps.InfoWindow({
+                        position: place.geometry.location,
+                        content: dom
+                    });
+                    info.open(map);
+                })
+            markers.push(search);
+        }
+    }
+}
+
+function marker(place) {
+    // console.log("qwp");
+    var search;
+    // Create a marker for each place.
+    search = new google.maps.Marker({
+        map,
+        title: place.name,
+        position: place.geometry.location,
+    }),
+        search.addListener('click', function () {
+            if (info != null) {
+                info.close();
+            }
+            start = pos['lat'] + ',' + pos['lng'];
+            var i = place.name + "<br>★：" + place.rating + "<br>" + place.formatted_address + "<br>"
+                //    + "<a href='" + 'https://www.google.com/maps/search/?api=1&query=' + place.name +"'><button>GoogleMapで見る</button></a>"
+                + place['opening_hours']['weekday_text'][0] + '<br>' + place['opening_hours']['weekday_text'][1] + '<br>' + place['opening_hours']['weekday_text'][2] + '<br>' + place['opening_hours']['weekday_text'][3] + '<br>' + place['opening_hours']['weekday_text'][4] + '<br>' + place['opening_hours']['weekday_text'][5] + '<br>' + place['opening_hours']['weekday_text'][6] + '<br>'
+                ;
+            var dom = document.createElement("div");
+            dom.innerHTML = i + "<button id='navi'>ナビ</button>";
+            dom.addEventListener("mousemove", () => {
+                $('#navi').on('click', function () {
+                    Display_JS(start, place.formatted_address);
+                    document.getElementById("testroot").click();
+                });
+            });
+            info = new google.maps.InfoWindow({
+                position: place.geometry.location,
+                content: dom
+            });
+            info.open(map);
+        })
+    markers.push(search);
 }
