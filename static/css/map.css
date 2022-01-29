@@ -1,14 +1,16 @@
 /* [START maps_places_searchbox] */
 /* Always set the map height explicitly to define the size of the div
  * element that contains the map. */
-#map {
-  height: 103%;
+ #map {
+  height: 90%;
+  z-index: 0;
+  /* position: absolute; */
 }
 
 /* Optional: Makes the sample page fill the window. */
 html,
 body {
-  height: 92%;
+  height: 100%;
   margin: 0;
   padding: 0;
 }
@@ -129,11 +131,10 @@ body {
 .gu{
   margin: 0 0 0 auto;
 }
-.kara{
-  margin-right: 8em;
-}
+
 #mise {
   cursor: pointer;
+  padding-top: 10px;
 }
 #navi-end {
   cursor: pointer;

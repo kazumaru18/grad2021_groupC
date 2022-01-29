@@ -7,206 +7,164 @@
 <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
 <link href="{% static 'css/map.css' %}" rel="stylesheet" />
 <link href="{% static 'css/style.css' %}" rel="stylesheet" />
-<script src="{% static 'js/index.js' %}"></script>
+<script src="{% static 'js/map.js' %}"></script>
 <script src="{% static 'js/apikey.js' %}"></script>
 <!-- <script src="{% static 'js/index.js' %} defer"></script> -->
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<link href="{% static 'css/side.css' %}" rel="stylesheet" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+<script src="{% static 'js/side.js' %}"></script>
 
-<input id="pac-input" class="controls" type="text" placeholder="Google マップを検索する" />
-<div id="category">
-  <ul>
-    <li class="kara"><a href="http://localhost:3000/">音声検索</a></li>
-    <li><a id="mise">飲食店</a></li>
-    <li><a id="cate1" data-value="atm">ATM</a></li>
-    <li><a id="cate2" data-value="スーパー">スーパー</a></li>
-    <li><a id="cate3" data-value="ホテル">ホテル</a></li>
-    <li><a id="cate4" data-value="病院">病院</a></li>
-    <li><a id="navi-end" style="display: none; margin-right: 8em;">ナビ終了</a></li>
-    <li><a id="cm" data-value="マップclear">マップclear</a></li>
-    <a href="http://webservice.recruit.co.jp/" class="gu"><img src="http://webservice.recruit.co.jp/banner/hotpepper-s.gif" alt="ホットペッパー Webサービス" width="135" height="17" border="0" title="ホットペッパー Webサービス"></a>
-  </ul>
-</div>
+
+<input id="pac-input" class="controls" type="text" placeholder="Google マップを検索する" style="margin-top: 13px;"/>
 
 <div id="map"></div>
 
-<!-- <button onclick="time()">start</button>
-<button onclick="clearTime()">stop</button>
-<button onclick="c()">clear</button>
-<button onclick="test()">スタート</button>
-<button onclick="clear()">クリア</button> -->
-
-<p><button type="button" id="testbutton"> 位置情報の取得開始 </button></p>
-
-<script>
-  $(function(){
-    // モーダル開く
-    $(".js-overlay-modal-open").on("click", function(){
-        $(".overlay-modal").fadeIn('normal');
-        $("body").addClass('modal-open');
-    });
-
-    // モーダル閉じる
-    $(".js-overlay-modal-close").on("click", function(){
-        $(".overlay-modal").fadeOut('normal');
-        $("body").removeClass('modal-open');
-    });
-});
-</script>
-
-<p>
-  <label for="mode">モード：
-    <select id="mode" name="mode">
-      <option value="driving" selected>自動車</option>
-      <option value="bicycling">自転車</option>
-      <!-- <option value="transit">電車</option> -->
-      <option value="walking">徒歩</option>
-    </select>
-  </label>
-</p>
-
-<p>
-  <label for="highways">高速道路：
-    <select id="highways" name="highways">
-      <option value="yes" selected>使用する</option>
-      <option value="no">使用しない</option>
-    </select>
-  </label>
-</p>
-
-<div class="searchbox" style="display: none;" id="searchbox">
-  <p><span class="bold">住所･地名から検索</span></p>
-  <p>start:<input type="text" name="sp" id="sp"></p>
-  <p>End:<input type="text" name="ep" id="ep"></p>
-  <input type="submit" name="regist" value="検索" id="searchButton" onclick="se()">
-</div>
-
-<div class="overlay__conts">
-  <p class="btn-overlay btn-pink">
-      <a href="javascript:void(0);" class="js-overlay-modal-open">飲食店詳細検索</a>
-  </p>
-  <div class="overlay-modal js-overlay-modal">
-    <div class="overlay-modal__overlay"></div>
-      <div class="overlay-modal__body">
-          <div class="overlay-modal__inner">
-              <a href="javascript:void(0);" class="overlay-modal__close js-overlay-modal-close"><i class="fas fa-times"></i></a>
-              <p>
-                  <label for="range">検索範囲：<select id="range" name="range">
-                      <option value="1">300m</option>
-                      <option value="2">500m</option>
-                      <option value="3" selected>1000m</option>
-                      <option value="4">2000m</option>
-                      <option value="5">3000m</option>
-                  </select></label>
-                  <br>
-                  <!-- <label for="genre">ジャンル：<select id="genre" name="genre">
-                      <option value="" selected>指定しない</option>
-                      <option value="G001">居酒屋</option>
-                      <option value="G002">ダイニングバー・バル</option>
-                      <option value="G003">創作料理</option>
-                      <option value="G004">和食</option>
-                      <option value="G005">洋食</option>
-                      <option value="G006">イタリアン・フレンチ</option>
-                      <option value="G007">中華</option>
-                      <option value="G008">焼肉・ホルモン</option>
-                      <option value="G017">韓国料理</option>
-                      <option value="G009">アジア・エスニック料理</option>
-                      <option value="G010">各国料理</option>
-                      <option value="G011">カラオケ・パーティ</option>
-                      <option value="G012">バー・カクテル</option>
-                      <option value="G013">ラーメン</option>
-                      <option value="G016">お好み焼き・もんじゃ</option>
-                      <option value="G014">カフェ・スイーツ</option>
-                      <option value="G015">その他グルメ</option>
-                  </select></label> -->
-                  <!-- <br> -->
-                  
-                  <!-- <label for="private_room">個室：<select id="private_room" name="private_room">
-                      <option value="" selected>指定しない</option>
-                      <option value="">あり</option>
-                  </select></label>
-                  <br>
-                  <label for="card">カード支払い：<select id="card" name="card">
-                      <option value="" selected>指定しない</option>
-                      <option value="">可</option>
-                  </select></label>
-                  <br>
-                  <label for="lunch">ランチ：<select id="lunch" name="lunch">
-                      <option value="" selected>指定しない</option>
-                      <option value="">あり</option>
-                  </select></label>
-                  <br>
-                  <label for="wifi">WiFi：<select id="wifi" name="wifi">
-                      <option value="" selected>指定しない</option>
-                      <option value="">あり</option>
-                  </select></label> -->
-                  <input type="button" class="js-overlay-modal-close" onclick="syousai()" value="検索">
-
-                  <form name="ca">
-                    <label><input type="checkbox" id="card" name="syousai">
-                      カード支払い</label>
-                    
-                    <label for="lunch"><input type="checkbox" id="lunch" name="syousai">
-                      ランチ</label>
-                    
-                    <label for="wifi"><input type="checkbox" id="wifi" name="syousai">
-                      WiFi</label>
-                    
-                    <label for="private_room"><input type="checkbox" id="private_room" name="syousai">
-                      個室</label>
-                    
-                    <label for="midnight_meal"><input type="checkbox" id="midnight_meal" name="syousai">
-                      23時以降食事OK</label>
-                    
-                    <label for="pet"><input type="checkbox" id="pet" name="syousai">
-                      ペット可</label>
-                    
-                    <label for="cocktail"><input type="checkbox" id="cocktail" name="syousai">
-                      カクテル充実</label>
-                    
-                    <label for="shochu"><input type="checkbox" id="shochu" name="syousai">
-                      焼酎充実</label>
-                    
-                    <label for="sake"><input type="checkbox" id="sake" name="syousai">
-                      日本酒充実</label>
-                    
-                    <label for="wine"><input type="checkbox" id="wine" name="syousai">
-                      ワイン充実</label>
-                    
-                    <label for="parking"><input type="checkbox" id="parking" name="syousai">
-                      駐車場あり</label>
-                    
-                    <label for="barrier_free"><input type="checkbox" id="barrier_free" name="syousai">
-                      バリアフリー</label>
-                    
-                    <label for="free_food"><input type="checkbox" id="free_food" name="syousai">
-                      食べ放題</label>
-                    
-                    <label for="free_drink"><input type="checkbox" id="free_drink" name="syousai">
-                      飲み放題</label>
-                    
-                    <label for="child"><input type="checkbox" id="child" name="syousai">
-                      お子様連れOK</label>
-                    
-                    <label for="non_smoking"><input type="checkbox" id="non_smoking" name="syousai">
-                      禁煙席</label>
-                    
-                    <label for="tatami"><input type="checkbox" id="tatami" name="syousai">
-                      座敷あり</label>
-                    
-                    <label for="course"><input type="checkbox" id="course" name="syousai">
-                      コースあり</label>
-                    
-                    <label for="keyword"><input type="text" id="keyword" name="keyword">
-                      キーワード</label>
-                </form>
-              </p>
+<div class="page_main">
+  <aside>
+    <div class="overlay__conts">
+      <p class="btn-overlay btn-pink">
+          <a href="javascript:void(0);" class="js-overlay-modal-open" style="font-size: 22px;">飲食店詳細検索</a>
+      </p>
+      <div class="overlay-modal js-overlay-modal">
+        <div class="overlay-modal__overlay"></div>
+          <div class="overlay-modal__body">
+              <div class="overlay-modal__inner">
+                  <a href="javascript:void(0);" class="overlay-modal__close js-overlay-modal-close"><i class="fas fa-times"></i></a>
+                  <p>
+                      <label for="range">検索範囲：<select id="range" name="range">
+                          <option value="1">300m</option>
+                          <option value="2">500m</option>
+                          <option value="3" selected>1000m</option>
+                          <option value="4">2000m</option>
+                          <option value="5">3000m</option>
+                      </select></label>
+                      <br>
+                      <input type="button" class="js-overlay-modal-close" onclick="syousai()" value="検索">
+    
+                      <form name="ca">
+                        <label><input type="checkbox" id="card" name="syousai">
+                          カード支払い</label>
+                        
+                        <label for="lunch"><input type="checkbox" id="lunch" name="syousai">
+                          ランチ</label>
+                        
+                        <label for="wifi"><input type="checkbox" id="wifi" name="syousai">
+                          WiFi</label>
+                        
+                        <label for="private_room"><input type="checkbox" id="private_room" name="syousai">
+                          個室</label>
+                        
+                        <label for="midnight_meal"><input type="checkbox" id="midnight_meal" name="syousai">
+                          23時以降食事OK</label>
+                        
+                        <label for="pet"><input type="checkbox" id="pet" name="syousai">
+                          ペット可</label>
+                        
+                        <label for="cocktail"><input type="checkbox" id="cocktail" name="syousai">
+                          カクテル充実</label>
+                        
+                        <label for="shochu"><input type="checkbox" id="shochu" name="syousai">
+                          焼酎充実</label>
+                        
+                        <label for="sake"><input type="checkbox" id="sake" name="syousai">
+                          日本酒充実</label>
+                        
+                        <label for="wine"><input type="checkbox" id="wine" name="syousai">
+                          ワイン充実</label>
+                        
+                        <label for="parking"><input type="checkbox" id="parking" name="syousai">
+                          駐車場あり</label>
+                        
+                        <label for="barrier_free"><input type="checkbox" id="barrier_free" name="syousai">
+                          バリアフリー</label>
+                        
+                        <label for="free_food"><input type="checkbox" id="free_food" name="syousai">
+                          食べ放題</label>
+                        
+                        <label for="free_drink"><input type="checkbox" id="free_drink" name="syousai">
+                          飲み放題</label>
+                        
+                        <label for="child"><input type="checkbox" id="child" name="syousai">
+                          お子様連れOK</label>
+                        
+                        <label for="non_smoking"><input type="checkbox" id="non_smoking" name="syousai">
+                          禁煙席</label>
+                        
+                        <label for="tatami"><input type="checkbox" id="tatami" name="syousai">
+                          座敷あり</label>
+                        
+                        <label for="course"><input type="checkbox" id="course" name="syousai">
+                          コースあり</label>
+                        
+                        <label for="keyword"><input type="text" id="keyword" name="keyword">
+                          キーワード</label>
+                    </form>
+                  </p>
+              </div>
           </div>
       </div>
-  </div>
+    </div>
+    <li><a class="side-text" id="mise">飲食店</a></li>
+    <li><a class="side-text" id="cate1" data-value="atm">ATM</a></li>
+    <li><a class="side-text" id="cate2" data-value="スーパー">スーパー</a></li>
+    <li><a class="side-text" id="cate3" data-value="ホテル">ホテル</a></li>
+    <li><a class="side-text" id="cate4" data-value="病院">病院</a></li>
+    
+    <a href="http://webservice.recruit.co.jp/" class="gu"><img src="http://webservice.recruit.co.jp/banner/hotpepper-s.gif" alt="ホットペッパー Webサービス" width="135" height="17" border="0" title="ホットペッパー Webサービス"></a>
+    <button><img src="{% static 'images/icon.png' %}" width="30px" height="auto"></button>
+  </aside>
 </div>
 
-<div id="directionsPanel"></div>
-<pre id="position_view"></pre>
+<div class="page_main2">
+  <aside>
+    
+    <li><a class="side-text" id="cm" data-value="マップclear">マップclear</a></li>
+    <br>
+    <li><a class="side-text" href="http://localhost:3000/">音声検索</a></li>
+    <br>
+    <p>
+      <label for="mode">モード：
+        <select id="mode" name="mode">
+          <option value="driving" selected>自動車</option>
+          <option value="bicycling">自転車</option>
+          <!-- <option value="transit">電車</option> -->
+          <option value="walking">徒歩</option>
+        </select>
+      </label>
+    </p>
+    
+    <p>
+      <label for="highways">高速道路：
+        <select id="highways" name="highways">
+          <option value="yes" selected>使用する</option>
+          <option value="no">使用しない</option>
+        </select>
+      </label>
+    </p>
+    <br>
+    <div class="searchbox" style="display: none;" id="searchbox">
+      <p><span class="bold">住所･地名から検索</span></p>
+      <p>開始：<input type="text" name="sp" id="sp"></p>
+      <p>終了：<input type="text" name="ep" id="ep"></p>
+      <input type="submit" name="regist" value="検索" id="searchButton" onclick="se()">
+      <br><br><br>
+      <li><a class="side-text" id="navi-end" style="display: none; margin: 10px 0 0 0;">ナビ終了</a></li>
+    </div>
+    <button><img src="{% static 'images/icon.png' %}" width="30px" height="auto"></button>
+  </aside>
+</div>
+
+<div class="page_main3">
+  <aside>
+    <dl id="side-dl">
+      <div id="directionsPanel"></div>
+      <pre id="position_view"></pre>
+    </dl>
+    <button><img src="{% static 'images/icon.png' %}" width="30px" height="auto"></button>
+  </aside>
+</div>
 
 <script>
   gmap();

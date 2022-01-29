@@ -10,5 +10,3 @@ class CalendarView(generic.TemplateView):
   template_name="calendar.html"
 class DescriveView(generic.TemplateView):
   template_name="describe.html"
-class TestView(generic.TemplateView):
-  template_name="test.html"

@@ -1,13 +1,189 @@
-{% extends 'base.html' %}
-{% block title %}予定表{% endblock%}
 {% load static %}
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <title>予定表</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="{% static 'css/style.css' %}" rel="stylesheet" />
+  <link href="{% static 'css/plus.css' %}" rel="stylesheet" />
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+  <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+  <script type="text/javascript" src="https://underscorejs.org/underscore-min.js"></script>
+  <script type="text/javascript" src="https://backbonejs.org/backbone-min.js"></script>
+  <script type="text/javascript" src="https://momentjs.com/downloads/moment.min.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.1.1/fullcalendar.min.js"></script>
+  <link href="{% static 'css/map.css' %}" rel="stylesheet" />
+  <style id="compiled-css" type="text/css">
+    #calendar {
+      max-width: 1020px;
+      width: 95%;
+      margin: 0 auto;
+      padding-top: 10px;
+    }
+  </style>
+</head>
 
-{% block contents%}
-
-<link href="{% static 'css/calendar.css' %}" rel="stylesheet" />
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="{% static 'js/calendar.js' %}"></script>
-
+<body>
+<header>
+  <h1>
+    <a href="{% url 'index' %}">観光推進MAP</a>
+  </h1>
+  <section>
+    <div class="btn-trigger" id="btn03">
+      <div class="icon">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+  </section>
+  <nav id="sm" class="pc-nav">
+    <ul id="ham_nav">
+      <li><a href="{% url 'describe' %}">システム概要</a></li>
+      <li><a href="{% url 'map' %}">マップ</a></li>
+      <li><a href="{% url 'calendar' %}">予定表</a></li>
+    </ul>
+  </nav>
+</header>
+<script>
+  $("#btn03").on('click', function () {
+    $('.btn-trigger').toggleClass('.btn-trigger');
+    $('.pc-nav').slideToggle();
+  });
+  $(function () {
+    $('.btn-trigger').on('click', function () {
+      $(this).toggleClass('active');
+      return false;
+    });
+  });
+</script>
+    
 <div id='calendar'></div>
+    
+<footer id="footer">
+  <section class="primary">
+    <div class="footer">
+      <p class="logo"><a href="https://github.com/kazumaru18/grad2021_groupC">GroupC</a></p>
+      <p class="address">
+        〒277-0842 千葉県柏市末広町10-1<br>
+        TEL : 04-7147-1008　/　二号館 : 04-7167-2601
+      </p>
+      <div class="navi-row">
+        <ul class="navi">
+          <li><a href="{% url 'index' %}">ホーム</a></li>
+          <li><a href="{% url 'describe' %}">システム概要</a></li>
+          <li><a href="{% url 'map' %}">マップ</a></li>
+          <li><a href="#">お問い合わせ</a></li>
+        </ul>
+        <ul class="sns-navi">
+          <li><a href="https://twitter.com/ohara_kashiwa"><i class="fa fa-twitter"></i></a></li>
+          <li><a href="{% url 'map' %}"><i class="fa fa-map"></i></a></li>
+          <li><a href="https://github.com/kazumaru18/grad2021_groupC"><i class="fa fa-github"></i></a></li>
+          <li><a href="{% url 'index' %}"><i class="fa fa-home"></i></a></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+  <section class="secondary">
+    <div class="footer">
+      <p class="copyright">Copyright 2022 GroupC.</p>
+    </div>
+  </section>
+</footer>
+<script>
+$(function () {
+    $("<link rel='stylesheet' type='text/css' href='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.1.1/fullcalendar.css' />").appendTo("head");
+    //　Backbone.js
+    var Events = Backbone.Collection.extend({});//データ管理
+    var EventsView = Backbone.View.extend({//表示管理
+        // content id 取得
+        el: document.getElementById("content"),
+ 
+        render: function () {
+            var self = this;
+            var events = JSON.parse(localStorage.getItem('events'));//locastorageに追加(上書き)
+            var events = new Events(events);
+            var jsevents = events.toJSON();//時間の参照
+ 
+            // full-calendar生成する。
+            self.$el.fullCalendar({
+                
+                agenda: 'h:mm{ - h:mm}',
+                    '': 'h(:mm)t',
+                aspectRatio: 1.5,
+                droppable: true,
+                weekend: true,
+                editable: true,
+                eventStartEditable: true,
+                eventDurationEditable: true,
+                dragScroll: true,
+                
 
-{% endblock %}
+                buttonText: {
+                    today:    '今日',
+                    month:    '月',
+                    week:     '週',
+                    day:      '日'
+                },
+
+
+                monthNames: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'],
+                monthNamesShort: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'],
+                dayNames: ['日曜日', '月曜日', '火曜日', '水曜日', '木曜日', '金曜日', '土曜日'],
+                dayNamesShort: ['日', '月', '火', '水', '木', '金', '土'],
+
+                 
+                eventDrop: function (event) {
+                    console.log(event);
+                },
+                
+                defaultView: 'month',
+                firstDay: 1,
+                handleWindowResize: true,
+                allDayDefault: true,
+                firstHour: 7,
+                columnFormat: {
+                    month: 'ddd',
+                    week: 'ddd',
+                    day: 'dddd, MMM '
+                },
+                header: {
+                    right: 'prev,next',
+                    center: 'title',
+                    left: 'month,agendaWeek,agendaDay'
+                },
+                selectable: true,
+                selectHelper: true,
+                select: function (start, end) {
+                    var title = prompt('Event Title:');
+                    var eventData;
+                    if (title) {
+                        eventData = {
+                            title: title,
+                            start: start,
+                            end: end
+                        };
+ 
+                        self.$el.fullCalendar('renderEvent', eventData, true);
+                        events.push(eventData);
+                        localStorage.setItem('events', JSON.stringify(events));
+                    }
+                    self.$el.fullCalendar('unselect');
+                },
+                events: function (start, end, timezone, callback) {
+                    callback(jsevents);
+                }
+            });
+        }
+    });
+    var view = new EventsView({
+        el: '#calendar'
+    });
+    //view -> calender 
+    view.render();
+});
+</script>
+
+</body>
+</html>
+
