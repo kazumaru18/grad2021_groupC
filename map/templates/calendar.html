@@ -148,7 +148,7 @@ $(function () {
         selectable: true,
         selectHelper: true,
         select: function (start, end) {
-          var title = prompt('Event Title:');
+          var title = prompt('予定を入力：');
           var eventData;
           if (title) {
             eventData = {
@@ -161,6 +161,7 @@ $(function () {
             localStorage.setItem('events', JSON.stringify(events));
           }
           self.$el.fullCalendar('unselect');
+          location.reload(true);
         },
         eventRender: function (calEvent, jsEvent, view, events) {
           (jsEvent).bind('dblclick', function () {
