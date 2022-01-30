@@ -5,6 +5,7 @@
 <!-- メイン ------------------------------------>
 {% block contents%}
 <main>
+<h1 class="summary_title" data-en="Summary"><span>システム概要</span></h1>
 <div id="mainBanner" class="mainImg">
     <div class="inner">
         <img src="{% static 'images/01a.jpg' %}" alt="" width="930" height="290">
@@ -19,23 +20,23 @@
     <section class="gridWrapper">
         <article class="grid">
                 <h3>店舗検索</h3>
-                <p class="img"><img src="{% static 'images/eyecatch1.jpg' %}" width="220" height="300" alt=""></p>
-                <p>情報伝達に重要なポイントである5W1Hを抽出し、目的に合った店舗を簡単検索</p>
+                <p class="img"><img src="{% static 'images/eyecatch1_.jpg' %}" width="220" height="300" alt=""></p>
+                <p>場所や時間帯そして人数を指定して検索を行うことで貴方の目的に合う店舗を<br>マップに表示</p>
             </article>
         <article class="grid">
               <h3>周辺情報</h3>
-              <p class="img"><img src="{% static 'images/eyecatch2.jpg' %}" width="220" height="300" alt=""></p>	
-              <p>目的地、現在地周辺の店舗や施設をマップ上に素早く表示</p>
+              <p class="img"><img src="{% static 'images/eyecatch2_.jpg' %}" width="220" height="300" alt=""></p>	
+              <p>各カテゴリーごとの現在地周辺の店舗やイベントなどを表示し<br>知らなかった１面を発見</p>
           </article>
           <article class="grid">
               <h3>ルート案内</h3>
-              <p class="img"><img src="{% static 'images/eyecatch3.jpg' %}" width="220" height="300" alt=""></p>
-              <p>サイト上でルートを表示することで、目的地まで向かうことが可能</p>
+              <p class="img"><img src="{% static 'images/eyecatch3_.jpg' %}" width="220" height="300" alt=""></p>
+              <p>マップ上で目的地までのルートと時間を表示し<br>素早くそしてスムーズな行動を可能にする</p>
           </article>
           <article class="grid">
         <h3>カレンダー</h3>
-              <p class="img"><img src="{% static 'images/eyecatch4.jpg' %}" width="220" height="300" alt=""></p>
-              <p>イベントや観光予定をシステム上に記載することで、行動計画をしやすくする</p>
+              <p class="img"><img src="{% static 'images/eyecatch4_.jpg' %}" width="220" height="300" alt=""></p>
+              <p>イベントや観光予定をカレンダー上に時間単位で記録し、貴方の日程計画の一助となる</p>
           </article>
       </section>
 
@@ -43,13 +44,14 @@
           <h3 class="heading">サイト開発に至った目的</h3>
           <article>
               <img src="{% static 'images/sample1.jpg' %}" width="320" height="240" alt="" class="alignleft frame">
-              <p>旅行先や出張先などの土地勘のない場所で、予定や気分に合わせた飲食店などがすぐに見つけられなくて困るのではないかという</p>
-              <p>今後、需要が高まるであろう、旅行業界における問題点を改善しようという意見が、グループ内であげられました。</p>
+              <p><font size="4">旅行先や出張先などの土地勘のない場所で、予定や気分に合わせた飲食店などがすぐに見つけられなくて困るのではないかという</font></p>
+              <p><font size="4">今後需要が高まるであろう、旅行業界における問題点を改善しようという意見が、チーム内であげられました。</font></p>
+              <p><font size="4">このシステムは、情報伝達に重要なポイントである「５W１H」を活用して詳細な検索を行うことが出来</font></p>
+              <p><font size="4">さらに音声認識の要望文から５W１Hにあてはまる単語を抽出して検索することが可能です</font></p>
           </article>
       </section>
   
   </div>
-  <!-- / WRAPPER -->
     <div class="bg_pattern Paper_v2"></div>
 </main>
 {% endblock %}

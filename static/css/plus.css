@@ -499,3 +499,32 @@ margin:3px 0 10px 10px;
 @media only screen and (max-width:480px){
 	#mainBanner h2,#mainBanner h3{font-size:75%;}
 }
+
+.summary_title {
+  margin:0 auto;
+	position: relative;
+	padding-top: 30px;
+	border-bottom: 1px solid rgba(5,62,98,1);
+  width: 62%;
+}
+
+.summary_title span {
+	position: relative;
+	z-index: 2;
+}
+
+.summary_title::before {
+	content: attr(data-en);
+	position: absolute;
+	top: 0px;
+	left: 0;
+	color: rgba(5,62,98,0.2);
+	font-size: 40px;
+	text-transform: uppercase;
+	z-index: 1;
+}
+@media screen and (max-width:768px) {
+  .summary_title{
+  width: 100%;
+}
+}

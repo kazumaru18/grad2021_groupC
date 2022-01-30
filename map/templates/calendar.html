@@ -42,14 +42,26 @@ body {
 .cal_block{
   margin-top: 30px;
 }
-.cal_title{
-  background: #696969; /*背景色*/
-  padding: 10px;/*文字周りの余白*/
-  color: white;/*文字を白に*/
-  border-radius: 0.5em;/*角の丸み*/
-  width: 25%;
-  margin: 0 auto;
-  text-align: center;
+.cal_title {
+	position: relative;
+	padding-top: 30px;
+	border-bottom: 1px solid rgba(5,62,98,1);
+}
+
+.cal_title span {
+	position: relative;
+	z-index: 2;
+}
+
+.cal_title::before {
+	content: attr(data-en);
+	position: absolute;
+	top: 0px;
+	left: 0;
+	color: rgba(5,62,98,0.2);
+	font-size: 40px;
+	text-transform: uppercase;
+	z-index: 1;
 }
 @media screen and (max-width:768px) {
   body {
@@ -137,7 +149,7 @@ body {
   })();	
 </script>
 <div class="cal_block">
-  <h1 class="cal_title">予定表</h1>
+  <h1 class="cal_title" data-en="Schedule"><span>予定表</span></h1>
   <div id='calendar'></div>
 </div>
 <div class="bg_pattern Paper_v2"></div>
