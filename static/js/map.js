@@ -58,6 +58,10 @@ function initMap() {
     // URLSearchParamsオブジェクトを取得
     var params = url.searchParams;
     const input = document.getElementById("pac-input");
+    // var str = params.get('q');
+    // var data = str.split(/[,]/);
+    // console.log(data);
+
     input.value = params.get('q');
     const searchBox = new google.maps.places.SearchBox(input);
     map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
@@ -86,7 +90,7 @@ function initMap() {
         // For each place, get the icon, name and location.
         const bounds = new google.maps.LatLngBounds();
         places.forEach((place) => {
-            // testTime(place);
+            testTime(place, 1, 1800);
             // console.log(place['opening_hours']['weekday_text']);
             // if(place['opening_hours']['open_now']){
             //     console.log('営業時間中');
@@ -548,34 +552,6 @@ function root(position) {
     calcRoute(start, endPoint);
 }
 
-
-// $.ajax({
-//     url:'https://maps.googleapis.com/maps/api/place/details/json?place_id=ChIJTd8nJ_qcGGARkwSBuz3Zxno&key=AIzaSyAaKn-PcSb_pTFwH6IJ2_ANNLKsHVMHWwU&fields=opening_hours,business_status&language=ja',
-//     type: 'GET',
-//     dataType: 'jsonp',
-//     jsonpCallback: 'callback'
-// }).done(function (data) {
-//     console.log(data);
-// }).fail(function (data) {
-//     console.log("no"); // 失敗時
-// });
-
-
-function testTime(place) {
-    var service = new google.maps.places.PlacesService(map);
-    service.getDetails({
-        placeId: place['place_id'],
-        // fields: ['name', 'formatted_address', 'geometry', 'url']
-    }, function (place, status) {
-        // if (status == google.maps.places.PlacesServiceStatus.OK) {
-        if (place['opening_hours']) {
-            if (place['opening_hours']['weekday_text']) {
-                console.log(place['opening_hours']['weekday_text']);
-            }
-        }
-    });
-}
-
 function gpsStart() {
     if (watch_id <= 0) {
         watch_id = window.navigator.geolocation.watchPosition(root);
@@ -645,7 +621,7 @@ function marker(place) {
             start = pos['lat'] + ',' + pos['lng'];
             var i = place.name + "<br>★：" + place.rating + "<br>" + place.formatted_address + "<br>"
                 //    + "<a href='" + 'https://www.google.com/maps/search/?api=1&query=' + place.name +"'><button>GoogleMapで見る</button></a>"
-                + place['opening_hours']['weekday_text'][0] + '<br>' + place['opening_hours']['weekday_text'][1] + '<br>' + place['opening_hours']['weekday_text'][2] + '<br>' + place['opening_hours']['weekday_text'][3] + '<br>' + place['opening_hours']['weekday_text'][4] + '<br>' + place['opening_hours']['weekday_text'][5] + '<br>' + place['opening_hours']['weekday_text'][6] + '<br>'
+                // + place['opening_hours']['weekday_text'][0] + '<br>' + place['opening_hours']['weekday_text'][1] + '<br>' + place['opening_hours']['weekday_text'][2] + '<br>' + place['opening_hours']['weekday_text'][3] + '<br>' + place['opening_hours']['weekday_text'][4] + '<br>' + place['opening_hours']['weekday_text'][5] + '<br>' + place['opening_hours']['weekday_text'][6] + '<br>'
                 ;
             var dom = document.createElement("div");
             dom.innerHTML = i + "<button id='navi'>ナビ</button>";
@@ -663,3 +639,92 @@ function marker(place) {
         })
     markers.push(search);
 }
+
+
+
+
+
+// function testTime(place) {
+//     var service = new google.maps.places.PlacesService(map);
+//     service.getDetails({
+//         placeId: place['place_id'],
+//         // fields: ['name', 'formatted_address', 'geometry', 'url']
+//     }, function (place, status) {
+//         // if (status == google.maps.places.PlacesServiceStatus.OK) {
+//         if (place['opening_hours']) {
+//             if (place['opening_hours']['weekday_text']) {
+//                 console.log(place['opening_hours']['weekday_text']);
+//             }
+//         }
+//     });
+// }
+function testTime(place, week, time) {
+    var service = new google.maps.places.PlacesService(map);
+    service.getDetails({
+        placeId: place['place_id'],
+        // fields: ['name', 'formatted_address', 'geometry', 'url']
+    }, function (place, status) {
+        // if (status == google.maps.places.PlacesServiceStatus.OK) {
+        if (place['opening_hours']) {
+            if (place['opening_hours']['weekday_text']) {
+                var day = place['opening_hours']['weekday_text'][0]
+                // console.log(place['opening_hours']['weekday_text']);
+                day = day.split(/[:～,]/);
+                // console.log(day.length);
+                if (day[week] === ' 24 時間営業') {
+                    console.log('yes');
+                    // return true;
+                } else if (day[week] === ' 定休日') {
+                    console.log('no');
+                    // return false;
+                }
+                var element;
+                for (let i = 1; i < day.length; i++) {//8時30分→830へ変換
+                    element = day[i];
+                    element = element.replace(/['時']/, '');
+                    element = element.replace(/['分']/, '');
+                    element = Number(element);
+                    // console.log(element);
+                    day[i] = element;
+                }
+                // console.log(day[1]);
+                // console.log(day);
+                // console.log(element);
+
+                switch (day.length) {
+                    case 3:
+                        if(day[1]<=time&&day[2]>=time){
+                            console.log('yes');
+                            return true;
+                        }else{
+                            console.log('no');
+                            return false;
+                        }
+                    case 5:
+                        console.log('no');
+                        if(day[1]<=time&&day[2]>=time||day[3]<=time&&day[4]>=time){
+                            console.log('yes');
+                            return true;
+                        }else{
+                            console.log('no');
+                            return false;
+                        }
+                }
+
+            }
+        }
+    });
+}
+
+
+
+
+
+// // console.log(place['opening_hours']['weekday_text']);
+// var data = place['opening_hours']['weekday_text'][0];
+// console.log(data);
+// var result = data.split(/[:～,]/);
+// result[1] = result[1].replace(/['時']/, '');
+// result[1] = result[1].replace(/['分']/, '');
+// // var result = data.split(/[時]/);
+// console.log(result);
