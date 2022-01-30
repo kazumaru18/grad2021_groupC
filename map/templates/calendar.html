@@ -124,23 +124,36 @@ $(function () {
                     
                 },
 
-                eventRender: function(calEvent, jsEvent, view,events) {
-                 (jsEvent).bind('dblclick', function() {
-                   if(!confirm('本当に削除しますか？')){
-                     return false;
-                    }else{
-                      $('#calendar').fullCalendar("removeEvents", calEvent._id);
+                eventRender: function (calEvent, jsEvent, view, events) {
+                        (jsEvent).bind('dblclick', function () {
+                            if (!confirm('本当に削除しますか？')) {
+                                return false;
+                            } else {
+                                $('#calendar').fullCalendar("removeEvents", calEvent._id);
 
-                      let storageItem = JSON.parse(localStorage.getItem('events'));
-                      
-                      if(storageItem){
-                        delete storageItem.calEvent;
-                        localStorage.setItem('events', JSON.stringify(storageItem));
-                      }
-                      
-                    }
-   				 });
-				},
+                                let storageItem = JSON.parse(localStorage.getItem('events'));
+
+                                var count = 0;
+                                var num;
+                                if (storageItem) {
+                                    storageItem.forEach(element => {
+                                        // console.log(element);
+                                        // console.log(calEvent);
+                                        if (element['title'] == calEvent['title'] && element['start'] == calEvent['start']['_i'] && element['end'] == calEvent['end']['_i']) {
+                                            num = count;
+                                        }
+                                        count++;
+                                    });
+                                    // console.log(calEvent);
+                                    // console.log(storageItem);
+                                    // delete storageItem.calEvent;
+                                    storageItem.splice(num, 1);
+                                    localStorage.setItem('events', JSON.stringify(storageItem));
+                                }
+
+                            }
+                        });
+                    },
 
                 events: function (start, end, timezone, callback) {
                     callback(jsevents);
