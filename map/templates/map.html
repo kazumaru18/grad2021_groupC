@@ -28,10 +28,12 @@
       <br>
       <p style="font-size: 30px;">カテゴリー検索</p>
       <li><a class="side-text" id="mise">飲食店</a></li>
-      <li><a class="side-text" id="cate" data-value="atm">ATM</a></li>
-      <li><a class="side-text" id="cate" data-value="スーパー">スーパー</a></li>
-      <li><a class="side-text" id="cate" data-value="ホテル">ホテル</a></li>
-      <li><a class="side-text" id="cate" data-value="病院">病院</a></li>
+      <li><a class="side-text" id="cate1" data-value="atm">ATM</a></li>
+      <li><a class="side-text" id="cate2" data-value="スーパー">スーパー</a></li>
+      <li><a class="side-text" id="cate3" data-value="ホテル">ホテル</a></li>
+      <li><a class="side-text" id="cate4" data-value="病院">病院</a></li>
+      <li><a class="side-text" id="cate5" data-value="レストラン">レストラン</a></li>
+      <li><a class="side-text" id="cate6" data-value="ガソリン">ガソリン</a></li>
       <p style="font-size: 30px;">飲食店詳細検索</p>
       <p>
         <form name="ca">
@@ -99,11 +101,11 @@
       </label>
     </p>
     <br>
-    <div class="searchbox" style="display: none;" id="searchbox">
+    <div class="searchbox" id="searchbox">
       <p><span class="bold">住所･地名から検索</span></p>
       <p>開始：<input type="text" name="sp" id="sp"></p>
       <p>終了：<input type="text" name="ep" id="ep"></p>
-      <input type="submit" name="regist" value="検索" id="searchButton" onclick="se()">
+      <input style="margin: 10px 0 0 0; width: 100px;" type="submit" name="regist" value="検索" id="searchButton" onclick="se()">
       <br><br><br>
       <li><a class="side-text" id="navi-end" style="display: none; margin: 10px 0 0 0;">ナビ終了</a></li>
     </div>

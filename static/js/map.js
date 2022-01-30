@@ -244,6 +244,20 @@ function initMap() {
       enter();
       input.blur()
   });
+  $('#cate5').on('click', function () {
+    cate = document.querySelector('#cate5').dataset["value"];
+    const input = document.getElementById("pac-input");
+    input.value = cate;
+    enter();
+    input.blur()
+  });
+  $('#cate6').on('click', function () {
+    cate = document.querySelector('#cate6').dataset["value"];
+    const input = document.getElementById("pac-input");
+    input.value = cate;
+    enter();
+    input.blur()
+  });
   $('#cm').on('click', function () {
       markers.forEach((marker) => {
           marker.setMap(null);
@@ -503,9 +517,11 @@ function syousaiMarker(res, pos) {
 
 
 function se() {
-  directionsDisplay.setMap(null);
-  directionsDisplay.setPanel(null);
-  directionsDisplay.setDirections(null);
+  if (directionsDisplay) {
+    directionsDisplay.setMap(null);
+    directionsDisplay.setPanel(null);
+    directionsDisplay.setDirections(null);
+  }
   var s, e;
   if ($('#sp').val() == '現在地') {
       s = pos['lat'] + ',' + pos['lng'];
@@ -519,4 +535,5 @@ function se() {
   // cal(s,e);   
   initialize(s, e);
   calcRoute(s, e);
+  $('#navi-end').show();
 }
