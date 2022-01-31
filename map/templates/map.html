@@ -38,23 +38,23 @@
       <p>
         <form name="ca">
           <label><input type="checkbox" id="card" name="syousai">カード支払い　　</label>
-          <label for="lunch"><input type="checkbox" id="lunch" name="syousai">ランチ　</label><br>
+          <label for="lunch"><input type="checkbox" id="lunch" name="syousai">ランチ</label><br>
           <label for="private_room"><input type="checkbox" id="private_room" name="syousai">個室　　</label>
-          <label for="midnight_meal"><input type="checkbox" id="midnight_meal" name="syousai">23時以降食事OK　</label><br>
+          <label for="midnight_meal"><input type="checkbox" id="midnight_meal" name="syousai">23時以降食事OK</label><br>
           <label for="pet"><input type="checkbox" id="pet" name="syousai">ペット可　</label>
-          <label for="cocktail"><input type="checkbox" id="cocktail" name="syousai">カクテル充実　</label><br>
+          <label for="cocktail"><input type="checkbox" id="cocktail" name="syousai">カクテル充実</label><br>
           <label for="shochu"><input type="checkbox" id="shochu" name="syousai">焼酎充実　　</label>
-          <label for="sake"><input type="checkbox" id="sake" name="syousai">日本酒充実　</label><br>
+          <label for="sake"><input type="checkbox" id="sake" name="syousai">日本酒充実</label><br>
           <label for="wine"><input type="checkbox" id="wine" name="syousai">ワイン充実　</label>
-          <label for="parking"><input type="checkbox" id="parking" name="syousai">駐車場あり　</label><br>
-          <label for="barrier_free"><input type="checkbox" id="barrier_free" name="syousai">バリアフリー　</label>
-          <label for="free_food"><input type="checkbox" id="free_food" name="syousai">食べ放題　　</label><br>
+          <label for="parking"><input type="checkbox" id="parking" name="syousai">駐車場あり</label><br>
+          <label for="barrier_free"><input type="checkbox" id="barrier_free" name="syousai">バリアフリー　　</label>
+          <label for="free_food"><input type="checkbox" id="free_food" name="syousai">食べ放題</label><br>
           <label for="free_drink"><input type="checkbox" id="free_drink" name="syousai">飲み放題　</label>
-          <label for="child"><input type="checkbox" id="child" name="syousai">お子様連れOK　</label><br>
-          <label for="non_smoking"><input type="checkbox" id="non_smoking" name="syousai">禁煙席あり　</label>
-          <label for="tatami"><input type="checkbox" id="tatami" name="syousai">座敷あり　　</label><br>
+          <label for="child"><input type="checkbox" id="child" name="syousai">お子様連れOK</label><br>
+          <label for="non_smoking"><input type="checkbox" id="non_smoking" name="syousai">禁煙席あり　　</label>
+          <label for="tatami"><input type="checkbox" id="tatami" name="syousai">座敷あり</label><br>
           <label for="wifi"><input type="checkbox" id="wifi" name="syousai">WiFiあり　　</label>
-          <label for="course"><input type="checkbox" id="course" name="syousai">コースあり　</label><br>
+          <label for="course"><input type="checkbox" id="course" name="syousai">コースあり</label><br>
           <label for="keyword"><input type="text" id="keyword" name="keyword">キーワード</label>
         </form><br>
         <label for="range">検索範囲：
@@ -76,41 +76,43 @@
 
 <div class="page_main2">
   <aside>
-    
-    <li><a class="side-text" id="cm" data-value="マップclear">マップclear</a></li>
-    <br>
-    <li><a class="side-text" href="http://localhost:3000/">音声検索</a></li>
-    <br>
-    <p style="font-size: 25px;">交通手段選択</p>
-    <p>
-      <label for="mode">モード：
-        <select id="mode" name="mode">
-          <option value="driving" selected>自動車</option>
-          <option value="bicycling">自転車</option>
-          <!-- <option value="transit">電車</option> -->
-          <option value="walking">徒歩</option>
-        </select>
-      </label>
-    </p>
-    
-    <p>
-      <label for="highways">高速道路：
-        <select id="highways" name="highways">
-          <option value="yes" selected>使用する</option>
-          <option value="no">使用しない</option>
-        </select>
-      </label>
-    </p>
-    <br>
-    <div class="searchbox" id="searchbox">
-      <p><span style="font-size: 25px;" class="bold">住所･地名から検索</span></p>
-      <p>開始：<input type="text" name="sp" id="sp"></p>
-      <p>終了：<input type="text" name="ep" id="ep"></p>
-      <input style="margin: 10px 0 0 0; width: 100px;" type="submit" name="regist" value="検索" id="searchButton" onclick="se()">
-      <br><br><br>
-      <li><a class="side-text" id="navi-end" style="display: none; margin: 10px 0 0 0;">ナビ終了</a></li>
-    </div>
-    <button><img src="{% static 'images/icon.png' %}" width="30px" height="auto"></button>
+    <dl id="side-dl">
+      <br>
+      <li><a class="side-text" id="cm" data-value="マップclear">マップclear</a></li>
+      <br>
+      <li><a class="side-text" href="http://localhost:3000/">音声検索</a></li>
+      <br>
+      <p style="font-size: 25px;">交通手段選択</p>
+      <p>
+        <label for="mode">モード：
+          <select id="mode" name="mode">
+            <option value="driving" selected>自動車</option>
+            <option value="bicycling">自転車</option>
+            <!-- <option value="transit">電車</option> -->
+            <option value="walking">徒歩</option>
+          </select>
+        </label>
+      </p>
+
+      <p>
+        <label for="highways">高速道路：
+          <select id="highways" name="highways">
+            <option value="yes" selected>使用する</option>
+            <option value="no">使用しない</option>
+          </select>
+        </label>
+      </p>
+      <br>
+      <div class="searchbox" id="searchbox">
+        <p><span style="font-size: 25px;" class="bold">住所･地名から検索</span></p>
+        <p>開始：<input type="text" name="sp" id="sp"></p>
+        <p>終了：<input type="text" name="ep" id="ep"></p>
+        <input style="margin: 10px 0 0 0; width: 100px;" type="submit" name="regist" value="検索" id="searchButton" onclick="se()">
+        <br><br><br>
+        <li><a class="side-text" id="navi-end" style="display: none; margin: 10px 0 0 0;">ナビ終了</a></li>
+      </div>
+      <button><img src="{% static 'images/icon.png' %}" width="30px" height="auto"></button>
+    </dl>
   </aside>
 </div>
 
