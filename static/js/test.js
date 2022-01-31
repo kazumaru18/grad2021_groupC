@@ -17,6 +17,9 @@ var timeId;
 var input;
 var searchBox;
 var reSearchFlag;
+var word = '';
+var week;
+var hours;
 var weeks = { '月曜日': 0, '火曜日': 1, '水曜日': 2, '木曜日': 3, '金曜日': 4, '土曜日': 5, '日曜日': 6 };
 function initMap() {
     map = new google.maps.Map(document.getElementById('map'), {
@@ -73,12 +76,16 @@ function initMap() {
 
     // Listen for the event fired when the user selects a prediction and retrieve
     // more details for that place.
-    var week, hours;
+    // var week, hours;
     searchBox.addListener("places_changed", () => {
         console.log("start");
         var str = input.value;
         word = "";
-        var data = str.split(/[,、\　\ ]/);
+        // var data = str.split(/[,、\　\ ]/);
+        // if(reSearchFlag!==null){
+        //     console.log('test3');
+        //     test3(str);
+        // }
         var dayNum;
         var timeNum;
         // console.log(reSearchFlag);
@@ -86,131 +93,52 @@ function initMap() {
             marker.setMap(null);
         });
         markers = [];
-        if (reSearchFlag == null) {
-            for (let i = 0; i < data.length; i++) {
-                const day = data[i].match(/.曜日/);
-                var time = replaceFullToHalf(data[i]);
-                // var time = data[i].match(/([0-9]+時[0-9]+分$|[0-9]+時半$|[0-9]+時$)/);
-                time = time.match(/([0-9]+[0-9時]+分$|[0-9]+時半$|[0-9]+時$)/);
 
-                if (day != null) {
-                    dayNum = i;
-                }
-                if (time != null) {
-                    timeNum = i;
-                }
-            }
-            for (let i = 0; i < data.length; i++) {
-                if (i != dayNum && i != timeNum) {
-                    word += data[i];
-                }
-            }
-            if (dayNum != null) {
-                week = weeks[data[dayNum]];
-            }
-            if (timeNum != null) {
-                hours = replaceFullToHalf(data[timeNum]);
-                hours = hours.replace(/[半]/, '30分');
-                hours = hours.replace(/['時']/, '');
-                if (hours.indexOf('分') === -1 && hours.indexOf('半') === -1) {
-                    hours = Number(hours);
-                    hours = hours * 100;
-                } else {
-                    hours = hours.replace(/['分']/, '');
-                }
-                hours = Number(hours);
-                // console.log(hours);
-            }
-            // console.log(week);
-            // console.log(hours);
-            if (week != null || hours != null) {
-                reSearchFlag = 1;
-
-                console.log(week);
-                console.log(hours);
-                // reSearch(word);
-                console.log('enterEnd');
-            }
-        } else if (reSearchFlag == 1) {
-            console.log('a');
-            var open = document.getElementById('openFlag');
-            var flag = open.checked;
-            const places = searchBox.getPlaces();
-            if (places.length == 0) {
-                alert('見つかりませんでした');
+        console.log('a');
+        var open = document.getElementById('openFlag');
+        var flag = open.checked;
+        const places = searchBox.getPlaces();
+        if (places.length == 0) {
+            alert('見つかりませんでした');
+            return;
+        }
+        if (info != null) {
+            info.close();
+        }
+        // Clear out the old markers.
+        markers.forEach((marker) => {
+            marker.setMap(null);
+        });
+        markers = [];
+        // For each place, get the icon, name and location.
+        const bounds = new google.maps.LatLngBounds();
+        places.forEach((place) => {
+            if (!place.geometry || !place.geometry.location) {
+                console.log("Returned place contains no geometry");
                 return;
             }
-            if (info != null) {
-                info.close();
+
+
+
+            //フラグでやるやつ
+            if (flag) {
+                if (!(typeof place['opening_hours']['open_now'] === "undefined")) {
+                    marker(place);
+                }
+            } else {
+                marker(place);
             }
-            // Clear out the old markers.
-            markers.forEach((marker) => {
-                marker.setMap(null);
-            });
-            markers = [];
-            // For each place, get the icon, name and location.
-            const bounds = new google.maps.LatLngBounds();
-            places.forEach((place) => {
-                if (!place.geometry || !place.geometry.location) {
-                    console.log("Returned place contains no geometry");
-                    return;
-                }
-                // searchHours(place, week, hours);
-                // console.log(place['opening_hours']['weekday_text']);
-                // if(place['opening_hours']['open_now']){
-                //     console.log('営業時間中');
-                // }else{
-                //     console.log('営業時間外');
-                // }
-
-                if (week != null || hours != null) {
-                    console.log('c');
-                    console.log(week + " " + hours);
-                    searchHours(place, week, hours)
-                } else {
-                    var service = new google.maps.places.PlacesService(map);
-                    service.getDetails({
-                        placeId: place['place_id'],
-                        // fields: ['name', 'formatted_address', 'geometry', 'url']
-                    }, function (place, status) {
-                        if (flag) {
-                            openMarker(place);
-                        } else {
-                            marker(place);
-                        }
-                    });
-
-                    if (place.geometry.viewport) {
-                        // Only geocodes have viewport.
-                        bounds.union(place.geometry.viewport);
-                    } else {
-                        bounds.extend(place.geometry.location);
-                    }
-                }
-            });
-            reSearchFlag = null;
-            week = null;
-            hours = null;
-        } else {
-            // reSearch(word);
-            reSearchFlag = 0;
-        }
-        // //  map.fitBounds(bounds);
-        // if (reSearchFlag != 1) {
-
-        //     reSearchFlag = null;
-        //     week = null;
-        //     hours = null;
-        //     console.log('end');
-        // } else {
-        console.log(reSearchFlag);
-
-        // }
+            if (place.geometry.viewport) {
+                // Only geocodes have viewport.
+                bounds.union(place.geometry.viewport);
+            } else {
+                bounds.extend(place.geometry.location);
+            }
+        });
+        reSearchFlag = null;
+        week = null;
+        hours = null;
     });
-    if (reSearchFlag == 1) {
-        console.log('re');
-        reSearch(word);
-    }
 
 
     $('#mise').on('click', function () {
@@ -274,6 +202,7 @@ function initMap() {
             dom.addEventListener("mousemove", () => {
                 $('#navi').on('click', function () {
                     Display_JS(start, end);
+                    document.getElementById("testroot").click();
                 });
             });
 
@@ -288,14 +217,21 @@ function initMap() {
         markers.push(marker);
     }
 
-    function enter() {
-        var input = document.getElementById("pac-input");
-        input.focus();
-        let KEvent = new KeyboardEvent("keydown", { keyCode: 13 });
-        input.dispatchEvent(KEvent);
-    }
+    // function enter() {
+    //     var input = document.getElementById("pac-input");
+    //     input.focus();
+    //     let KEvent = new KeyboardEvent("keydown", { keyCode: 13 });
+    //     input.dispatchEvent(KEvent);
+    // }
 
     window.addEventListener('load', function () {
+        var url = new URL(window.location.href);
+        // URLSearchParamsオブジェクトを取得
+        var params = url.searchParams;
+        input = document.getElementById("pac-input");
+        var str = params.get('q');
+        test3(str);
+        console.log(word+' '+hours+' '+week);
         enter();
     });
 
@@ -576,6 +512,7 @@ function syousaiMarker(res, pos) {
         dom.addEventListener("mousemove", () => {
             $('#navi').on('click', function () {
                 Display_JS(start, end);
+                document.getElementById("testroot").click();
             });
         });
 
@@ -660,44 +597,42 @@ function gpsEmd() {
 }
 
 function openMarker(place) {
-    // console.log('open');
-    if (place['opening_hours']) {
-        if (place['opening_hours']['weekday_text']) {
-            // console.log(place['opening_hours']['weekday_text']);
-            var search;
-            // Create a marker for each place.
-            search = new google.maps.Marker({
-                map,
-                title: place.name,
+    var search;
+    // Create a marker for each place.
+    search = new google.maps.Marker({
+        map,
+        title: place.name,
+        position: place.geometry.location,
+    }),
+        search.addListener('click', function () {
+            if (info != null) {
+                info.close();
+            }
+            start = pos['lat'] + ',' + pos['lng'];
+            var i = place.name + "<br>★：" + place.rating + "<br>" + place.formatted_address + "<br>"
+                //    + "<a href='" + 'https://www.google.com/maps/search/?api=1&query=' + place.name +"'><button>GoogleMapで見る</button></a>"
+                // + place['opening_hours']['weekday_text'][0] + '<br>' + place['opening_hours']['weekday_text'][1] + '<br>' + place['opening_hours']['weekday_text'][2] + '<br>' + place['opening_hours']['weekday_text'][3] + '<br>' + place['opening_hours']['weekday_text'][4] + '<br>' + place['opening_hours']['weekday_text'][5] + '<br>' + place['opening_hours']['weekday_text'][6] + '<br>'
+                ;
+            if (typeof place['opening_hours']['weekday_text'] === 'undefined') {
+                console.log(place['opening_hours']['weekday_text'][0]);
+                i + place['opening_hours']['weekday_text'][0] + '<br>' + place['opening_hours']['weekday_text'][1] + '<br>' + place['opening_hours']['weekday_text'][2] + '<br>' + place['opening_hours']['weekday_text'][3] + '<br>' + place['opening_hours']['weekday_text'][4] + '<br>' + place['opening_hours']['weekday_text'][5] + '<br>' + place['opening_hours']['weekday_text'][6] + '<br>';
+            }
+            var dom = document.createElement("div");
+            dom.innerHTML = i + "<button id='navi'>ナビ</button>";
+            dom.addEventListener("mousemove", () => {
+                $('#navi').on('click', function () {
+                    Display_JS(start, place.formatted_address);
+                    document.getElementById("testroot").click();
+                });
+            });
+            info = new google.maps.InfoWindow({
                 position: place.geometry.location,
-            }),
-                search.addListener('click', function () {
-                    if (info != null) {
-                        info.close();
-                    }
-                    start = pos['lat'] + ',' + pos['lng'];
-                    var i = place.name + "<br>★：" + place.rating + "<br>" + place.formatted_address + "<br>"
-                        //    + "<a href='" + 'https://www.google.com/maps/search/?api=1&query=' + place.name +"'><button>GoogleMapで見る</button></a>"
-                        + place['opening_hours']['weekday_text'][0] + '<br>' + place['opening_hours']['weekday_text'][1] + '<br>' + place['opening_hours']['weekday_text'][2] + '<br>' + place['opening_hours']['weekday_text'][3] + '<br>' + place['opening_hours']['weekday_text'][4] + '<br>' + place['opening_hours']['weekday_text'][5] + '<br>' + place['opening_hours']['weekday_text'][6] + '<br>'
-                        ;
-                    var dom = document.createElement("div");
-                    dom.innerHTML = i + "<button id='navi'>ナビ</button>";
-                    dom.addEventListener("mousemove", () => {
-                        $('#navi').on('click', function () {
-                            Display_JS(start, place.formatted_address);
-                            document.getElementById("testroot").click();
-                        });
-                    });
-                    info = new google.maps.InfoWindow({
-                        position: place.geometry.location,
-                        content: dom
-                    });
-                    info.open(map);
-                })
-            console.log('openMarker');
-            markers.push(search);
-        }
-    }
+                content: dom
+            });
+            info.open(map);
+        })
+    console.log('openMarker');
+    markers.push(search);
 }
 
 function marker(place) {
@@ -800,7 +735,8 @@ function searchHours(place, week, time) {
                         if (day[1] <= time && day[2] >= time) {
                             // console.log(day[1]);
                             // console.log(day[2]);
-                            openMarker(place);
+                            // openMarker(place);
+                            marker(place);
                             // return true;
                             break;
                         } else {
@@ -819,7 +755,8 @@ function searchHours(place, week, time) {
                         }
                         if (day[1] <= time && day[2] >= time || day[3] <= time && day[4] >= time) {
                             // console.log('yes');
-                            openMarker(place);
+                            // openMarker(place);
+                            marker(place);
                             // return true;
                             break;
                         } else {
@@ -841,7 +778,7 @@ function replaceFullToHalf(str) {
 }
 
 function reSearch(word) {
-    console.log('b');
+    var input = document.getElementById("pac-input");
     input.value = word;
     // enter(); 
     input.focus();
@@ -850,222 +787,306 @@ function reSearch(word) {
 }
 
 
-// function enter() {
-//     console.log('enter');
-//     var input = document.getElementById("pac-input");
-//     input.focus();
-//     let KEvent = new KeyboardEvent("keydown", { keyCode: 13 });
-//     input.dispatchEvent(KEvent);
-// }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-function test1(places) {
-    markers.forEach((marker) => {
-        marker.setMap(null);
-    });
-    markers = [];
-
-    var open = document.getElementById('openFlag');
-    var flag = open.checked;
-    const places = searchBox.getPlaces();
-    if (places.length == 0) {
-        alert('見つかりませんでした');
-        return;
-    }
-    if (info != null) {
-        info.close();
-    }
-    // Clear out the old markers.
-    markers.forEach((marker) => {
-        marker.setMap(null);
-    });
-    markers = [];
-    // For each place, get the icon, name and location.
-    const bounds = new google.maps.LatLngBounds();
-    places.forEach((place) => {
-        if (!place.geometry || !place.geometry.location) {
-            console.log("Returned place contains no geometry");
-            return;
-        }
-        var service = new google.maps.places.PlacesService(map);
-        service.getDetails({
-            placeId: place['place_id'],
-            // fields: ['name', 'formatted_address', 'geometry', 'url']
-        }, function (place, status) {
-            if (flag) {
-                openMarker(place);
-            } else {
-                marker(place);
-            }
-        });
-
-        if (place.geometry.viewport) {
-            // Only geocodes have viewport.
-            bounds.union(place.geometry.viewport);
-        } else {
-            bounds.extend(place.geometry.location);
-        }
-    });
+function enter() {
+    var input = document.getElementById("pac-input");
+    input.focus();
+    let KEvent = new KeyboardEvent("keydown", { keyCode: 13 });
+    input.dispatchEvent(KEvent);
 }
 
 
 
 
 
-function test2(places) {
-    var str = input.value;
-    var word = "";
-    var data = str.split(/[,、\　\ ]/);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// function test1(places) {
+//     markers.forEach((marker) => {
+//         marker.setMap(null);
+//     });
+//     markers = [];
+
+//     var open = document.getElementById('openFlag');
+//     var flag = open.checked;
+//     const places = searchBox.getPlaces();
+//     if (places.length == 0) {
+//         alert('見つかりませんでした');
+//         return;
+//     }
+//     if (info != null) {
+//         info.close();
+//     }
+//     // Clear out the old markers.
+//     markers.forEach((marker) => {
+//         marker.setMap(null);
+//     });
+//     markers = [];
+//     // For each place, get the icon, name and location.
+//     const bounds = new google.maps.LatLngBounds();
+//     places.forEach((place) => {
+//         if (!place.geometry || !place.geometry.location) {
+//             console.log("Returned place contains no geometry");
+//             return;
+//         }
+//         var service = new google.maps.places.PlacesService(map);
+//         service.getDetails({
+//             placeId: place['place_id'],
+//             // fields: ['name', 'formatted_address', 'geometry', 'url']
+//         }, function (place, status) {
+//             if (flag) {
+//                 openMarker(place);
+//             } else {
+//                 marker(place);
+//             }
+//         });
+
+//         if (place.geometry.viewport) {
+//             // Only geocodes have viewport.
+//             bounds.union(place.geometry.viewport);
+//         } else {
+//             bounds.extend(place.geometry.location);
+//         }
+//     });
+// }
+
+
+
+
+
+// function test2(places) {
+//     var str = input.value;
+//     var word = "";
+//     var data = str.split(/[,、\　\ ]/);
+//     var dayNum;
+//     var timeNum;
+//     markers.forEach((marker) => {
+//         marker.setMap(null);
+//     });
+//     markers = [];
+//     if (reSearchFlag == null) {
+//         for (let i = 0; i < data.length; i++) {
+//             const day = data[i].match(/.曜日/);
+//             var time = replaceFullToHalf(data[i]);
+//             time = time.match(/([0-9]+[0-9時]+分$|[0-9]+時半$|[0-9]+時$)/);
+
+//             if (day != null) {
+//                 dayNum = i;
+//             }
+//             if (time != null) {
+//                 timeNum = i;
+//             }
+//         }
+//         for (let i = 0; i < data.length; i++) {
+//             if (i != dayNum && i != timeNum) {
+//                 word += data[i];
+//             }
+//         }
+//         if (dayNum != null) {
+//             week = weeks[data[dayNum]];
+//         }
+//         if (timeNum != null) {
+//             hours = replaceFullToHalf(data[timeNum]);
+//             hours = hours.replace(/[半]/, '30分');
+//             hours = hours.replace(/['時']/, '');
+//             if (hours.indexOf('分') === -1 && hours.indexOf('半') === -1) {
+//                 hours = Number(hours);
+//                 hours = hours * 100;
+//             } else {
+//                 hours = hours.replace(/['分']/, '');
+//             }
+//             hours = Number(hours);
+//         }
+//         if (week != null || hours != null) {
+//             reSearchFlag = 1;
+
+//             console.log(week);
+//             console.log(hours);
+//             console.log('enterEnd');
+//             return reSearch(word);
+//         }
+//     } else if (reSearchFlag == 1) {
+//         const places = searchBox.getPlaces();
+//         if (places.length == 0) {
+//             alert('見つかりませんでした');
+//             return;
+//         }
+//         if (info != null) {
+//             info.close();
+//         }
+//         // Clear out the old markers.
+//         markers.forEach((marker) => {
+//             marker.setMap(null);
+//         });
+//         markers = [];
+//         // For each place, get the icon, name and location.
+//         const bounds = new google.maps.LatLngBounds();
+//         places.forEach((place) => {
+//             if (!place.geometry || !place.geometry.location) {
+//                 console.log("Returned place contains no geometry");
+//                 return;
+//             }
+//             if (week != null || hours != null) {
+//                 searchHours(place, week, hours)
+//             } else {
+//                 if (place.geometry.viewport) {
+//                     // Only geocodes have viewport.
+//                     bounds.union(place.geometry.viewport);
+//                 } else {
+//                     bounds.extend(place.geometry.location);
+//                 }
+//             }
+//         });
+//         reSearchFlag = null;
+//         week = null;
+//         hours = null;
+//     } else {
+//         // reSearch(word);
+//         reSearchFlag = 0;
+//     }
+// }
+
+
+
+
+function test3(data) {
     var dayNum;
     var timeNum;
-    markers.forEach((marker) => {
-        marker.setMap(null);
-    });
-    markers = [];
-    if (reSearchFlag == null) {
-        for (let i = 0; i < data.length; i++) {
-            const day = data[i].match(/.曜日/);
-            var time = replaceFullToHalf(data[i]);
-            time = time.match(/([0-9]+[0-9時]+分$|[0-9]+時半$|[0-9]+時$)/);
+    var dayFlag;
+    var timeFlag;
+    word = '';
+    week;
+    hours;
+    data = data.split(/[,、\　\ ]/);
+    for (let i = 0; i < data.length; i++) {
+        const day = data[i].match(/.曜日/);
+        var time = replaceFullToHalf(data[i]);
+        // var time = data[i].match(/([0-9]+時[0-9]+分$|[0-9]+時半$|[0-9]+時$)/);
+        time = time.match(/([0-9]+[0-9時]+分$|[0-9]+時半$|[0-9]+時$)/);
 
-            if (day != null) {
-                dayNum = i;
-            }
-            if (time != null) {
-                timeNum = i;
-            }
+        if (day != null) {
+            dayNum = i;
         }
-        for (let i = 0; i < data.length; i++) {
-            if (i != dayNum && i != timeNum) {
-                word += data[i];
-            }
+        if (time != null) {
+            timeNum = i;
         }
-        if (dayNum != null) {
-            week = weeks[data[dayNum]];
-        }
-        if (timeNum != null) {
-            hours = replaceFullToHalf(data[timeNum]);
-            hours = hours.replace(/[半]/, '30分');
-            hours = hours.replace(/['時']/, '');
-            if (hours.indexOf('分') === -1 && hours.indexOf('半') === -1) {
-                hours = Number(hours);
-                hours = hours * 100;
-            } else {
-                hours = hours.replace(/['分']/, '');
-            }
-            hours = Number(hours);
-        }
-        if (week != null || hours != null) {
-            reSearchFlag = 1;
-
-            console.log(week);
-            console.log(hours);
-            console.log('enterEnd');
-            return reSearch(word);
-        }
-    } else if (reSearchFlag == 1) {
-        const places = searchBox.getPlaces();
-        if (places.length == 0) {
-            alert('見つかりませんでした');
-            return;
-        }
-        if (info != null) {
-            info.close();
-        }
-        // Clear out the old markers.
-        markers.forEach((marker) => {
-            marker.setMap(null);
-        });
-        markers = [];
-        // For each place, get the icon, name and location.
-        const bounds = new google.maps.LatLngBounds();
-        places.forEach((place) => {
-            if (!place.geometry || !place.geometry.location) {
-                console.log("Returned place contains no geometry");
-                return;
-            }
-            if (week != null || hours != null) {
-                searchHours(place, week, hours)
-            } else {
-                if (place.geometry.viewport) {
-                    // Only geocodes have viewport.
-                    bounds.union(place.geometry.viewport);
-                } else {
-                    bounds.extend(place.geometry.location);
-                }
-            }
-        });
-        reSearchFlag = null;
-        week = null;
-        hours = null;
-    } else {
-        // reSearch(word);
-        reSearchFlag = 0;
     }
+    console.log(dayNum + ' ' + timeNum);
+    for (let i = 0; i < data.length; i++) {
+        if (i != dayNum && i != timeNum) {
+            word += data[i];
+            console.log(word);
+        }
+    }
+    if (typeof dayNum === "undefined") {
+        if (week == null) {
+            dayFlag = 1;
+            var now = new Date();
+            var nowWeek = now.getDay();
+            var nowWeeks = ['日曜日', '月曜日', '火曜日', '水曜日', '木曜日', '金曜日', '土曜日'];
+            week = weeks[nowWeeks[nowWeek]];
+            console.log(week);
+        }
+    } else {
+        week = weeks[data[dayNum]];
+        console.log(week);
+    }
+
+    console.log(week + " " + timeNum + ' ' + word);
+    // if (typeof timeNum === "undefined") {
+    if (timeNum) {
+        console.log(data[timeNum]);
+        hours = replaceFullToHalf(data[timeNum]);
+        hours = hours.replace(/[半]/, '30分');
+        hours = hours.replace(/['時']/, '');
+        if (hours.indexOf('分') === -1 && hours.indexOf('半') === -1) {
+            hours = Number(hours);
+            hours = hours * 100;
+        } else {
+            hours = hours.replace(/['分']/, '');
+        }
+        hours = Number(hours);
+        console.log(hours);
+    } else {
+        if (time == null) {
+            timeFlag = 1;
+            var now = new Date();
+            var Hour = now.getHours();
+            var Min = now.getMinutes();
+            var nowTime = Hour * 100 + Min;
+            hours = nowTime;
+            console.log(hours);
+        }
+    }
+    // console.log(week);
+    // console.log(hours);
+    if (week != null || hours != null) {
+        if (timeFlag !== 1 && dayFlag !== 1) {
+            reSearchFlag = 1;
+            reSearch(word);
+        }
+        console.log(week + " " + hours + ' ' + word);
+        // reSearch(word);
+        console.log('enterEnd');
+    }
+    console.log(reSearchFlag);
 }

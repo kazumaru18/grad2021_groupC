@@ -554,7 +554,7 @@ function root(position) {
 
     geo_text += "取得回数:" + (++num) + "\n";
 
-    // document.getElementById('position_view').innerHTML = geo_text;
+    document.getElementById('position_view').innerHTML = geo_text;
 
     var start = position.coords.latitude + ',' + position.coords.longitude;
     // Display_JS(start,'柏駅');
