@@ -84,41 +84,63 @@ function initMap() {
       // For each place, get the icon, name and location.
       const bounds = new google.maps.LatLngBounds();
       places.forEach((place) => {
-          // console.log(place);
+          // testTime(place);
+          // console.log(place['opening_hours']['weekday_text']);
+          // if(place['opening_hours']['open_now']){
+          //     console.log('営業時間中');
+          // }else{
+          //     console.log('営業時間外');
+          // }
+
           if (!place.geometry || !place.geometry.location) {
               console.log("Returned place contains no geometry");
               return;
           }
-          var search;
-          // Create a marker for each place.
-          search = new google.maps.Marker({
-              map,
-              title: place.name,
-              position: place.geometry.location,
-          }),
-              search.addListener('click', function () {
-                  if (info != null) {
-                      info.close();
+
+          var service = new google.maps.places.PlacesService(map);
+          service.getDetails({
+              placeId: place['place_id'],
+              // fields: ['name', 'formatted_address', 'geometry', 'url']
+          }, function (place, status) {
+              // if (status == google.maps.places.PlacesServiceStatus.OK) {
+              if (place['opening_hours']) {
+                  if (place['opening_hours']['weekday_text']) {
+                      // console.log(place['opening_hours']['weekday_text']);
+                      var search;
+                      // Create a marker for each place.
+                      search = new google.maps.Marker({
+                          map,
+                          title: place.name,
+                          position: place.geometry.location,
+                      }),
+                          search.addListener('click', function () {
+                              if (info != null) {
+                                  info.close();
+                              }
+                              start = pos['lat'] + ',' + pos['lng'];
+                              var i = place.name + "<br>★：" + place.rating + "<br>" + place.formatted_address + "<br>"
+                                  //    + "<a href='" + 'https://www.google.com/maps/search/?api=1&query=' + place.name +"'><button>GoogleMapで見る</button></a>"
+                                  + place['opening_hours']['weekday_text'][0] + '<br>' + place['opening_hours']['weekday_text'][1] + '<br>' + place['opening_hours']['weekday_text'][2] + '<br>' + place['opening_hours']['weekday_text'][3] + '<br>' + place['opening_hours']['weekday_text'][4] + '<br>' + place['opening_hours']['weekday_text'][5] + '<br>' + place['opening_hours']['weekday_text'][6] + '<br>'
+                                  ;
+                              var dom = document.createElement("div");
+                              dom.innerHTML = i + "<button id='navi'>ナビ</button>";
+                              dom.addEventListener("mousemove", () => {
+                                  $('#navi').on('click', function () {
+                                      Display_JS(start, place.formatted_address);
+                                      document.getElementById("testroot").click();
+                                  });
+                              });
+                              info = new google.maps.InfoWindow({
+                                  position: place.geometry.location,
+                                  content: dom
+                              });
+                              info.open(map);
+                          })
+                      markers.push(search);
                   }
-                  // console.log(place);
-                  start = pos['lat'] + ',' + pos['lng'];
-                  var i = place.name + "<br>★：" + place.rating + "<br>" + place.formatted_address + "<br>"
-                      //    + "<a href='" + 'https://www.google.com/maps/search/?api=1&query=' + place.name +"'><button>GoogleMapで見る</button></a>"
-                      ;
-                  var dom = document.createElement("div");
-                  dom.innerHTML = i + "<button id='navi'>ナビ</button>";
-                  dom.addEventListener("mousemove", () => {
-                      $('#navi').on('click', function () {
-                          Display_JS(start, place.formatted_address);
-                      });
-                  });
-                  info = new google.maps.InfoWindow({
-                      position: place.geometry.location,
-                      content: dom
-                  });
-                  info.open(map);
-              })
-          markers.push(search);
+              }
+          });
+
           if (place.geometry.viewport) {
               // Only geocodes have viewport.
               bounds.union(place.geometry.viewport);
@@ -273,11 +295,12 @@ function initMap() {
       directionsDisplay.setMap(null);
       directionsDisplay.setPanel(null);
       directionsDisplay.setDirections(null);
+      gpsEmd();
       $('#navi-end').hide();
   });
 }
 
-
+var endPoint;
 function Display_JS(start, end) {
   const input = document.getElementById("pac-input");
   input.value = null;
@@ -296,6 +319,7 @@ function Display_JS(start, end) {
   sp.value = '現在地';
   var ep = document.getElementById('ep');
   ep.value = end;
+  endPoint = end;
 }
 
 
@@ -358,27 +382,29 @@ function calcRoute(s, e) {
 }
 
 
+var watch_id = 0;
 document.addEventListener("DOMContentLoaded", function () {
   // 監視識別ID
-  var watch_id = 0;
+  watch_id = 0;
   // ボタンにclickイベントのリスナーをセット
   // var button = document.querySelector('button');
-  var button = document.getElementById('testbutton');
-  button.addEventListener("click", function () {
-      if (watch_id > 0) {
-          // リアルタイム監視を停止
-          window.navigator.geolocation.clearWatch(watch_id);
-          // 監視識別IDに0をセット
-          watch_id = 0;
-          // ボタン表記を変更
-          button.textContent = " 位置情報の取得開始 ";
-      } else {
-          // リアルタイム監視を開始
-          watch_id = window.navigator.geolocation.watchPosition(successCallback);
-          // ボタン表記を変更
-          button.textContent = " 位置情報の取得停止 ";
-      };
-  }, false);
+  // var button = document.getElementById('testbutton');
+  // button.addEventListener("click", function () {
+  //     if (watch_id > 0) {
+  //         // リアルタイム監視を停止
+  //         window.navigator.geolocation.clearWatch(watch_id);
+  //         // 監視識別IDに0をセット
+  //         watch_id = 0;
+  //         // ボタン表記を変更
+  //         button.textContent = " 位置情報の取得開始 ";
+  //     } else {
+  //         // リアルタイム監視を開始
+  //         // watch_id = window.navigator.geolocation.watchPosition(successCallback);
+  //         watch_id = window.navigator.geolocation.watchPosition(root);
+  //         // ボタン表記を変更
+  //         button.textContent = " 位置情報の取得停止 ";
+  //     };
+  // }, false);
 }, false);
 
 var num = 0;
@@ -536,4 +562,76 @@ function se() {
   initialize(s, e);
   calcRoute(s, e);
   $('#navi-end').show();
+}
+
+
+function root(position) {
+  markers.forEach((marker) => {
+      marker.setMap(null);
+  });
+  markers = [];
+
+  var glLatitude = position.coords.latitude;
+
+  var glLongitude = position.coords.longitude;
+
+  var geo_text = "緯度:" + position.coords.latitude + "\n";
+  geo_text += "経度:" + position.coords.longitude + "\n";
+  // geo_text += "高度:" + position.coords.altitude + "\n";
+  geo_text += "位置精度:" + position.coords.accuracy + "\n";
+  // geo_text += "高度精度:" + position.coords.altitudeAccuracy  + "\n";
+  geo_text += "移動方向:" + position.coords.heading + "\n";
+  geo_text += "速度:" + position.coords.speed + "\n";
+
+
+  geo_text += "取得回数:" + (++num) + "\n";
+
+  // document.getElementById('position_view').innerHTML = geo_text;
+
+  var start = position.coords.latitude + ',' + position.coords.longitude;
+  // Display_JS(start,'柏駅');
+
+  // initialize(start, '柏駅');
+  calcRoute(start, endPoint);
+}
+
+
+// $.ajax({
+//     url:'https://maps.googleapis.com/maps/api/place/details/json?place_id=ChIJTd8nJ_qcGGARkwSBuz3Zxno&key=AIzaSyAaKn-PcSb_pTFwH6IJ2_ANNLKsHVMHWwU&fields=opening_hours,business_status&language=ja',
+//     type: 'GET',
+//     dataType: 'jsonp',
+//     jsonpCallback: 'callback'
+// }).done(function (data) {
+//     console.log(data);
+// }).fail(function (data) {
+//     console.log("no"); // 失敗時
+// });
+
+
+function testTime(place) {
+  var service = new google.maps.places.PlacesService(map);
+  service.getDetails({
+      placeId: place['place_id'],
+      // fields: ['name', 'formatted_address', 'geometry', 'url']
+  }, function (place, status) {
+      // if (status == google.maps.places.PlacesServiceStatus.OK) {
+      if (place['opening_hours']) {
+          if (place['opening_hours']['weekday_text']) {
+              console.log(place['opening_hours']['weekday_text']);
+          }
+      }
+  });
+}
+
+function gpsStart() {
+  if (watch_id <= 0) {
+      watch_id = window.navigator.geolocation.watchPosition(root);
+  }
+}
+
+function gpsEmd() {
+  if (watch_id > 0) {
+      window.navigator.geolocation.clearWatch(watch_id);
+      watch_id = 0;
+  }
 }
