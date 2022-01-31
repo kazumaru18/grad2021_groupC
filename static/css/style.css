@@ -5,25 +5,66 @@
 body {
   margin: 0;
   padding: 0;
+  height: 100%;
   font-family: "Hiragino Kaku Gothic Pro", "ヒラギノ角ゴ Pro W3", メイリオ, Meiryo, "ＭＳ Ｐゴシック", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  background-color: #ffff;
+}
+
+.bg_pattern {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: #fff;
+  z-index: -1;
+}
+.Paper_v2 {
+  background-image:
+    repeating-linear-gradient(to bottom,
+      transparent 25px,
+      rgba(0, 0, 0, 0.04) 26px,  rgba(0, 0, 0, 0.04) 26px,
+      transparent 27px,  transparent 51px, 
+      rgba(0, 0, 0, 0.04) 52px,  rgba(0, 0, 0, 0.04) 52px,
+      transparent 53px,  transparent 77px, 
+      rgba(0, 0, 0, 0.04) 78px,  rgba(0, 0, 0, 0.04) 78px,
+      transparent 79px,  transparent 103px, 
+      rgba(0, 0, 0, 0.04) 104px,  rgba(0, 0, 0, 0.04) 104px,
+      transparent 105px,  transparent 129px, 
+      rgba(0, 0, 0, 0.04) 130px,  rgba(0, 0, 0, 0.04) 130px),
+ 
+    repeating-linear-gradient(to right,
+      transparent 25px,
+      rgba(0, 0, 0, 0.04) 26px,  rgba(0, 0, 0, 0.04) 26px,
+      transparent 27px,  transparent 51px, 
+      rgba(0, 0, 0, 0.04) 52px,  rgba(0, 0, 0, 0.04) 52px,
+      transparent 53px,  transparent 77px, 
+      rgba(0, 0, 0, 0.04) 78px,  rgba(0, 0, 0, 0.04) 78px,
+      transparent 79px,  transparent 103px, 
+      rgba(0, 0, 0, 0.04) 104px,  rgba(0, 0, 0, 0.04) 104px,
+      transparent 105px,  transparent 129px, 
+      rgba(0, 0, 0, 0.04) 130px,  rgba(0, 0, 0, 0.04) 130px);
 }
 
 header {
-  margin: 0px 0px 5px 0px;
+  width: 100%;
+  /* height: 100px; */
+  height: 10%;
+  /* margin: 0px 0px 1px 0px; */
   border-bottom: solid 1px #d8d6d6;
-  padding: 20px 10% 20px;
+  padding: 0px 10% 0px;
   position: static;
   top: 0;
-  width: 100%;
   background-color: #fff;
   display: flex;
   align-items: center;
 }
 
+
+/* 以下ハンバーガーメニュー */
 .btn-trigger{
   display: none;
 }
-
 @media screen and (max-width: 680px) {
   .pc-nav{
     display:none;
@@ -33,7 +74,11 @@ header {
   .btn-trigger
   =============================*/
   .btn-trigger {
-    position: relative;
+    position: absolute;
+    float: right;
+    top: 20px;
+    right: 20px;
+    /* position: relative; */
     width: 50px;
     height: 44px;
     cursor: pointer;
@@ -43,7 +88,7 @@ header {
     left: 0;
     width: 100%;
     height: 4px;
-    background-color: #fff;
+    background-color: #999;
     border-radius: 4px;
   }
   .btn-trigger, .btn-trigger span {
@@ -60,6 +105,7 @@ header {
   .btn-trigger span:nth-of-type(3) {
     bottom: 0;
   }
+  
 
   #btn03.active {
     -webkit-transform: rotate(360deg);
@@ -76,8 +122,22 @@ header {
   #btn03.active span:nth-of-type(3) {
     opacity: 0;
   }
+  a{
+    text-align: center;
+  }
+  #sm{
+    top: 80px;
+    left: 0px;
+    position: absolute;
+    z-index: 10;
+    width: 100%;
+    background-color: #fff;
+  }
+  #ham_nav{
+    flex-direction: column;
+  }
 }
-
+/* a */
 h1 {
   margin: 0; padding: 0;
   font-size: 30px;
@@ -103,6 +163,7 @@ li {
   font-size: 14px;
 }
 
+/* メイン */
 main {
   margin: 10px auto;
   padding: 0;
@@ -110,8 +171,8 @@ main {
 }
 
 .top-search {
-  border-top: solid 1px #808080;
-  border-bottom: solid 1px #808080;
+  border-top: dashed 2px #808080;
+  border-bottom: dashed 2px #808080;
   padding: 20px 0px 20px 0px;
 }
 
@@ -131,6 +192,7 @@ main {
 .search_container input[type="text"]{
   border: none;
   height: 2.0em;
+  border-radius: 20px;
 }
 
 .search_container input[type="text"]:focus {
@@ -251,12 +313,26 @@ dl::after {
 
 @media screen and (max-width: 480px) {
 	/* 480px以下に適用されるCSS（スマホ用） */
+  img {
+    width: 100%;
+  }
+  .ons button{
+      font-size: 25px;
+  }
+  dd{
+    display: inline-block;
+  }
+  .search_container{
+    width: 100%;
+  }
 }
 
+/* フッター */
 #footer {
   position: relative;
   margin-top: 40px;
   color: #fff;
+  /* bottom: 0; */
 }
 
 .footer {
@@ -361,7 +437,9 @@ dl::after {
 
   #footer .navi li {
     margin-top: 5px;
+    margin-right: 5px;
     font-size: 12px;
+    word-break: keep-all;
   }
 }
 
@@ -426,10 +504,9 @@ dl::after {
 /* copyright */
 
 #footer .copyright {
-  width: 50%;
   margin: 0;
   padding: 0;
-  text-align: right;
+  text-align: center;
 }
 
 @media screen and (max-width: 767px) {
@@ -439,4 +516,15 @@ dl::after {
     text-align: center;
     font-size: 12px;
   }
+}
+
+.bx-wrapper .bx-prev {
+  left: 10px;
+  background: url(images/controls.png) no-repeat 0 -32px;
+  display: none;
+}
+.bx-wrapper .bx-next {
+  right: 10px;
+  background: url(images/controls.png) no-repeat -43px -32px;
+  display: none;
 }
