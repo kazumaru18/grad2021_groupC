@@ -33,9 +33,7 @@
     flex-wrap: wrap;
   }
 }
-.Form-Item:nth-child(5) {
 
-}
 .Form-Item-Label {
   width: 100%;
   max-width: 248px;
