@@ -16,12 +16,16 @@ var mode, highways;
 var timeId;
 var input;
 var searchBox;
-var reSearchFlag;
+var reSearchFlag = true;
 var word = '';
 var week;
 var hours;
 var dayFlag;
 var timeFlag;
+var enterFlag;
+var nullnull = 1;
+var dayNum;
+var timeNum;
 var weeks = { '月曜日': 0, '火曜日': 1, '水曜日': 2, '木曜日': 3, '金曜日': 4, '土曜日': 5, '日曜日': 6 };
 function initMap() {
     map = new google.maps.Map(document.getElementById('map'), {
@@ -81,7 +85,55 @@ function initMap() {
     // var week, hours;
     searchBox.addListener("places_changed", () => {
         console.log("start");
+        console.log(
+            word
+
+        );
+        console.log(
+            week
+
+        );
+        console.log(
+            hours
+        );
+        console.log(
+            dayFlag
+
+        );
+        console.log(
+            timeFlag
+        );
+        console.log(
+            enterFlag
+        );
+        console.log(
+            nullnull
+        );
+        console.log(
+            dayNum
+        );
+        console.log(
+            timeNum
+        );
+
+
+
+
         const places = searchBox.getPlaces();
+        if (!(enterFlag)) {
+            // nullnull = 0;
+            var strTest = input.value;
+            test3(strTest);
+            console.log(nullnull);
+            if (nullnull == 0) {
+                week = null;
+                hours = null;
+                dayFlag = null;
+                timeFlag = null;
+            }
+
+        }
+        console.log(nullnull);
         // var str = input.value;
         // word = "";
         // var data = str.split(/[,、\　\ ]/);
@@ -89,8 +141,17 @@ function initMap() {
         //     console.log('test3');
         //     test3(str);
         // }
-        var dayNum;
-        var timeNum;
+        // console.log(reSearchFlag);
+        // if(reSearchFlag){
+        //     // window.location.href = '../map/?q='+input.value+'&re=y';
+        //     window.location.href = '../map/?q='+input.value;
+        //     // params.set('q',input.value);
+        //     // params.set('re','y');
+        //     // document.location.reload();
+        //     reSearchFlag=false;
+        // }
+        // var dayNum;
+        // var timeNum;
         // console.log(reSearchFlag);
         // console.log('a');
         var open = document.getElementById('openFlag');
@@ -111,35 +172,59 @@ function initMap() {
         // For each place, get the icon, name and location.
         const bounds = new google.maps.LatLngBounds();
         places.forEach((place) => {
-            if (dayFlag == 1 || timeFlag == 1) {
-                searchHours(place, week, hours);
-                return;
+            console.log(dayFlag + ' ' + timeFlag);
+            if (nullnull == 1) {
+
+                if (dayFlag == null && timeFlag == null || dayFlag == 1 || timeFlag == 1) {
+                    searchHours(place, week, hours);
+                    console.log("Ss");
+                    return;
+                }
+                if (!place.geometry || !place.geometry.location) {
+                    console.log("Returned place contains no geometry");
+                    return;
+                }
             }
-            if (!place.geometry || !place.geometry.location) {
-                console.log("Returned place contains no geometry");
-                return;
-            }
 
 
-
-            //フラグでやるやつ
-            if (flag) {
-                if (!(typeof place['opening_hours']['open_now'] === "undefined")) {
+            var service = new google.maps.places.PlacesService(map);
+            service.getDetails({
+                placeId: place['place_id'],
+                // fields: ['name', 'formatted_address', 'geometry', 'url']
+            }, function (place, status) {
+                //フラグでやるやつ
+                if (flag) {
+                    if (!(typeof place['opening_hours']['open_now'] === "undefined")) {
+                        marker(place);
+                    }
+                } else {
                     marker(place);
                 }
-            } else {
-                marker(place);
-            }
-            if (place.geometry.viewport) {
-                // Only geocodes have viewport.
-                bounds.union(place.geometry.viewport);
-            } else {
-                bounds.extend(place.geometry.location);
-            }
+                if (place.geometry.viewport) {
+                    // Only geocodes have viewport.
+                    bounds.union(place.geometry.viewport);
+                } else {
+                    bounds.extend(place.geometry.location);
+                }
+            });
         });
         reSearchFlag = null;
+        word = '';
         week = null;
         hours = null;
+        nullnull = 1;
+        week = null;
+        hours = null;
+        dayFlag = null;
+        timeFlag = null;
+        enterFlag = null;
+        nullnull = 1;
+        dayNum = null;
+        timeNum = null;
+        // if (markers.length == 0) {
+        //     alert('見つかりませんでした');
+        //     // return;
+        // }
     });
 
 
@@ -227,22 +312,36 @@ function initMap() {
     // }
 
     window.addEventListener('load', function () {
+
         var url = new URL(window.location.href);
         // URLSearchParamsオブジェクトを取得
         var params = url.searchParams;
-        var input = document.getElementById("pac-input");
+        input = document.getElementById("pac-input");
         var str = params.get('q');
+        if (params.get('q') != null) {
+            reSearchFlag = false;
+        }
         test3(str);
+        console.log(nullnull);
+        if (nullnull == 0) {
+            week = null;
+            hours = null;
+            dayFlag = null;
+            timeFlag = null;
+        }
         if (dayFlag == 1 || timeFlag == 1) {
             // searchHours();
+            console.log(word, week, hours);
             params.set('q', word);
             params.set('w', week);
             params.set('h', hours);
             // input.value = params.get('q');
-            // console.log(params.get('q')+'　'+params.get('w')+'　'+params.get('h'));
+            console.log(dayFlag + ' ' + timeFlag);
+            console.log(params.get('q') + '　' + params.get('w') + '　' + params.get('h'));
             reSearch();
-        }else{
+        } else {
             // params.set('q', str);
+            // console.log(word+' '+week+' '+hours);
             enter();
         }
         // console.log(word+' '+week+' '+hours);
@@ -627,7 +726,7 @@ function openMarker(place) {
                 // + place['opening_hours']['weekday_text'][0] + '<br>' + place['opening_hours']['weekday_text'][1] + '<br>' + place['opening_hours']['weekday_text'][2] + '<br>' + place['opening_hours']['weekday_text'][3] + '<br>' + place['opening_hours']['weekday_text'][4] + '<br>' + place['opening_hours']['weekday_text'][5] + '<br>' + place['opening_hours']['weekday_text'][6] + '<br>'
                 ;
             if (typeof place['opening_hours']['weekday_text'] === 'undefined') {
-                console.log(place['opening_hours']['weekday_text'][0]);
+                console.log(place['opening_hours']['weekday_text']);
                 i + place['opening_hours']['weekday_text'][0] + '<br>' + place['opening_hours']['weekday_text'][1] + '<br>' + place['opening_hours']['weekday_text'][2] + '<br>' + place['opening_hours']['weekday_text'][3] + '<br>' + place['opening_hours']['weekday_text'][4] + '<br>' + place['opening_hours']['weekday_text'][5] + '<br>' + place['opening_hours']['weekday_text'][6] + '<br>';
             }
             var dom = document.createElement("div");
@@ -670,6 +769,7 @@ function marker(place) {
             if (place['opening_hours']) {
                 if (place['opening_hours']['weekday_text']) {
                     i = i + place['opening_hours']['weekday_text'][0] + '<br>' + place['opening_hours']['weekday_text'][1] + '<br>' + place['opening_hours']['weekday_text'][2] + '<br>' + place['opening_hours']['weekday_text'][3] + '<br>' + place['opening_hours']['weekday_text'][4] + '<br>' + place['opening_hours']['weekday_text'][5] + '<br>' + place['opening_hours']['weekday_text'][6] + '<br>'
+                    console.log(place['opening_hours']['weekday_text']);
                 }
             }
             var dom = document.createElement("div");
@@ -691,7 +791,9 @@ function marker(place) {
 }
 
 function searchHours(place, week, time) {
-    console.log('d');
+    console.log('searchHours');
+    console.log(week, time);
+
     var service = new google.maps.places.PlacesService(map);
     service.getDetails({
         placeId: place['place_id'],
@@ -699,17 +801,22 @@ function searchHours(place, week, time) {
     }, function (place, status) {
         // if (status == google.maps.places.PlacesServiceStatus.OK) {
         if (place['opening_hours']) {
+            console.log('G');
             if (place['opening_hours']['weekday_text']) {
-                var day = place['opening_hours']['weekday_text'][0]
+                var day = place['opening_hours']['weekday_text'][week];
                 console.log(place['opening_hours']['weekday_text']);
                 day = day.split(/[:～,]/);
-                // console.log(day.length);
-                if (day[week] === ' 24 時間営業') {
-                    // console.log('yes');
-                    return true;
-                } else if (day[week] === ' 定休日') {
-                    // console.log('no');
-                    return false;
+                if (day.length === 2) {
+                    // console.log(day[1]);
+                    if (day[1] === ' 24 時間営業') {
+                        // console.log('yes');
+                        // return true;
+                        marker(place);
+                    } else if (day[week][1] === ' 定休日') {
+                        // console.log('no');
+                        return false;
+                        // break;
+                    }
                 }
                 var element;
                 for (let i = 1; i < day.length; i++) {//8時30分→830へ変換
@@ -778,9 +885,11 @@ function replaceFullToHalf(str) {
 function reSearch() {
     var input = document.getElementById("pac-input");
     input.value = word;
+    // console.log(input.value);
     input.focus();
     let KEvent = new KeyboardEvent("keydown", { keyCode: 13 });
     input.dispatchEvent(KEvent);
+    enterFlag = true;
 }
 
 
@@ -789,6 +898,7 @@ function enter() {
     input.focus();
     let KEvent = new KeyboardEvent("keydown", { keyCode: 13 });
     input.dispatchEvent(KEvent);
+    enterFlag = true;
 }
 
 
@@ -1004,16 +1114,16 @@ function enter() {
 
 
 
-
 function test3(data) {
-    var dayNum;
-    var timeNum;
+    dayNum;
+    timeNum;
     dayFlag = null;
     timeFlag = null;
     word = '';
     week;
     hours;
     data = data.split(/[,、\　\ ]/);
+    // console.log(data.length);
     for (let i = 0; i < data.length; i++) {
         const day = data[i].match(/.曜日/);
         var time = replaceFullToHalf(data[i]);
@@ -1028,9 +1138,12 @@ function test3(data) {
         }
     }
     console.log(dayNum + ' ' + timeNum);
+    if (dayNum == null && timeNum == null) {
+        nullnull = 0;
+    }
     for (let i = 0; i < data.length; i++) {
         if (i != dayNum && i != timeNum) {
-            word += data[i];
+            word += ' ' + data[i];
             console.log(word);
         }
     }
@@ -1085,5 +1198,7 @@ function test3(data) {
         // reSearch(word);
         console.log('enterEnd');
     }
-    console.log(reSearchFlag);
+    // console.log(reSearchFlag);
 }
+
+
