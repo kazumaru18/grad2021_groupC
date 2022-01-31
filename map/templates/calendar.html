@@ -61,10 +61,11 @@ $(function () {
  
             // full-calendar生成する。
             self.$el.fullCalendar({
-                
+         
                 axisFormat: 'H:mm',
 	              timeFormat: {
-	              	agenda: 'H:mm{ - H:mm}'
+	              	agenda: 'H:mm',
+                      '': 'h(:mm)t',
 	              },
                 aspectRatio: 1.5,
                 droppable: true,
@@ -113,7 +114,7 @@ $(function () {
                         eventData = {
                             title: title,
                             start: start,
-                            end: end
+                            end: end,
                         };
                         self.$el.fullCalendar('renderEvent', eventData, true);
                         events.push(eventData);
@@ -124,11 +125,13 @@ $(function () {
                     
                 },
 
-                eventDrop: function(event,delta,revertFunc,calEvent,jsEvent,ui,view){
-                    $('#calendar').fullCalendar("dropEvents", calEvent.start);
-                    localStorage.setItem('events', JSON.stringify(events));//書き込み
+                //
+
+                // eventDrop: function(event,delta,revertFunc,calEvent,jsEvent,ui,view){
+                //     $('#calendar').fullCalendar("dropEvents", calEvent.start);
+                //     localStorage.setItem('events', JSON.stringify(events));//書き込み
                     
-                },
+                // },
 
                 eventRender: function (calEvent, jsEvent, view, events) {
                         (jsEvent).bind('dblclick', function () {
