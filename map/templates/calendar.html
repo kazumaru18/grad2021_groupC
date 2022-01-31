@@ -124,6 +124,12 @@ $(function () {
                     
                 },
 
+                eventDrop: function(event,delta,revertFunc,calEvent,jsEvent,ui,view){
+                    $('#calendar').fullCalendar("dropEvents", calEvent.start);
+                    localStorage.setItem('events', JSON.stringify(events));//書き込み
+                    
+                },
+
                 eventRender: function (calEvent, jsEvent, view, events) {
                         (jsEvent).bind('dblclick', function () {
                             if (!confirm('本当に削除しますか？')) {
