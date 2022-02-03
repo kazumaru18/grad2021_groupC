@@ -83,6 +83,7 @@ function initMap() {
   // Listen for the event fired when the user selects a prediction and retrieve
   // more details for that place.
   // var week, hours;
+  // const bounds = new google.maps.LatLngBounds();
   searchBox.addListener("places_changed", () => {
       markers.forEach((marker) => {
           marker.setMap(null);
@@ -125,7 +126,15 @@ function initMap() {
           }
           // searchHours(place,week,hours);
           // });
+          // if (place.geometry.viewport) {
+          //   // Only geocodes have viewport.
+          //   bounds.union(place.geometry.viewport);
+          // } else {
+          //   bounds.extend(place.geometry.location);
+          // }
       });
+      map.fitBounds(bounds);
+
       dayNum = null;
       timeNum = null;
       dayFlag = null;
