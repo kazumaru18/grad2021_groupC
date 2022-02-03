@@ -14,11 +14,15 @@
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.1.1/fullcalendar.min.js"></script>
   <link href="{% static 'css/map.css' %}" rel="stylesheet" />
   <style id="compiled-css" type="text/css">
-    #calendar {
+    .cal_main{
       max-width: 1020px;
       width: 95%;
       margin: 0 auto;
       padding-top: 10px;
+    }
+    #calendar {
+      padding-top: 20px;
+      background-color: #ffff;
     }
   </style>
 </head>
@@ -57,9 +61,10 @@
     });
   });
 </script>
-    
-<div id='calendar'></div>
-    
+<div class="cal_main">
+  <h1 class="summary_title" data-en="Calendar"><span>予定表</span></h1>
+  <div id='calendar'></div>
+</div>  
 <footer id="footer">
   <section class="primary">
     <div class="footer">
