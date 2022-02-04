@@ -1,1 +1,0 @@
-var apiKey = 'AIzaSyAaKn-PcSb_pTFwH6IJ2_ANNLKsHVMHWwU';
