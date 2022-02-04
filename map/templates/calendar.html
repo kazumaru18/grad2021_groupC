@@ -62,11 +62,11 @@ $(function () {
             // full-calendar生成する。
             self.$el.fullCalendar({
          
-                axisFormat: 'H:mm',
+                axisFormat: 'HH:mm',
 	              timeFormat: {
-	              	agenda: 'H:mm',
-                      '': 'h(:mm)t',
-	              },
+	              	agenda: 'HH:mm',
+                      '': 'hh(:mm)t',
+	              
                 aspectRatio: 1.5,
                 droppable: true,
                 weekend: true,
@@ -74,7 +74,7 @@ $(function () {
                 eventStartEditable: true,
                 eventDurationEditable: true,
                 dragScroll: true,
-            
+            },
                 buttonText: {
                     today:    '今日',
                     month:    '月',
@@ -90,7 +90,7 @@ $(function () {
                 defaultView: 'month',
                 firstDay: 1,
                 handleWindowResize: true,
-                allDayDefault: true,
+                // allDayDefault: true,
                 firstHour: 7,
                 columnFormat: {
                     month: 'ddd',
@@ -105,6 +105,15 @@ $(function () {
                 
                 selectable: true,
                 selectHelper: true,
+
+                // displayEventTime:true,
+
+                // // displayEventEnd:{
+                // //     month:true,
+                // //     basicweek:true,
+                // //     "default":true,
+                // // },
+                // // timeFormat:"HH:mm",
 
                 //イベントの追加
                 select: function (start, end) {
