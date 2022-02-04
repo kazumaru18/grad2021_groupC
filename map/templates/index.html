@@ -35,7 +35,7 @@
   <div class="top-search">
     <h1 class="search-title">キーワード検索</h1>
     <form method="get" action="./map/?" class="search_container">
-      <input type="text" size="90%" name="q" placeholder="キーワード検索">
+      <input type="text" size="130%" name="q" placeholder="キーワード検索">
       <input class="musimegane" type="submit" value="&#xf002">
     </form>
     <h1 class="search-subtitle">音声検索</h1>
@@ -79,6 +79,7 @@
           <li><a href="{% url 'index' %}">ホーム</a></li>
           <li><a href="{% url 'describe' %}">システム概要</a></li>
           <li><a href="{% url 'map' %}">マップ</a></li>
+          <li><a href="{% url 'calendar' %}">予定表</a></li>
         </ul>
         <ul class="sns-navi">
           <li><a href="https://twitter.com/ohara_kashiwa"><i class="fa fa-twitter"></i></a></li>
