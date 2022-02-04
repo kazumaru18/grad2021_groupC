@@ -270,6 +270,7 @@ function calcRoute(s, e) {
 
     directionsService.route(request, function (response, status) {
         // if (status == google.maps.DirectionsStatus.OK) {
+            delete response['routes'][0]['bounds'];
         directionsDisplay.setDirections(response);
         // } else {
         // alert('ルートが見つかりませんでした…');
