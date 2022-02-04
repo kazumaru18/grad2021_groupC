@@ -10,3 +10,5 @@ class CalendarView(generic.TemplateView):
   template_name="calendar.html"
 class DescriveView(generic.TemplateView):
   template_name="describe.html"
+class OnseiView(generic.TemplateView):
+  template_name="onsei.html"

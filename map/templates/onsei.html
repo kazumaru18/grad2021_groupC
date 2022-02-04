@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% block title %}観光推進MAP{% endblock%}
+{% load static %}
+
+{% block contents%}
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.css">
+<!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"> -->
+<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css"> -->
+<!-- <link href="{% static 'css/style.css' %}" rel="stylesheet" /> -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.min.js"></script>
+<script src="{% static 'js/onseiapi.js' %}"></script> 
+  <script src="{% static 'js/onsei.js' %}"></script> 
+  <script src="{% static 'js/recorder.js' %}"></script> 
+
+<script type="text/javascript">
+  $(document).ready(function () {
+    $('.slider').bxSlider({
+      auto: true,
+      pause: 3000,
+    });
+  });
+</script>
+
+<button onclick="startRecording(this)">録音開始</button>
+  <button onclick="stopRecording(this)">録音停止</button>
+  <ul id="output"></ul>
+
+<footer id="footer">
+  <section class="primary">
+    <div class="footer">
+      <p class="logo"><a href="https://github.com/kazumaru18/grad2021_groupC">GroupC</a></p>
+      <p class="address">
+        〒277-0842 千葉県柏市末広町10-1<br>
+        TEL : 04-7147-1008　/　二号館 : 04-7167-2601
+      </p>
+      <div class="navi-row">
+        <ul class="navi">
+          <li><a href="{% url 'index' %}">ホーム</a></li>
+          <li><a href="{% url 'describe' %}">システム概要</a></li>
+          <li><a href="{% url 'map' %}">マップ</a></li>
+        </ul>
+        <ul class="sns-navi">
+          <li><a href="https://twitter.com/ohara_kashiwa"><i class="fa fa-twitter"></i></a></li>
+          <li><a href="{% url 'map' %}"><i class="fa fa-map"></i></a></li>
+          <li><a href="https://github.com/kazumaru18/grad2021_groupC"><i class="fa fa-github"></i></a></li>
+          <li><a href="{% url 'index' %}"><i class="fa fa-home"></i></a></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+  <section class="secondary">
+    <div class="footer">
+      <p class="copyright">Copyright 2022 GroupC.</p>
+    </div>
+  </section>
+</footer>
+
+<div class="bg_pattern Paper_v2"></div>
+
+{% endblock %}
