@@ -2,32 +2,32 @@ function gmap() {
     var sc = document.createElement('script');
     sc.src = 'https://maps.googleapis.com/maps/api/js?key=' + conf.MAP_KEY + '&libraries=places&callback=initMap&v=weekly&v=beta';
     document.body.appendChild(sc);
-}
-
-var pos;
-let markers = [];
-var r, p;
-var info = null;
-var map;
-var cate;
-var directionsDisplay;
-var directionsService;
-var mode, highways;
-var timeId;
-var input;
-var searchBox;
-var reSearchFlag = true;
-var word = '';
-var week;
-var hours;
-var dayFlag;
-var timeFlag;
-var enterFlag;
-var nullnull = 1;
-var dayNum;
-var timeNum;
-var weeks = { '月曜日': 0, '火曜日': 1, '水曜日': 2, '木曜日': 3, '金曜日': 4, '土曜日': 5, '日曜日': 6 };
-function initMap() {
+  }
+  
+  var pos;
+  let markers = [];
+  var r, p;
+  var info = null;
+  var map;
+  var cate;
+  var directionsDisplay;
+  var directionsService;
+  var mode, highways;
+  var timeId;
+  var input;
+  var searchBox;
+  var reSearchFlag = true;
+  var word = '';
+  var week;
+  var hours;
+  var dayFlag;
+  var timeFlag;
+  var enterFlag;
+  var nullnull = 1;
+  var dayNum;
+  var timeNum;
+  var weeks = { '月曜日': 0, '火曜日': 1, '水曜日': 2, '木曜日': 3, '金曜日': 4, '土曜日': 5, '日曜日': 6 };
+  function initMap() {
     map = new google.maps.Map(document.getElementById('map'), {
         center: { lat: 35.859766, lng: 139.971014 },
         zoom: 14,
@@ -47,7 +47,7 @@ function initMap() {
         //情報ウィンドウを表示
         infowindow.open(map);
     }
-
+  
     //ブラウザが対応している場合、position にユーザーの位置情報が入る
     navigator.geolocation.getCurrentPosition(function (position) {
         //position から緯度経度（ユーザーの位置）のオブジェクトを作成し変数に代入
@@ -65,8 +65,8 @@ function initMap() {
         //情報ウィンドウを表示
         infowindow.open(map);
     });
-
-
+  
+  
     var weeks = { '月曜日': 0, '火曜日': 1, '水曜日': 2, '木曜日': 3, '金曜日': 4, '土曜日': 5, '日曜日': 6 };
     var url = new URL(window.location.href);
     // URLSearchParamsオブジェクトを取得
@@ -79,22 +79,23 @@ function initMap() {
     map.addListener("bounds_changed", () => {
         searchBox.setBounds(map.getBounds());
     });
-
+  
     // Listen for the event fired when the user selects a prediction and retrieve
     // more details for that place.
     // var week, hours;
+    // const bounds = new google.maps.LatLngBounds();
     searchBox.addListener("places_changed", () => {
         markers.forEach((marker) => {
             marker.setMap(null);
         });
         markers = [];
         var str = input.value;
-
+  
         test3(str);
         console.log(word);
         console.log(week);
         console.log(hours);
-
+  
         console.log(str);
         console.log(nullnull);
         // if (nullnull == 0) {
@@ -106,7 +107,7 @@ function initMap() {
         console.log(word);
         console.log(week);
         console.log(hours);
-
+  
         const places = searchBox.getPlaces();
         places.forEach((place) => {
             // service.getDetails({
@@ -125,7 +126,15 @@ function initMap() {
             }
             // searchHours(place,week,hours);
             // });
+            // if (place.geometry.viewport) {
+            //   // Only geocodes have viewport.
+            //   bounds.union(place.geometry.viewport);
+            // } else {
+            //   bounds.extend(place.geometry.location);
+            // }
         });
+        map.fitBounds(bounds);
+  
         dayNum = null;
         timeNum = null;
         dayFlag = null;
@@ -133,10 +142,10 @@ function initMap() {
         word = '';
         week = null;
         hours = null;
-        nullnull = 1; 
+        nullnull = 1;
     });
-
-
+  
+  
     $('#mise').on('click', function () {
         const input = document.getElementById("pac-input");
         input.value = '飲食店';
@@ -145,7 +154,7 @@ function initMap() {
         params.set('q', '飲食店');
         callback();
     });
-
+  
     function callback(results, status) {
         var latlng = map.getCenter();
         var lat = latlng.lat();
@@ -173,14 +182,14 @@ function initMap() {
             console.log("no"); // 失敗時
         });
     }
-
+  
     function gourmetMarker(res, pos) {
         //var placeLoc = place.geometry.location; 
         var marker = new google.maps.Marker({
             map: map,
             position: { lat: res['lat'], lng: res['lng'] }  //results[i].geometry.location
         });
-
+  
         //マーカーにイベントリスナを設定
         marker.addListener('click', function () {
             if (info != null) {
@@ -192,7 +201,7 @@ function initMap() {
             var i = "<img src='" + res['logo_image'] + "'>" + "<br>" + res['name'] + "<br>" + res['address'] + "<br>" + res['access'] + "<br>" + "<img src='" + res['photo']['mobile']['s'] + "'>" + "<br>" + '営業時間：' + res['open'] + "<br>" + '定休日：' + res['close'] + "<br>"
                 //    + "<a href='" + res['urls']['pc'] + "'><button>ホットペッパーグルメで見る</button></a>" 
                 ;
-
+  
             var dom = document.createElement("div");
             dom.innerHTML = i + "<button id='navi'>ナビ</button>";
             dom.addEventListener("mousemove", () => {
@@ -201,7 +210,7 @@ function initMap() {
                     document.getElementById("testroot").click();
                 });
             });
-
+  
             info = new google.maps.InfoWindow({
                 position: positio,
                 content: dom
@@ -212,14 +221,14 @@ function initMap() {
         });
         markers.push(marker);
     }
-
+  
     // function enter() {
     //     var input = document.getElementById("pac-input");
     //     input.focus();
     //     let KEvent = new KeyboardEvent("keydown", { keyCode: 13 });
     //     input.dispatchEvent(KEvent);
     // }
-
+  
     window.addEventListener('load', function () {
         var url = new URL(window.location.href);
         // URLSearchParamsオブジェクトを取得
@@ -230,9 +239,9 @@ function initMap() {
         console.log(word + ' ' + hours + ' ' + week);
         enter();
     });
-
+  
     $('#cate1').on('click', function () {
-
+  
         cate = document.querySelector('#cate1').dataset["value"];
         const input = document.getElementById("pac-input");
         input.value = cate;
@@ -240,7 +249,7 @@ function initMap() {
         input.blur()
     });
     $('#cate2').on('click', function () {
-
+  
         cate = document.querySelector('#cate2').dataset["value"];
         const input = document.getElementById("pac-input");
         input.value = cate;
@@ -248,7 +257,7 @@ function initMap() {
         input.blur()
     });
     $('#cate3').on('click', function () {
-
+  
         cate = document.querySelector('#cate3').dataset["value"];
         const input = document.getElementById("pac-input");
         input.value = cate;
@@ -256,7 +265,7 @@ function initMap() {
         input.blur()
     });
     $('#cate4').on('click', function () {
-
+  
         cate = document.querySelector('#cate4').dataset["value"];
         const input = document.getElementById("pac-input");
         input.value = cate;
@@ -275,7 +284,7 @@ function initMap() {
         }
         $('#navi-end').hide();
     });
-
+  
     $('#navi-end').on('click', function () {
         if (directionsDisplay) {
             directionsDisplay.setMap(null);
@@ -285,10 +294,10 @@ function initMap() {
         gpsEmd();
         $('#navi-end').hide();
     });
-}
-
-var endPoint;
-function Display_JS(start, end) {
+  }
+  
+  var endPoint;
+  function Display_JS(start, end) {
     const input = document.getElementById("pac-input");
     input.value = null;
     if (info != null) {
@@ -307,10 +316,10 @@ function Display_JS(start, end) {
     var ep = document.getElementById('ep');
     ep.value = end;
     endPoint = end;
-}
-
-
-function initialize(s, e) {
+  }
+  
+  
+  function initialize(s, e) {
     // インスタンス[geocoder]作成
     var geocoder = new google.maps.Geocoder();
     geocoder.geocode({
@@ -325,10 +334,10 @@ function initialize(s, e) {
         // alert('取得できませんでした…');
         // }
     });
-}
-
-// ルート取得
-function calcRoute(s, e) {
+  }
+  
+  // ルート取得
+  function calcRoute(s, e) {
     switch ($("#mode").val()) {
         case "driving":
             mode = google.maps.DirectionsTravelMode.DRIVING;
@@ -343,7 +352,7 @@ function calcRoute(s, e) {
             mode = google.maps.DirectionsTravelMode.WALKING;
             break;
     }
-
+  
     if ($('#highways').val() == 'yes') {
         highways = false;
     } else if ($('#highways').val() == 'no') {
@@ -355,10 +364,10 @@ function calcRoute(s, e) {
         travelMode: mode,   //交通手段
         avoidHighways: highways,        // 高速道路利用フラグ
     };
-
+  
     // インスタンス作成
     directionsService = new google.maps.DirectionsService();
-
+  
     directionsService.route(request, function (response, status) {
         // if (status == google.maps.DirectionsStatus.OK) {
         directionsDisplay.setDirections(response);
@@ -366,11 +375,11 @@ function calcRoute(s, e) {
         // alert('ルートが見つかりませんでした…');
         // }
     });
-}
-
-
-var watch_id = 0;
-document.addEventListener("DOMContentLoaded", function () {
+  }
+  
+  
+  var watch_id = 0;
+  document.addEventListener("DOMContentLoaded", function () {
     // 監視識別ID
     watch_id = 0;
     // ボタンにclickイベントのリスナーをセット
@@ -392,12 +401,12 @@ document.addEventListener("DOMContentLoaded", function () {
     //         button.textContent = " 位置情報の取得停止 ";
     //     };
     // }, false);
-}, false);
-
-var num = 0;
-
-// リアルタイム監視
-function successCallback(position) {
+  }, false);
+  
+  var num = 0;
+  
+  // リアルタイム監視
+  function successCallback(position) {
     markers.forEach((marker) => {
         marker.setMap(null);
     });
@@ -410,8 +419,8 @@ function successCallback(position) {
     // 経度
     var glLongitude = position.coords.longitude;
     // document.querySelector('#longitude').textContent = glLongitude;
-
-
+  
+  
     var geo_text = "緯度:" + position.coords.latitude + "\n";
     geo_text += "経度:" + position.coords.longitude + "\n";
     // geo_text += "高度:" + position.coords.altitude + "\n";
@@ -419,23 +428,24 @@ function successCallback(position) {
     // geo_text += "高度精度:" + position.coords.altitudeAccuracy  + "\n";
     geo_text += "移動方向:" + position.coords.heading + "\n";
     geo_text += "速度:" + position.coords.speed + "\n";
-
+  
     // var date = new Date(position.timestamp);
-
+  
     // geo_text += "取得時刻:" + date.toLocaleString() + "\n";
     geo_text += "取得回数:" + (++num) + "\n";
-
+  
     document.getElementById('position_view').innerHTML = geo_text;
-
+  
     marker = new google.maps.Marker({
         map,
         // title: place.name,
         position: { lat: glLatitude, lng: glLongitude },
     });
     markers.push(marker);
-}
-
-function syousai() {
+  
+  }
+  
+  function syousai() {
     var latlng = map.getCenter();
     var lat = latlng.lat();
     var lng = latlng.lng();
@@ -445,16 +455,16 @@ function syousai() {
     // var genre = g.value;
     var url = '//webservice.recruit.co.jp/hotpepper/gourmet/v1/?key=' + conf.GOURMET_KEY + '&lat=' + lat + '&lng=' + lng + '&range=' + range;
     var arr = ['&card=1', '&lunch=1', '&wifi=1', '&private_room=1', '&midnight_meal=1', '&pet=1', '&cocktail=1', '&shochu=1', '&sake=1', '&wine=1', '&parking=1', '&barrier_free=1', '&free_food=1', '&free_drink=1', '&child=1', '&non_smoking=1', '&tatami=1', '&course=1'];
-
+  
     const syousai = document.ca.syousai;
-
+  
     for (let i = 0; i < syousai.length; i++) {
         if (syousai[i].checked) {
             url += arr[i];
         }
     }
     url += '&order=4&count=50&format=jsonp';
-
+  
     console.log(url);
     if (info != null) {
         info.close();
@@ -463,7 +473,7 @@ function syousai() {
         marker.setMap(null);
     });
     markers = [];
-
+  
     // &genre=
     $.ajax({
         url: url,
@@ -479,15 +489,15 @@ function syousai() {
     }).fail(function (data) {
         console.log("no"); // 失敗時
     });
-}
-
-function syousaiMarker(res, pos) {
+  }
+  
+  function syousaiMarker(res, pos) {
     //var placeLoc = place.geometry.location; 
     var marker = new google.maps.Marker({
         map: map,
         position: { lat: res['lat'], lng: res['lng'] }  //results[i].geometry.location
     });
-
+  
     //マーカーにイベントリスナを設定
     marker.addListener('click', function () {
         console.log("sssss");
@@ -505,7 +515,7 @@ function syousaiMarker(res, pos) {
             ;
         // let button = document.getElementById('navi');
         // $('navi').on('click', Display_JS(start,end));
-
+  
         var dom = document.createElement("div");
         dom.innerHTML = i + "<button id='navi'>ナビ</button>";
         dom.addEventListener("mousemove", () => {
@@ -514,7 +524,7 @@ function syousaiMarker(res, pos) {
                 document.getElementById("testroot").click();
             });
         });
-
+  
         info = new google.maps.InfoWindow({
             position: positio,
             content: dom
@@ -524,12 +534,12 @@ function syousaiMarker(res, pos) {
         info.open(map);
     });
     markers.push(marker);
-}
-
-
-
-
-function se() {
+  }
+  
+  
+  
+  
+  function se() {
     if (directionsDisplay) {
         directionsDisplay.setMap(null);
         directionsDisplay.setPanel(null);
@@ -541,13 +551,100 @@ function se() {
     } else {
         s = $('#sp').val();
     }
-    e = $('#ep').val();  
+    e = $('#ep').val();
+    // console.log(s);
+    // console.log(e);
+    // ini(s,e);
+    // cal(s,e);   
     initialize(s, e);
     calcRoute(s, e);
     $('#navi-end').show();
-}
-
-function marker(place) {
+  }
+  
+  
+  function root(position) {
+    markers.forEach((marker) => {
+        marker.setMap(null);
+    });
+    markers = [];
+  
+    var glLatitude = position.coords.latitude;
+  
+    var glLongitude = position.coords.longitude;
+  
+    var geo_text = "緯度:" + position.coords.latitude + "\n";
+    geo_text += "経度:" + position.coords.longitude + "\n";
+    // geo_text += "高度:" + position.coords.altitude + "\n";
+    geo_text += "位置精度:" + position.coords.accuracy + "\n";
+    // geo_text += "高度精度:" + position.coords.altitudeAccuracy  + "\n";
+    geo_text += "移動方向:" + position.coords.heading + "\n";
+    geo_text += "速度:" + position.coords.speed + "\n";
+  
+  
+    geo_text += "取得回数:" + (++num) + "\n";
+  
+    // document.getElementById('position_view').innerHTML = geo_text;
+  
+    var start = position.coords.latitude + ',' + position.coords.longitude;
+    // Display_JS(start,'柏駅');
+  
+    // initialize(start, '柏駅');
+    calcRoute(start, endPoint);
+  }
+  
+  function gpsStart() {
+    if (watch_id <= 0) {
+        watch_id = window.navigator.geolocation.watchPosition(root);
+    }
+  }
+  
+  function gpsEmd() {
+    if (watch_id > 0) {
+        window.navigator.geolocation.clearWatch(watch_id);
+        watch_id = 0;
+    }
+  }
+  
+  function openMarker(place) {
+    var search;
+    // Create a marker for each place.
+    search = new google.maps.Marker({
+        map,
+        title: place.name,
+        position: place.geometry.location,
+    }),
+        search.addListener('click', function () {
+            if (info != null) {
+                info.close();
+            }
+            start = pos['lat'] + ',' + pos['lng'];
+            var i = place.name + "<br>★：" + place.rating + "<br>" + place.formatted_address + "<br>"
+                //    + "<a href='" + 'https://www.google.com/maps/search/?api=1&query=' + place.name +"'><button>GoogleMapで見る</button></a>"
+                // + place['opening_hours']['weekday_text'][0] + '<br>' + place['opening_hours']['weekday_text'][1] + '<br>' + place['opening_hours']['weekday_text'][2] + '<br>' + place['opening_hours']['weekday_text'][3] + '<br>' + place['opening_hours']['weekday_text'][4] + '<br>' + place['opening_hours']['weekday_text'][5] + '<br>' + place['opening_hours']['weekday_text'][6] + '<br>'
+                ;
+            if (typeof place['opening_hours']['weekday_text'] === 'undefined') {
+                console.log(place['opening_hours']['weekday_text']);
+                i + place['opening_hours']['weekday_text'][0] + '<br>' + place['opening_hours']['weekday_text'][1] + '<br>' + place['opening_hours']['weekday_text'][2] + '<br>' + place['opening_hours']['weekday_text'][3] + '<br>' + place['opening_hours']['weekday_text'][4] + '<br>' + place['opening_hours']['weekday_text'][5] + '<br>' + place['opening_hours']['weekday_text'][6] + '<br>';
+            }
+            var dom = document.createElement("div");
+            dom.innerHTML = i + "<button id='navi'>ナビ</button>";
+            dom.addEventListener("mousemove", () => {
+                $('#navi').on('click', function () {
+                    Display_JS(start, place.formatted_address);
+                    document.getElementById("testroot").click();
+                });
+            });
+            info = new google.maps.InfoWindow({
+                position: place.geometry.location,
+                content: dom
+            });
+            info.open(map);
+        })
+    console.log('openMarker');
+    markers.push(search);
+  }
+  
+  function marker(place) {
     console.log(place);
     // console.log("qwp");
     var search;
@@ -589,9 +686,9 @@ function marker(place) {
         })
     // console.log('marker');
     markers.push(search);
-}
-
-function searchHours(place, week, time) {
+  }
+  
+  function searchHours(place, week, time) {
     time = hours;
     console.log(place);
     console.log('searchHours');
@@ -602,18 +699,18 @@ function searchHours(place, week, time) {
         placeId: place['place_id'],
         // fields: ['name', 'formatted_address', 'geometry', 'url']
     }, function (place, status) {
-
+  
         if (place['opening_hours']) {
             console.log('G');
             if (place['opening_hours']['weekday_text']) {
                 var day = place['opening_hours']['weekday_text'][1];
-
-
+  
+  
                 console.log(place['opening_hours']['weekday_text'][1]);
                 // if (day.indexOf(/[:～,]/)) {
                 day = day.split(/[:～,]/);
                 // }
-
+  
                 if (day.length === 2) {
                     console.log(day[1]);
                     if (day[1] === ' 24 時間営業') {
@@ -683,27 +780,27 @@ function searchHours(place, week, time) {
             }
         }
     });
-}
-
-// 全角→半角(英数字)
-function replaceFullToHalf(str) {
+  }
+  
+  // 全角→半角(英数字)
+  function replaceFullToHalf(str) {
     return str.replace(/[！-～]/g, function (s) {
         return String.fromCharCode(s.charCodeAt(0) - 0xFEE0);
     });
-}
-
-
-function enter() {
+  }
+  
+  
+  function enter() {
     console.log('Enter!!');
     var input = document.getElementById("pac-input");
     input.focus();
     let KEvent = new KeyboardEvent("keydown", { keyCode: 13 });
     input.dispatchEvent(KEvent);
     enterFlag = true;
-}
-
-
-function test3(data) {
+  }
+  
+  
+  function test3(data) {
     dayNum;
     timeNum;
     dayFlag = null;
@@ -712,16 +809,16 @@ function test3(data) {
     week;
     hours;
     nullnull = 1;
-    data = data.split(/[,、\　\ 。]/);
+    data = data.split(/[,、\　\ ]/);
     console.log(data.length);
     for (let i = 0; i < data.length; i++) {
         const day = data[i].match(/.曜日/);
-
+  
         var time = replaceFullToHalf(data[i]);
-
+  
         // var time = data[i].match(/([0-9]+時[0-9]+分$|[0-9]+時半$|[0-9]+時$)/);
         time = time.match(/([0-9]+[0-9時]+分$|[0-9]+時半$|[0-9]+時$)/);
-
+  
         if (day != null) {
             dayNum = i;
         }
@@ -754,7 +851,7 @@ function test3(data) {
         week = weeks[data[dayNum]];
         console.log(week);
     }
-
+  
     console.log(week + " " + timeNum + ' ' + word);
     // if (typeof timeNum === "undefined") {
     if (timeNum) {
@@ -793,14 +890,14 @@ function test3(data) {
         console.log('enterEnd');
     }
     // console.log(reSearchFlag);
-}
-
-
-
-
-
-
-function searchHours(place, week, time) {
+  }
+  
+  
+  
+  
+  
+  
+  function searchHours(place, week, time) {
     console.log('d');
     var service = new google.maps.places.PlacesService(map);
     service.getDetails({
@@ -889,4 +986,4 @@ function searchHours(place, week, time) {
             }
         }
     });
-}
+  }
