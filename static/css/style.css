@@ -2,7 +2,7 @@
   box-sizing: border-box;
 }
 
-body {
+html, body {
   margin: 0;
   padding: 0;
   height: 100%;
@@ -55,7 +55,7 @@ header {
   padding: 0px 10% 0px;
   position: static;
   top: 0;
-  background-color: #fff;
+  /* background-color: #fff; */
   display: flex;
   align-items: center;
 }
