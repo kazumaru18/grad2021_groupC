@@ -128,8 +128,8 @@
                                     // delete storageItem.calEvent;
                                     storageItem.splice(num, 1);
                                     localStorage.setItem('events', JSON.stringify(storageItem));
+                                    location.reload('true');
                                 }
-
                             }
                         });
                     },
