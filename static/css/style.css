@@ -58,12 +58,33 @@ header {
   background-color: #fff;
   display: flex;
   align-items: center;
+  box-shadow: 2px 2px 4px #dcdcdc;
 }
-
 
 /* 以下ハンバーガーメニュー */
 .btn-trigger{
   display: none;
+}
+#ham_nav li{
+  padding-right: 15px;
+}
+#ham_nav a{
+  position: relative;
+  transition: .3s;
+}
+#ham_nav a::after {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  content: '';
+  width: 0;
+  height: 2px;
+  background-color: #dcdcdc;
+  transition: .3s;
+  transform: translateX(-50%);
+}
+#ham_nav a:hover::after{
+  width: 100%;
 }
 @media screen and (max-width: 680px) {
   .pc-nav{
@@ -135,6 +156,9 @@ header {
   }
   #ham_nav{
     flex-direction: column;
+  }
+  #ham_nav li{
+    border-bottom: 1px solid #a9a9a9;
   }
 }
 /* a */
