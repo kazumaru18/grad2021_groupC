@@ -26,6 +26,9 @@ var enterFlag;
 var nullnull = 1;
 var dayNum;
 var timeNum;
+var year;
+var month;
+var nowDay;
 var weeks = { '月曜日': 0, '火曜日': 1, '水曜日': 2, '木曜日': 3, '金曜日': 4, '土曜日': 5, '日曜日': 6 };
 function initMap() {
     map = new google.maps.Map(document.getElementById('map'), {
@@ -226,7 +229,8 @@ function initMap() {
         var params = url.searchParams;
         input = document.getElementById("pac-input");
         var str = params.get('q');
-        test3(str);
+        // test3(str);
+        dayWeek(2022, 2, 7);
         console.log(word + ' ' + hours + ' ' + week);
         enter();
     });
@@ -743,4 +747,35 @@ function searchHours(place, week, time) {
             }
         }
     });
+}
+
+
+
+
+
+function dayWeek(year, month, nowDay) {
+    if (year == null) {
+        var date = new Date();
+        year = date.getFullYear();
+    }
+    if (month == null) {
+        var date = new Date();
+        month = date.getMonth() + 1;
+    }
+    if (nowDay == null) {
+        var date = new Date();
+        nowDay = date.getDate();
+    }
+
+    // Dateオブジェクトには実際の月ー１の値を指定するため
+    // var jsMonth = month - 1;
+    // Dateオブジェクトは曜日情報を0から6の数値で保持しているため、翻訳する
+    var dayOfWeekStrJP = [6, 0, 1, 2, 3, 4, 5];
+    // 指定日付で初期化したDateオブジェクトのインスタンスを生成する
+    var date = new Date(year, month, nowDay);
+    // 木曜日は数値の4として保持されているため、dayOfWeekStrJP[4]の値が出力される
+    console.log(year);
+    console.log(month);
+    console.log(nowDay);
+    console.log(dayOfWeekStrJP[date.getDay()]);
 }
