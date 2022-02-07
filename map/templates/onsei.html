@@ -2,28 +2,29 @@
 {% block title %}観光推進MAP{% endblock%}
 {% load static %}
 
-{% block contents%}
-
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-<script src="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.min.js"></script>
+{% block head%}
+<link href="{% static 'css/onsei.css' %}" rel="stylesheet" />
 <script src="{% static 'js/onseiapi.js' %}"></script> 
-  <script src="{% static 'js/onsei.js' %}"></script> 
-  <script src="{% static 'js/recorder.js' %}"></script> 
-
-<script type="text/javascript">
-  $(document).ready(function () {
-    $('.slider').bxSlider({
-      auto: true,
-      pause: 3000,
-    });
-  });
+<script src="{% static 'js/onsei.js' %}"></script> 
+<script src="{% static 'js/recorder.js' %}"></script> 
+<script>
+  function mario(button) {
+    window.location.href = "{% url 'map' %}" + '?q=' + this.output.innerHTML;
+  }
+  function clear(button) {
+    output = '';
+  }
 </script>
+{% endblock %}
 
-<button onclick="startRecording(this)">録音開始</button>
-<button onclick="stopRecording(this)">録音停止</button>
-<ul id="output"></ul>
-
-<!-- <div class="bg_pattern Paper_v2"></div> -->
-
+{% block contents%}
+<div class="onseimain">
+  <h1 class="summary_title" data-en="Voice search"><span>音声検索</span></h1>
+  <button class="btn btn--circle btn--circle-c btn--shadow" onclick="startRecording(this)"><i class="fa fa-microphone"></i></button>
+  <!-- <p>マイクを押して</p> -->
+  <button class="btn btn--circle btn--circle-c btn--shadow" onclick="stopRecording(this)"><i class="fa fa-pencil"></i></button>
+  <div class="onseioutput" id="output"></div>
+  <button onclick="mario(this)">検索</button>
+  <button onclick="clear(this)">テキストクリア</button>
+</div>
 {% endblock %}

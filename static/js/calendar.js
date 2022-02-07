@@ -83,7 +83,7 @@ $(function () {
                       localStorage.setItem('events', JSON.stringify(events));
                   }
                   self.$el.fullCalendar('unselect');
-
+                  location.reload('true');
                   
               },
 
@@ -121,6 +121,7 @@ $(function () {
                                   storageItem.splice(num, 1);
                                   localStorage.setItem('events', JSON.stringify(storageItem));
                               }
+                              location.reload('true');
 
                           }
                       });
