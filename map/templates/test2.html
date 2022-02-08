@@ -10,7 +10,34 @@
 
 <body>
     <script>
-        
+        dayWeek( 2022, 2, 8);
+
+        function dayWeek(year, month, nowDay) {
+            if (year == null) {
+                var date = new Date();
+                year = date.getFullYear();
+            }
+            if (month == null) {
+                var date = new Date();
+                month = date.getMonth() + 1;
+            }
+            if (nowDay == null) {
+                var date = new Date();
+                nowDay = date.getDate();
+            }
+
+            // Dateオブジェクトには実際の月ー１の値を指定するため
+            // var jsMonth = month - 1;
+            // Dateオブジェクトは曜日情報を0から6の数値で保持しているため、翻訳する
+            var dayOfWeekStrJP = [6, 0, 1, 2, 3, 4, 5];
+            // 指定日付で初期化したDateオブジェクトのインスタンスを生成する
+            var date = new Date(year, month, nowDay);
+            // 木曜日は数値の4として保持されているため、dayOfWeekStrJP[4]の値が出力される
+            console.log(year);
+            console.log(month);
+            console.log(nowDay);
+            console.log(dayOfWeekStrJP[date.getDay()]);
+        }
     </script>
 </body>
 
