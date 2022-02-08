@@ -21,6 +21,10 @@ window.onload = function init() {
 // 録音開始
 function startRecording(button) {
   recorder && recorder.record()
+
+  window.setTimeout(function(){
+    stopRecording()
+  }, 10000)
 }
 
 // 録音停止

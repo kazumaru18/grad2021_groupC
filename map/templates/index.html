@@ -2,15 +2,10 @@
 {% block title %}観光推進MAP{% endblock%}
 {% load static %}
 
-{% block contents%}
-
+{% block head%}
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.css">
-<!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"> -->
-<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css"> -->
-<!-- <link href="{% static 'css/style.css' %}" rel="stylesheet" /> -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.min.js"></script>
-
 <script type="text/javascript">
   $(document).ready(function () {
     $('.slider').bxSlider({
@@ -19,8 +14,11 @@
     });
   });
 </script>
+{% endblock %}
 
-<main>
+<!-- メイン ------------------------------------>
+{% block contents%}
+<main style="max-width: 1020px; width: 90%; margin: 0 auto; padding-top: 10px;">
   <div class="slider">
     <img src="{% static 'images/01.jpg' %}" width="" height="auto" alt="">
     <img src="{% static 'images/02.jpg' %}" width="" height="auto" alt="">
@@ -40,7 +38,7 @@
     </form>
     <h1 class="search-subtitle">音声検索</h1>
     <div class="ons">
-      <a href="{% url 'onsei' %}"><button class="btn btn--circle btn--circle-c btn--shadow"><i class="fa fa-microphone"></i> 音声検索ページへ</button></a>
+      <a href="{% url 'onsei' %}"><button class="btn btn--circle btn--circle-c btn--shadow"><i class="fa fa-microphone"></i> 音声検索ページ</button></a>
     </div>
   </div>
   <div class="news">
@@ -67,7 +65,4 @@
     </dl>
   </div>
 </main>
-
-
-
 {% endblock %}

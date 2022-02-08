@@ -5,54 +5,49 @@
 <!-- メイン ------------------------------------>
 {% block contents%}
 <main style="max-width: 1020px; width: 90%; margin: 0 auto; padding-top: 10px;">
-<h1 class="summary_title" data-en="Summary"><span>システム概要</span></h1>
-<div id="mainBanner" class="mainImg">
+  <h1 class="summary_title" data-en="Summary"><span>システム概要</span></h1>
+  <div id="mainBanner" class="mainImg">
     <div class="inner">
-        <img src="{% static 'images/01a.jpg' %}" alt="" width="930" height="290">
-        <div class="slogan">
-            <h2>観光推進マップ</h2>
-            <h3>初めて来た場所でも目的に合わせた店舗を検索出来るシステム</h3>
-        </div>
+      <img src="{% static 'images/01a.jpg' %}" alt="" width="930" height="290">
+      <div class="slogan">
+        <h2>観光推進マップ</h2>
+        <h3>初めて来た場所でも目的に合わせた店舗を検索出来るシステム</h3>
+      </div>
     </div>
-</div>
-
-<div id="wrapper">
-    <section class="gridWrapper">
-        <article class="grid">
-                <h3>店舗検索</h3>
-                <p class="img"><img src="{% static 'images/eyecatch1_.jpg' %}" width="220" height="300" alt=""></p>
-                <p>場所や時間帯そして人数を指定して検索を行うことで貴方の目的に合う店舗を<br>マップに表示</p>
-            </article>
-        <article class="grid">
-              <h3>周辺情報</h3>
-              <p class="img"><img src="{% static 'images/eyecatch2_.jpg' %}" width="220" height="300" alt=""></p>	
-              <p>各カテゴリーごとの現在地周辺の店舗やイベントなどを表示し知らなかった１面を発見</p>
-          </article>
-          <article class="grid">
-              <h3>ルート案内</h3>
-              <p class="img"><img src="{% static 'images/eyecatch3_.jpg' %}" width="220" height="300" alt=""></p>
-              <p>マップ上で目的地までのルートと時間を表示し素早くそしてスムーズな行動を可能にする</p>
-          </article>
-          <article class="grid">
-        <h3>カレンダー</h3>
-              <p class="img"><img src="{% static 'images/eyecatch4_.jpg' %}" width="220" height="300" alt=""></p>
-              <p>イベントや観光予定をカレンダー上に時間単位で記録し、貴方の日程計画の一助となる</p>
-          </article>
-      </section>
-
-      <section class="content">
-          <h3 class="heading">サイト開発に至った目的</h3>
-          <article>
-              <img src="{% static 'images/sample1.jpg' %}" width="320" height="240" alt="" class="alignleft frame">
-              <p><font size="4">旅行先や出張先などの土地勘のない場所で、予定や気分に合わせた飲食店などがすぐに見つけられなくて困るのではないかという</font></p>
-              <p><font size="4">今後需要が高まるであろう、旅行業界における問題点を改善しようという意見が、チーム内であげられました。</font></p>
-              <p><font size="4">このシステムは、情報伝達に重要なポイントである「５W１H」を活用して詳細な検索を行うことが出来</font></p>
-              <p><font size="4">さらに音声認識の要望文から５W１Hにあてはまる単語を抽出して検索することが可能です</font></p>
-          </article>
-      </section>
-  
   </div>
-    <div class="bg_pattern Paper_v2"></div>
+  <div id="wrapper">
+    <section class="gridWrapper">
+      <article class="grid">
+        <h3>店舗検索</h3>
+        <p class="img"><img src="{% static 'images/eyecatch1_.jpg' %}" width="220" height="300" alt=""></p>
+        <p>場所や時間帯そして人数を指定して検索を行うことで貴方の目的に合う店舗を<br>マップに表示</p>
+      </article>
+      <article class="grid">
+        <h3>周辺情報</h3>
+        <p class="img"><img src="{% static 'images/eyecatch2_.jpg' %}" width="220" height="300" alt=""></p>	
+        <p>各カテゴリーごとの現在地周辺の店舗やイベントなどを表示し知らなかった１面を発見</p>
+      </article>
+      <article class="grid">
+        <h3>ルート案内</h3>
+        <p class="img"><img src="{% static 'images/eyecatch3_.jpg' %}" width="220" height="300" alt=""></p>
+        <p>マップ上で目的地までのルートと時間を表示し素早くそしてスムーズな行動を可能にする</p>
+      </article>
+      <article class="grid">
+        <h3>カレンダー</h3>
+        <p class="img"><img src="{% static 'images/eyecatch4_.jpg' %}" width="220" height="300" alt=""></p>
+        <p>イベントや観光予定をカレンダー上に時間単位で記録し、貴方の日程計画の一助となる</p>
+      </article>
+    </section>
+    <section class="content">
+      <h3 class="heading">サイト開発に至った目的</h3>
+      <article>
+        <img src="{% static 'images/sample1.jpg' %}" width="320" height="240" alt="" class="alignleft frame">
+        <p><font size="4">旅行先や出張先などの土地勘のない場所で、予定や気分に合わせた飲食店などがすぐに見つけられなくて困るのではないかという</font></p>
+        <p><font size="4">今後需要が高まるであろう、旅行業界における問題点を改善しようという意見が、チーム内であげられました。</font></p>
+        <p><font size="4">このシステムは、情報伝達に重要なポイントである「５W１H」を活用して詳細な検索を行うことが出来</font></p>
+        <p><font size="4">さらに音声認識の要望文から５W１Hにあてはまる単語を抽出して検索することが可能です</font></p>
+      </article>
+    </section>
+  </div>
 </main>
-
 {% endblock %}

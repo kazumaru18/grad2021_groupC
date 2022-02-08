@@ -1,34 +1,31 @@
 {% extends 'base.html' %}
 {% block title %}予定表{% endblock%}
 {% load static %}
+
+{% block head%}
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+<script type="text/javascript" src="https://underscorejs.org/underscore-min.js"></script>
+<script type="text/javascript" src="https://backbonejs.org/backbone-min.js"></script>
+<script type="text/javascript" src="https://momentjs.com/downloads/moment.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.1.1/fullcalendar.min.js"></script>
+<script src="{% static 'js/calendar.js' %}"></script>
+<style id="compiled-css" type="text/css">
+  .cal_main{
+    max-width: 1020px;
+    width: 90%;
+    margin: 0 auto;
+    padding-top: 10px;
+  }
+  #calendar {
+    padding-top: 20px;
+  }
+</style>
+{% endblock %}
+
 <!-- メイン ------------------------------------>
 {% block contents%}
-<body>
-  <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
-  <script type="text/javascript" src="https://underscorejs.org/underscore-min.js"></script>
-  <script type="text/javascript" src="https://backbonejs.org/backbone-min.js"></script>
-  <script type="text/javascript" src="https://momentjs.com/downloads/moment.min.js"></script>
-  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.1.1/fullcalendar.min.js"></script>
-  <script src="{% static 'js/calendar.js' %}"></script>
-  <style id="compiled-css" type="text/css">
-    .cal_main{
-      max-width: 1020px;
-      width: 90%;
-      margin: 0 auto;
-      padding-top: 10px;
-    }
-    #calendar {
-      padding-top: 20px;
-      background-color: #ffff;
-    }
-  </style>
 <div class="cal_main">
   <h1 class="summary_title" data-en="Calendar"><span>予定表</span></h1>
   <div id='calendar'></div>
-</div> 
-
-
-
-
+</div>
 {% endblock %}
-<div class="bg_pattern Paper_v2"></div>
