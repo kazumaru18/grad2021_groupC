@@ -8,7 +8,7 @@
     top: 10%;
     left: -350px;
     position: fixed;
-    z-index: 2;
+    z-index: 1;
     text-align: center;
 }
 .side-text {
@@ -52,7 +52,7 @@
   top: 10%;
   left: -350px;
   position: fixed;
-  z-index: 4;
+  z-index: 2;
   text-align: center;
 }
 .page_main2 > aside button {
@@ -66,7 +66,7 @@
   margin: 0;
   padding: 0;
   border-radius: 0 5px 5px 0;
-  z-index: 3;
+  z-index: 2;
 }
 
 .page_main3 {
@@ -79,7 +79,7 @@
   top: 10%;
   left: -350px;
   position: fixed;
-  z-index: 6;
+  z-index: 3;
 }
 .page_main3 > aside button {
   background-color: rgba(201, 241, 208, 1);
@@ -92,7 +92,7 @@
   margin: 0;
   padding: 0;
   border-radius: 0 5px 5px 0;
-  z-index: 5;
+  z-index: 3;
 }
 aside li a { color:#fff;}
 

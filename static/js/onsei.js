@@ -64,7 +64,7 @@ function audioRecognize() {
         let result_json = JSON.parse(text)
         // 音声認識結果の表示
         text = result_json.results[0].alternatives[0].transcript
-        output.innerHTML += "\n" + text
+        output.innerHTML += text + "　" 
         console.log("result: " + text)
       })
     }

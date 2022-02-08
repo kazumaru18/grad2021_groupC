@@ -922,14 +922,14 @@ function searchHours(place, week, time) {
       // if (status == google.maps.places.PlacesServiceStatus.OK) {
       if (place['opening_hours']) {
           if (place['opening_hours']['weekday_text']) {
-              var day = place['opening_hours']['weekday_text'][0]
+              var day = place['opening_hours']['weekday_text'][week]
               // console.log(place['opening_hours']['weekday_text']);
               day = day.split(/[:～,]/);
               // console.log(day.length);
-              if (day[week] === ' 24 時間営業') {
+              if (day[1] === ' 24 時間営業') {
                   // console.log('yes');
                   return true;
-              } else if (day[week] === ' 定休日') {
+              } else if (day[1] === ' 定休日') {
                   // console.log('no');
                   return false;
               }

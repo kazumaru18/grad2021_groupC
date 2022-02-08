@@ -7,7 +7,7 @@ html, body {
   padding: 0;
   height: 100%;
   font-family: "Hiragino Kaku Gothic Pro", "ヒラギノ角ゴ Pro W3", メイリオ, Meiryo, "ＭＳ Ｐゴシック", "Helvetica Neue", Helvetica, Arial, sans-serif;
-  background-color: #ffff;
+  
 }
 
 .bg_pattern {
@@ -226,6 +226,63 @@ main {
 .ons button {
   padding: 15px 30px;
   font-size: 35px;
+}
+
+button {
+  cursor: pointer;
+}
+
+.btn--circle {
+  width: 400px;
+  height: 80px;
+  margin: 0 auto;
+  padding: 0;
+  background: #fff;
+  border-radius: 40px;
+  -webkit-box-shadow: 0 3px 5px rgba(0, 0, 0, .3);
+  box-shadow: 0 3px 5px rgba(0, 0, 0, .3);
+}
+
+.btn--circle-c {
+  font-size: 150%;
+  line-height: 40px;
+  -webkit-transition: all .3s;
+  transition: all .3s;
+  letter-spacing: 0;
+}
+
+.btn--shadow {
+  line-height: 35px;
+}
+
+@media screen and (max-width: 480px) {
+	/* 480px以下に適用されるCSS（スマホ用） */
+  /* img {
+    width: 100%;
+  } */
+
+  .btn--circle {
+    width: 300px;
+    height: 80px;
+    margin: 0 auto;
+    padding: 0;
+    background: #fff;
+    border-radius: 40px;
+    -webkit-box-shadow: 0 3px 5px rgba(0, 0, 0, .3);
+    box-shadow: 0 3px 5px rgba(0, 0, 0, .3);
+  }
+  
+  .btn--circle-c {
+    font-size: 150%;
+    line-height: 40px;
+    -webkit-transition: all .3s;
+    transition: all .3s;
+    letter-spacing: 0;
+  }
+  
+  .btn--shadow {
+    line-height: 35px;
+  }
 }
 
 .search-subtitle {
