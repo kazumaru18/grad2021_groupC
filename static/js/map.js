@@ -229,8 +229,7 @@ function initMap() {
         var params = url.searchParams;
         input = document.getElementById("pac-input");
         var str = params.get('q');
-        // test3(str);
-        dayWeek(2022, 2, 7);
+        test3(str);
         console.log(word + ' ' + hours + ' ' + week);
         enter();
     });
@@ -262,6 +261,22 @@ function initMap() {
     $('#cate4').on('click', function () {
 
         cate = document.querySelector('#cate4').dataset["value"];
+        const input = document.getElementById("pac-input");
+        input.value = cate;
+        enter();
+        input.blur()
+    });
+    $('#cate5').on('click', function () {
+
+        cate = document.querySelector('#cate5').dataset["value"];
+        const input = document.getElementById("pac-input");
+        input.value = cate;
+        enter();
+        input.blur()
+    });
+    $('#cate6').on('click', function () {
+
+        cate = document.querySelector('#cate6').dataset["value"];
         const input = document.getElementById("pac-input");
         input.value = cate;
         enter();
@@ -365,6 +380,12 @@ function calcRoute(s, e) {
 
     directionsService.route(request, function (response, status) {
         // if (status == google.maps.DirectionsStatus.OK) {
+
+        //所要時間
+        console.log(response['routes'][0]['legs'][0]['duration']['text']);
+
+        //zoom削除
+        delete response['routes'][0]['bounds'];
         directionsDisplay.setDirections(response);
         // } else {
         // alert('ルートが見つかりませんでした…');
@@ -500,7 +521,7 @@ function gpsRoot(position) {
     var start = position.coords.latitude + ',' + position.coords.longitude;
     // Display_JS(start,'柏駅');
     // initialize(start, '柏駅');
-    calcRoute(start, endPoint);
+    // calcRoute(start, endPoint);
 }
 
 function gpsStart() {
@@ -571,19 +592,37 @@ function enter() {
     enterFlag = true;
 }
 
+var monthFlag=0;
 function test3(data) {
     dayNum;
     timeNum;
     dayFlag = null;
     timeFlag = null;
     word = '';
+    var year= null;
+    var month=null;
     week;
     hours;
     nullnull = 1;
+    monthFlag=0;
     data = data.split(/[,、\　\ ]/);
     console.log(data.length);
+    var strDayFlag=0;
     for (let i = 0; i < data.length; i++) {
         const day = data[i].match(/.曜日/);
+
+        var strDay = replaceFullToHalf(data[i]);
+        if (strDay.match(/[0-9]+日/) != null) {
+            strDayFlag = 1;
+            strDay = strDay.replace(/['日']/, '');
+            var dey = new Date();
+            day = dey.getDay();
+            if(day>strDay){
+                monthFlag=1;
+            }
+            console.log(strDay);
+            data[i]='';
+        }
 
         var time = replaceFullToHalf(data[i]);
         // var time = data[i].match(/([0-9]+時[0-9]+分$|[0-9]+時半$|[0-9]+時$)/);
@@ -596,6 +635,7 @@ function test3(data) {
             timeNum = i;
         }
     }
+
     console.log(dayNum + ' ' + timeNum);
     if (dayNum == null && timeNum == null) {
         nullnull = 0;
@@ -608,7 +648,10 @@ function test3(data) {
         }
     }
     // if (typeof dayNum === "undefined") {
-    if (dayNum == null) {
+    if (strDayFlag == 1) {
+        dayWeek(year, month, strDay);
+    } else {
+        // if (dayNum == null) {
         if (week == null) {
             dayFlag = 1;
             var now = new Date();
@@ -616,10 +659,12 @@ function test3(data) {
             var nowWeeks = ['日曜日', '月曜日', '火曜日', '水曜日', '木曜日', '金曜日', '土曜日'];
             week = weeks[nowWeeks[nowWeek]];
             console.log('newWeek   ' + week);
+        } else {
+            // } else {
+            week = weeks[data[dayNum]];
+            console.log(week);
+            // }
         }
-    } else {
-        week = weeks[data[dayNum]];
-        console.log(week);
     }
 
     console.log(week + " " + timeNum + ' ' + word);
@@ -761,6 +806,9 @@ function dayWeek(year, month, nowDay) {
     if (month == null) {
         var date = new Date();
         month = date.getMonth() + 1;
+        if(monthFlag==1){
+            month = month + 1;
+        }
     }
     if (nowDay == null) {
         var date = new Date();
@@ -774,8 +822,9 @@ function dayWeek(year, month, nowDay) {
     // 指定日付で初期化したDateオブジェクトのインスタンスを生成する
     var date = new Date(year, month, nowDay);
     // 木曜日は数値の4として保持されているため、dayOfWeekStrJP[4]の値が出力される
-    console.log(year);
-    console.log(month);
-    console.log(nowDay);
-    console.log(dayOfWeekStrJP[date.getDay()]);
+    // console.log(year);
+    // console.log(month);
+    // console.log(nowDay);
+    // console.log(dayOfWeekStrJP[date.getDay()]);
+    week = dayOfWeekStrJP[date.getDay()];
 }
