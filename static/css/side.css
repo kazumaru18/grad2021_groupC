@@ -10,7 +10,6 @@
     position: fixed;
     z-index: 2;
     text-align: center;
-    padding: 30px 0 0 0;
 }
 .side-text {
   font-size: 22px;
@@ -55,7 +54,6 @@
   position: fixed;
   z-index: 4;
   text-align: center;
-  padding: 30px 0 0 0;
 }
 .page_main2 > aside button {
   background-color: rgba(201, 207, 241, 1);

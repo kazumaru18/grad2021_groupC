@@ -1,163 +1,87 @@
 {% extends 'base.html' %}
-{% block title %}Simple Map{% endblock%}
+{% block title %}システム概要{% endblock%}
 {% load static %}
 
+<!-- メイン ------------------------------------>
 {% block contents%}
+<main>
+<h1 class="summary_title" data-en="Summary"><span>システム概要</span></h1>
+<div id="mainBanner" class="mainImg">
+    <div class="inner">
+        <img src="{% static 'images/01a.jpg' %}" alt="" width="930" height="290">
+        <div class="slogan">
+            <h2>観光推進マップ</h2>
+            <h3>初めて来た場所でも目的に合わせた店舗を検索出来るシステム</h3>
+        </div>
+    </div>
+</div>
 
-<link href="{% static 'css/side.css' %}" rel="stylesheet" />
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-<script src="{% static 'js/side.js' %}"></script>
+<div id="wrapper">
+    <section class="gridWrapper">
+        <article class="grid">
+                <h3>店舗検索</h3>
+                <p class="img"><img src="{% static 'images/eyecatch1_.jpg' %}" width="220" height="300" alt=""></p>
+                <p>場所や時間帯そして人数を指定して検索を行うことで貴方の目的に合う店舗を<br>マップに表示</p>
+            </article>
+        <article class="grid">
+              <h3>周辺情報</h3>
+              <p class="img"><img src="{% static 'images/eyecatch2_.jpg' %}" width="220" height="300" alt=""></p>	
+              <p>各カテゴリーごとの現在地周辺の店舗やイベントなどを表示し<br>知らなかった１面を発見</p>
+          </article>
+          <article class="grid">
+              <h3>ルート案内</h3>
+              <p class="img"><img src="{% static 'images/eyecatch3_.jpg' %}" width="220" height="300" alt=""></p>
+              <p>マップ上で目的地までのルートと時間を表示し<br>素早くそしてスムーズな行動を可能にする</p>
+          </article>
+          <article class="grid">
+        <h3>カレンダー</h3>
+              <p class="img"><img src="{% static 'images/eyecatch4_.jpg' %}" width="220" height="300" alt=""></p>
+              <p>イベントや観光予定をカレンダー上に時間単位で記録し、貴方の日程計画の一助となる</p>
+          </article>
+      </section>
+
+      <section class="content">
+          <h3 class="heading">サイト開発に至った目的</h3>
+          <article>
+              <img src="{% static 'images/sample1.jpg' %}" width="320" height="240" alt="" class="alignleft frame">
+              <p><font size="4">旅行先や出張先などの土地勘のない場所で、予定や気分に合わせた飲食店などがすぐに見つけられなくて困るのではないかという</font></p>
+              <p><font size="4">今後需要が高まるであろう、旅行業界における問題点を改善しようという意見が、チーム内であげられました。</font></p>
+              <p><font size="4">このシステムは、情報伝達に重要なポイントである「５W１H」を活用して詳細な検索を行うことが出来</font></p>
+              <p><font size="4">さらに音声認識の要望文から５W１Hにあてはまる単語を抽出して検索することが可能です</font></p>
+          </article>
+      </section>
   
-<div class="page_main">
-  <aside>
-    <button><img src="{% static 'images/icon.png' %}" width="30px" height="auto"></button>
-  </aside>
-</div>
-
-<div class="page_main2">
-  <aside>
-    <button><img src="{% static 'images/icon.png' %}" width="30px" height="auto"></button>
-  </aside>
-</div>
-
-<div class="page_main3">
-  <aside>
-    <button><img src="{% static 'images/icon.png' %}" width="30px" height="auto"></button>
-  </aside>
-</div>
-
-{% endblock %}
-
-
-<p><button type="button" id="testbutton"> 位置情報の取得開始 </button></p>
-
-<script>
-  $(function(){
-    // モーダル開く
-    $(".js-overlay-modal-open").on("click", function(){
-        $(".overlay-modal").fadeIn('normal');
-        $("body").addClass('modal-open');
-    });
-
-    // モーダル閉じる
-    $(".js-overlay-modal-close").on("click", function(){
-        $(".overlay-modal").fadeOut('normal');
-        $("body").removeClass('modal-open');
-    });
-});
-</script>
-
-<p>
-  <label for="mode">モード：
-    <select id="mode" name="mode">
-      <option value="driving" selected>自動車</option>
-      <option value="bicycling">自転車</option>
-      <!-- <option value="transit">電車</option> -->
-      <option value="walking">徒歩</option>
-    </select>
-  </label>
-</p>
-
-<p>
-  <label for="highways">高速道路：
-    <select id="highways" name="highways">
-      <option value="yes" selected>使用する</option>
-      <option value="no">使用しない</option>
-    </select>
-  </label>
-</p>
-
-<div class="searchbox" style="display: none;" id="searchbox">
-  <p><span class="bold">住所･地名から検索</span></p>
-  <p>start:<input type="text" name="sp" id="sp"></p>
-  <p>End:<input type="text" name="ep" id="ep"></p>
-  <input type="submit" name="regist" value="検索" id="searchButton" onclick="se()">
-</div>
-
-<div class="overlay__conts">
-  <p class="btn-overlay btn-pink">
-      <a href="javascript:void(0);" class="js-overlay-modal-open">飲食店詳細検索</a>
-  </p>
-  <div class="overlay-modal js-overlay-modal">
-    <div class="overlay-modal__overlay"></div>
-      <div class="overlay-modal__body">
-          <div class="overlay-modal__inner">
-              <a href="javascript:void(0);" class="overlay-modal__close js-overlay-modal-close"><i class="fas fa-times"></i></a>
-              <p>
-                  <label for="range">検索範囲：<select id="range" name="range">
-                      <option value="1">300m</option>
-                      <option value="2">500m</option>
-                      <option value="3" selected>1000m</option>
-                      <option value="4">2000m</option>
-                      <option value="5">3000m</option>
-                  </select></label>
-                  <br>
-                  <input type="button" class="js-overlay-modal-close" onclick="syousai()" value="検索">
-
-                  <form name="ca">
-                    <label><input type="checkbox" id="card" name="syousai">
-                      カード支払い</label>
-                    
-                    <label for="lunch"><input type="checkbox" id="lunch" name="syousai">
-                      ランチ</label>
-                    
-                    <label for="wifi"><input type="checkbox" id="wifi" name="syousai">
-                      WiFi</label>
-                    
-                    <label for="private_room"><input type="checkbox" id="private_room" name="syousai">
-                      個室</label>
-                    
-                    <label for="midnight_meal"><input type="checkbox" id="midnight_meal" name="syousai">
-                      23時以降食事OK</label>
-                    
-                    <label for="pet"><input type="checkbox" id="pet" name="syousai">
-                      ペット可</label>
-                    
-                    <label for="cocktail"><input type="checkbox" id="cocktail" name="syousai">
-                      カクテル充実</label>
-                    
-                    <label for="shochu"><input type="checkbox" id="shochu" name="syousai">
-                      焼酎充実</label>
-                    
-                    <label for="sake"><input type="checkbox" id="sake" name="syousai">
-                      日本酒充実</label>
-                    
-                    <label for="wine"><input type="checkbox" id="wine" name="syousai">
-                      ワイン充実</label>
-                    
-                    <label for="parking"><input type="checkbox" id="parking" name="syousai">
-                      駐車場あり</label>
-                    
-                    <label for="barrier_free"><input type="checkbox" id="barrier_free" name="syousai">
-                      バリアフリー</label>
-                    
-                    <label for="free_food"><input type="checkbox" id="free_food" name="syousai">
-                      食べ放題</label>
-                    
-                    <label for="free_drink"><input type="checkbox" id="free_drink" name="syousai">
-                      飲み放題</label>
-                    
-                    <label for="child"><input type="checkbox" id="child" name="syousai">
-                      お子様連れOK</label>
-                    
-                    <label for="non_smoking"><input type="checkbox" id="non_smoking" name="syousai">
-                      禁煙席</label>
-                    
-                    <label for="tatami"><input type="checkbox" id="tatami" name="syousai">
-                      座敷あり</label>
-                    
-                    <label for="course"><input type="checkbox" id="course" name="syousai">
-                      コースあり</label>
-                    
-                    <label for="keyword"><input type="text" id="keyword" name="keyword">
-                      キーワード</label>
-                </form>
-              </p>
-          </div>
-      </div>
   </div>
-</div>
+    <div class="bg_pattern Paper_v2"></div>
+</main>
 
-<div id="directionsPanel"></div>
-<pre id="position_view"></pre>
+<footer id="footer">
+  <section class="primary">
+    <div class="footer">
+      <p class="logo"><a href="https://github.com/kazumaru18/grad2021_groupC">GroupC</a></p>
+      <p class="address">
+        〒277-0842 千葉県柏市末広町10-1<br>
+        TEL : 04-7147-1008　/　二号館 : 04-7167-2601
+      </p>
+      <div class="navi-row">
+        <ul class="navi">
+          <li><a href="{% url 'index' %}">ホーム</a></li>
+          <li><a href="{% url 'describe' %}">システム概要</a></li>
+          <li><a href="{% url 'map' %}">マップ</a></li>
+        </ul>
+        <ul class="sns-navi">
+          <li><a href="https://twitter.com/ohara_kashiwa"><i class="fa fa-twitter"></i></a></li>
+          <li><a href="{% url 'map' %}"><i class="fa fa-map"></i></a></li>
+          <li><a href="https://github.com/kazumaru18/grad2021_groupC"><i class="fa fa-github"></i></a></li>
+          <li><a href="{% url 'index' %}"><i class="fa fa-home"></i></a></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+  <section class="secondary">
+    <div class="footer">
+      <p class="copyright">Copyright 2022 GroupC.</p>
+    </div>
+  </section>
+</footer>
+{% endblock %}

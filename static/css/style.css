@@ -313,9 +313,10 @@ dl::after {
 
 @media screen and (max-width: 480px) {
 	/* 480px以下に適用されるCSS（スマホ用） */
-  img {
+  /* img {
     width: 100%;
-  }
+  } */
+
   .ons button{
       font-size: 25px;
   }
