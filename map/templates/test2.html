@@ -1,21 +1,78 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
+
 <body>
-    <form name="gpsRoot">
-        <input type="checkbox" name="gpsRoot" value="gpsRoot" id="gpsRoot">gpsRoot(非推奨)<br>
-        <input type="buttom" onclick="test()">
-      </form>
     <script>
-        function test(){
-            var gpsFlag = document.getElementById('gpsRoot');
-            console.log(gpsFlag.checked)
+
+var eigyoutime;
+
+        var GetThere = document.getElementById('GetThere');
+        if (GetThere.checked == true) {
+
         }
+
+
+
+        function eigyou() {
+
+        }
+
+
+        function calc() {
+            switch ($("#mode").val()) {
+                case "driving":
+                    mode = google.maps.DirectionsTravelMode.DRIVING;
+                    break;
+                case "bicycling":
+                    mode = google.maps.DirectionsTravelMode.BICYCLING;
+                    break;
+                case "transit":
+                    mode = google.maps.DirectionsTravelMode.TRANSIT;
+                    break;
+                case "walking":
+                    mode = google.maps.DirectionsTravelMode.WALKING;
+                    break;
+            }
+
+            if ($('#highways').val() == 'yes') {
+                highways = false;
+            } else if ($('#highways').val() == 'no') {
+                highways = true;
+            }
+            var request = {
+                origin: s,         // 開始地点
+                destination: e,      // 終了地点
+                travelMode: mode,   //交通手段
+                avoidHighways: highways,        // 高速道路利用フラグ
+            };
+
+            // インスタンス作成
+            directionsService = new google.maps.DirectionsService();
+
+            directionsService.route(request, function (response, status) {
+                // if (status == google.maps.DirectionsStatus.OK) {
+
+                //所要時間
+                eigyoutime = response['routes'][0]['legs'][0]['duration']['text'];
+
+                //zoom削除
+
+
+                // } else {
+                // alert('ルートが見つかりませんでした…');
+                // }
+            });
+        }
+
+
     </script>
 </body>
+
 </html>

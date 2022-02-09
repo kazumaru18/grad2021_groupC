@@ -422,7 +422,7 @@ function syousai() {
     }
     url += '&order=4&count=50&format=jsonp';
 
-    console.log(url);
+    // console.log(url);
     if (info != null) {
         info.close();
     }
@@ -853,3 +853,6 @@ function dayWeek(year, month, nowDay) {
     // console.log(dayOfWeekStrJP[date.getDay()]);
     week = dayOfWeekStrJP[date.getDay()];
 }
+
+
+// 1日 19時間
