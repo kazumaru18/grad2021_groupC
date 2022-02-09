@@ -592,22 +592,22 @@ function enter() {
     enterFlag = true;
 }
 
-var monthFlag=0;
+var monthFlag = 0;
 function test3(data) {
     dayNum;
     timeNum;
     dayFlag = null;
     timeFlag = null;
     word = '';
-    var year= null;
-    var month=null;
+    var year = null;
+    var month = null;
     week;
     hours;
     nullnull = 1;
-    monthFlag=0;
+    monthFlag = 0;
     data = data.split(/[,、\　\ ]/);
     console.log(data.length);
-    var strDayFlag=0;
+    var strDayFlag = 0;
     for (let i = 0; i < data.length; i++) {
         const day = data[i].match(/.曜日/);
 
@@ -616,12 +616,16 @@ function test3(data) {
             strDayFlag = 1;
             strDay = strDay.replace(/['日']/, '');
             var dey = new Date();
-            day = dey.getDay();
-            if(day>strDay){
-                monthFlag=1;
+            dey = dey.getDate();
+            console.log(dey);
+            console.log(strDay);
+
+            if (dey > strDay) {
+                monthFlag = 1;
             }
             console.log(strDay);
-            data[i]='';
+            strDay = Number(strDay);
+            data[i] = '';
         }
 
         var time = replaceFullToHalf(data[i]);
@@ -806,7 +810,7 @@ function dayWeek(year, month, nowDay) {
     if (month == null) {
         var date = new Date();
         month = date.getMonth() + 1;
-        if(monthFlag==1){
+        if (monthFlag == 1) {
             month = month + 1;
         }
     }
