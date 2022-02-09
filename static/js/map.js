@@ -109,6 +109,8 @@ function initMap() {
         console.log(week);
         console.log(hours);
 
+        var timeSearchFlag = document.getElementById('timeSearch');
+
         const places = searchBox.getPlaces();
         places.forEach((place) => {
             // service.getDetails({
@@ -116,6 +118,9 @@ function initMap() {
             //         // fields: ['name', 'formatted_address', 'geometry', 'url']
             // }, function (place, status) {
             // if (hours == null && week == null) {
+            if (timeSearchFlag.checked == false){
+                nullnull = 0;
+            }
             if (nullnull == 0) {
                 marker(place);
                 console.log("検索キーワードのみ！！！");
@@ -503,11 +508,16 @@ function se() {
     $('#navi-end').show();
 }
 
+var gpsMarkers = [];
 function gpsRoot(position) {
     markers.forEach((marker) => {
         marker.setMap(null);
     });
     markers = [];
+    gpsMarkers.forEach((marker) => {
+        marker.setMap(null);
+    });
+    gpsMarkers = [];
     // var geo_text = "緯度:" + position.coords.latitude + "\n";
     // geo_text += "経度:" + position.coords.longitude + "\n";
     // geo_text += "高度:" + position.coords.altitude + "\n";
@@ -519,9 +529,20 @@ function gpsRoot(position) {
     // document.getElementById('position_view').innerHTML = geo_text;
 
     var start = position.coords.latitude + ',' + position.coords.longitude;
+    var pclat = position.coords.latitude;
+    var pclng = position.coords.longitude;
     // Display_JS(start,'柏駅');
     // initialize(start, '柏駅');
-    // calcRoute(start, endPoint);
+    var gpsFlag = document.getElementById('gpsRoot');
+    if (gpsFlag.checked == true) {
+        calcRoute(start, endPoint);
+    } else {
+        var m = new google.maps.Marker({
+            map: map,
+            position: { lat: pclat, lng: pclng },
+        })
+        gpsMarkers.push(m);
+    }
 }
 
 function gpsStart() {
