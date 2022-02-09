@@ -76,7 +76,7 @@ header {
   .btn-trigger {
     position: absolute;
     float: right;
-    top: 20px;
+    top: 2%;
     right: 20px;
     /* position: relative; */
     width: 50px;
@@ -126,12 +126,12 @@ header {
     text-align: center;
   }
   #sm{
-    top: 80px;
+    top: 10%;
     left: 0px;
     position: absolute;
     z-index: 10;
     width: 100%;
-    background-color: #fff;
+    background-color: rgb(242, 242, 242, 0.9);
   }
   #ham_nav{
     flex-direction: column;
