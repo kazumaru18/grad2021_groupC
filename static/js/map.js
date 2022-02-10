@@ -29,6 +29,9 @@ var timeNum;
 var year;
 var month;
 var nowDay;
+var result = 0;
+var eigyoutime;
+var et = '';
 var weeks = { '月曜日': 0, '火曜日': 1, '水曜日': 2, '木曜日': 3, '金曜日': 4, '土曜日': 5, '日曜日': 6 };
 function initMap() {
     map = new google.maps.Map(document.getElementById('map'), {
@@ -110,7 +113,7 @@ function initMap() {
         console.log(hours);
 
         var timeSearchFlag = document.getElementById('timeSearch');
-
+        var GetThere = document.getElementById('GetThere');
         const places = searchBox.getPlaces();
         places.forEach((place) => {
             // service.getDetails({
@@ -118,17 +121,25 @@ function initMap() {
             //         // fields: ['name', 'formatted_address', 'geometry', 'url']
             // }, function (place, status) {
             // if (hours == null && week == null) {
-            if (timeSearchFlag.checked == false){
-                nullnull = 0;
-            }
-            if (nullnull == 0) {
-                marker(place);
-                console.log("検索キーワードのみ！！！");
-                //     // return;
-            } else if (nullnull == 1) {
-                searchHours(place, week, hours);
-                console.log("ワード、曜日、時間");
-                //     // return;
+            if (GetThere.checked == true) {
+                var strat = pos['lat'] + ',' + pos['lng']
+                var end = place['formatted_address'];
+                calc(strat, end, place, word, week, hours);
+                console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+            } else {
+
+                if (timeSearchFlag.checked == false) {
+                    nullnull = 0;
+                }
+                if (nullnull == 0) {
+                    marker(place);
+                    console.log("検索キーワードのみ！！！");
+                    //     // return;
+                } else if (nullnull == 1) {
+                    searchHours(place, week, hours);
+                    console.log("ワード、曜日、時間");
+                    //     // return;
+                }
             }
             // searchHours(place,week,hours);
             // });
@@ -855,4 +866,190 @@ function dayWeek(year, month, nowDay) {
 }
 
 
-// 1日 19時間
+// var GetThere = document.getElementById('GetThere');
+// if (GetThere.checked == true) {
+//     eigyou();
+// }
+
+function eigyou(eigyoutime,p,word,week,h) {
+    // eigyoutime = calc('柏駅', '那覇市');
+    // console.log(eigyoutime);
+    eigyoutime = replaceFullToHalf(eigyoutime);
+
+    eigyoutime = eigyoutime.split(/[　\ ]/);
+    result = 0;
+
+    eigyoutime.forEach(element => {
+        // console.log(element);
+        if (element.match(/[0-9]+日/) != null) {
+            var dayTime = element.replace(/['日']/, '');
+            dayTime = dayTime * 24;
+            dayTime = dayTime * 100;
+            dayTime = Number(dayTime);
+            result = result + dayTime;
+        }
+        if (element.match(/[0-9]+時間/) != null) {
+            var hoursTime = element.replace(/['時']/, '');
+            hoursTime = hoursTime.replace(/['間']/, '');
+            hoursTime = hoursTime * 100;
+            hoursTime = Number(hoursTime);
+            result = result + hoursTime;
+        }
+        if (element.match(/[0-9]+分/) != null) {
+            var minutes = element.replace(/['分']/, '');
+            minutes = Number(minutes);
+            result = result + minutes;
+        }
+    });
+    result=Number(result);
+    console.log(result);
+    searchHours2(result , p, week, h)
+}
+
+
+function calc(s, e, p, word, week, h) {
+    switch ($("#mode").val()) {
+        case "driving":
+            mode = google.maps.DirectionsTravelMode.DRIVING;
+            break;
+        case "bicycling":
+            mode = google.maps.DirectionsTravelMode.BICYCLING;
+            break;
+        case "transit":
+            mode = google.maps.DirectionsTravelMode.TRANSIT;
+            break;
+        case "walking":
+            mode = google.maps.DirectionsTravelMode.WALKING;
+            break;
+    }
+
+    if ($('#highways').val() == 'yes') {
+        highways = false;
+    } else if ($('#highways').val() == 'no') {
+        highways = true;
+    }
+    var request = {
+        origin: s,         // 開始地点
+        destination: e,      // 終了地点
+        travelMode: mode,   //交通手段
+        avoidHighways: highways,        // 高速道路利用フラグ
+    };
+
+    // インスタンス作成
+    directionsService = new google.maps.DirectionsService();
+
+    directionsService.route(request, function (response, status) {
+        // if (status == google.maps.DirectionsStatus.OK) {
+
+        //所要時間
+        et = et + response['routes'][0]['legs'][0]['duration']['text'];
+        // console.log(response['routes'][0]['legs'][0]['duration']['text']);
+        // console.log(et);
+
+        //zoom削除
+
+        eigyou(et, p, word, week, h);
+        // } else {
+        // alert('ルートが見つかりませんでした…');
+        // }
+    });
+}
+
+
+
+
+function searchHours2(r , place, week, time) {
+    console.log('d');
+    var service = new google.maps.places.PlacesService(map);
+    service.getDetails({
+        placeId: place['place_id'],
+        // fields: ['name', 'formatted_address', 'geometry', 'url']
+    }, function (place, status) {
+        if (week == null) {
+            var now = new Date();
+            var nowWeek = now.getDay();
+            var nowWeeks = ['日曜日', '月曜日', '火曜日', '水曜日', '木曜日', '金曜日', '土曜日'];
+            week = weeks[nowWeeks[nowWeek]];
+            console.log(week);
+        }
+        if (time == null) {
+            var now = new Date();
+            var Hour = now.getHours();
+            var Min = now.getMinutes();
+            var nowTime = Hour * 100 + Min;
+            time = nowTime;
+            console.log(time);
+        }
+        // if (status == google.maps.places.PlacesServiceStatus.OK) {
+        if (place['opening_hours']) {
+            if (place['opening_hours']['weekday_text']) {
+                var day = place['opening_hours']['weekday_text'][week]
+                // console.log(place['opening_hours']['weekday_text']);
+                day = day.split(/[:～,]/);
+
+                console.log(day);
+                if (day[1] === ' 24 時間営業') {
+                    // console.log('yes');
+                    return true;
+                } else if (day[1] === ' 定休日') {
+                    // console.log('no');
+                    return false;
+                }
+                var element;
+                for (let i = 1; i < day.length; i++) {//8時30分→830へ変換
+                    element = day[i];
+                    element = element.replace(/['時']/, '');
+                    element = element.replace(/['分']/, '');
+                    element = Number(element);
+                    // console.log(element);
+                    day[i] = element;
+                }
+
+
+                console.log(time);
+                if(result!=0){
+                    time=time+result;
+                }
+                console.log(time);
+
+                switch (day.length) {
+                    case 3:
+                        if (day[2] <= day[1]) {
+                            day[2] += 2400;
+                            console.log(day[2])
+                        }
+                        if (day[1] <= time && day[2] >= time) {
+                            // console.log(day[1]);
+                            // console.log(day[2]);
+                            marker(place);
+                            // return true;
+                            break;
+                        } else {
+                            // console.log('no');
+                            // return false;
+                            break;
+                        }
+                    case 5:
+                        if (day[2] <= day[1]) {
+                            day[2] += 2400;
+                            console.log(day[2])
+                        }
+                        if (day[4] <= day[3]) {
+                            day[4] += 2400;
+                            console.log(day[4])
+                        }
+                        if (day[1] <= time && day[2] >= time || day[3] <= time && day[4] >= time) {
+                            // console.log('yes');
+                            marker(place);
+                            // return true;
+                            break;
+                        } else {
+                            // console.log('no');
+                            // return false;
+                            break;
+                        }
+                }
+            }
+        }
+    });
+}

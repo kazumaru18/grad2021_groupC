@@ -11,21 +11,52 @@
 <body>
     <script>
 
-var eigyoutime;
+        // 34日 15時間
+        var result=0;
+        var eigyoutime;
+        eigyoutime = '１日　14時間 13分';
 
-        var GetThere = document.getElementById('GetThere');
-        if (GetThere.checked == true) {
+        // var GetThere = document.getElementById('GetThere');
+        // if (GetThere.checked == true) {
+        //     eigyou();
+        // }
 
-        }
-
-
+        eigyou();
 
         function eigyou() {
+            calc('柏駅', '那覇市');
+            eigyoutime = replaceFullToHalf(eigyoutime);
 
+            eigyoutime = eigyoutime.split(/[　\ ]/);
+            result=0;
+
+            eigyoutime.forEach(element => {
+                // console.log(element);
+                if (element.match(/[0-9]+日/) != null) {
+                    var dayTime = element.replace(/['日']/, '');
+                    dayTime = dayTime * 24;
+                    dayTime = dayTime * 100;
+                    dayTime = Number(dayTime);
+                    result = result + dayTime;
+                }
+                if (element.match(/[0-9]+時間/) != null) {
+                    var hoursTime = element.replace(/['時']/, '');
+                    hoursTime = hoursTime.replace(/['間']/, '');
+                    hoursTime = hoursTime * 100;
+                    hoursTime = Number(hoursTime);
+                    result = result + hoursTime;
+                }
+                if (element.match(/[0-9]+分/) != null) {
+                    var minutes = element.replace(/['分']/, '');
+                    minutes = Number(minutes);
+                    result = result + minutes;
+                }
+            });
+            console.log(result);
         }
 
 
-        function calc() {
+        function calc(s, e) {
             switch ($("#mode").val()) {
                 case "driving":
                     mode = google.maps.DirectionsTravelMode.DRIVING;
@@ -68,6 +99,14 @@ var eigyoutime;
                 // } else {
                 // alert('ルートが見つかりませんでした…');
                 // }
+            });
+        }
+
+
+        // 全角→半角(英数字)
+        function replaceFullToHalf(str) {
+            return str.replace(/[！-～]/g, function (s) {
+                return String.fromCharCode(s.charCodeAt(0) - 0xFEE0);
             });
         }
 
