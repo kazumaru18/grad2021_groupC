@@ -873,7 +873,7 @@ function dayWeek(year, month, nowDay) {
 
 function eigyou(eigyoutime,p,word,week,h) {
     // eigyoutime = calc('柏駅', '那覇市');
-    // console.log(eigyoutime);
+    console.log(eigyoutime);
     eigyoutime = replaceFullToHalf(eigyoutime);
 
     eigyoutime = eigyoutime.split(/[　\ ]/);
@@ -942,17 +942,17 @@ function calc(s, e, p, word, week, h) {
         // if (status == google.maps.DirectionsStatus.OK) {
 
         //所要時間
-        et = et + response['routes'][0]['legs'][0]['duration']['text'];
+        et = response['routes'][0]['legs'][0]['duration']['text'];
         // console.log(response['routes'][0]['legs'][0]['duration']['text']);
         // console.log(et);
 
         //zoom削除
 
-        eigyou(et, p, word, week, h);
         // } else {
-        // alert('ルートが見つかりませんでした…');
-        // }
-    });
+            // alert('ルートが見つかりませんでした…');
+            // }
+            eigyou(et, p, word, week, h);
+        });
 }
 
 
@@ -983,6 +983,7 @@ function searchHours2(r , place, week, time) {
         // if (status == google.maps.places.PlacesServiceStatus.OK) {
         if (place['opening_hours']) {
             if (place['opening_hours']['weekday_text']) {
+                console.log('時間がある');
                 var day = place['opening_hours']['weekday_text'][week]
                 // console.log(place['opening_hours']['weekday_text']);
                 day = day.split(/[:～,]/);
@@ -1007,11 +1008,15 @@ function searchHours2(r , place, week, time) {
 
 
                 console.log(time);
-                if(result!=0){
-                    time=time+result;
+                if(r!=0){
+                    time=time+r;
                 }
+                
+                console.log(day[1]);
+                console.log(day[2]);
+                console.log(day[3]);
+                console.log(day[4]);
                 console.log(time);
-
                 switch (day.length) {
                     case 3:
                         if (day[2] <= day[1]) {
@@ -1049,7 +1054,14 @@ function searchHours2(r , place, week, time) {
                             break;
                         }
                 }
+            }else{
+                console.log('時間がない2');
+
             }
+        }else{
+            console.log('時間がない');
+            console.log(place['opening_hours']);
+
         }
     });
 }
