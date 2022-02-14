@@ -56,7 +56,7 @@ function audioRecognize() {
           "content": arrayBufferToBase64(result)
         }
       }
-      fetch('https://speech.googleapis.com/v1/speech:recognize?key=' + apiKey, {
+      fetch('https://speech.googleapis.com/v1/speech:recognize?key=' + conf.MAP_KEY, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json; charset=utf-8'

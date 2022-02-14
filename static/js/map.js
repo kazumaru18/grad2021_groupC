@@ -92,6 +92,10 @@ function initMap() {
         markers.forEach((marker) => {
             marker.setMap(null);
         });
+        gpsMarkers.forEach((marker) => {
+            marker.setMap(null);
+        });
+        gpsMarkers = [];
         markers = [];
         var str = input.value;
 
@@ -182,6 +186,10 @@ function initMap() {
         markers.forEach((marker) => {
             marker.setMap(null);
         });
+        gpsMarkers.forEach((marker) => {
+            marker.setMap(null);
+        });
+        gpsMarkers = [];
         markers = [];
         var urlw = '//webservice.recruit.co.jp/hotpepper/gourmet/v1/?key=' + conf.GOURMET_KEY + '&lat=' + lat + '&lng=' + lng + '&range=4&order=4&count=50&format=jsonp';
         $.ajax({
@@ -320,6 +328,10 @@ function initMap() {
         markers.forEach((marker) => {
             marker.setMap(null);
         });
+        gpsMarkers.forEach((marker) => {
+            marker.setMap(null);
+        });
+        gpsMarkers = [];
         markers = [];
         if (directionsDisplay) {
             directionsDisplay.setMap(null);
@@ -350,6 +362,10 @@ function Display_JS(start, end) {
     markers.forEach((marker) => {
         marker.setMap(null);
     });
+    gpsMarkers.forEach((marker) => {
+        marker.setMap(null);
+    });
+    gpsMarkers = [];
     markers = [];
     initialize(start, end);
     calcRoute(start, end);
@@ -459,6 +475,10 @@ function syousai() {
         marker.setMap(null);
     });
     markers = [];
+    gpsMarkers.forEach((marker) => {
+        marker.setMap(null);
+    });
+    gpsMarkers = [];
 
     // &genre=
     $.ajax({
