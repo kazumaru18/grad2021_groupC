@@ -1,11 +1,7 @@
 /* [START maps_places_searchbox] */
 /* Always set the map height explicitly to define the size of the div
  * element that contains the map. */
- #map {
-  height: 90%;
-  z-index: 0;
-  /* position: absolute; */
-}
+
 
 /* Optional: Makes the sample page fill the window. */
 html,
@@ -13,6 +9,11 @@ body {
   height: 100%;
   margin: 0;
   padding: 0;
+}
+
+#map {
+  height: 90%;
+  z-index: 0;
 }
 
 #description {
@@ -62,20 +63,6 @@ body {
   font-weight: 300;
 }
 
-#pac-input {
-  background-color: #fff;
-  font-family: Roboto;
-  font-size: 15px;
-  font-weight: 300;
-  margin-left: 12px;
-  padding: 0 11px 0 13px;
-  text-overflow: ellipsis;
-  width: 400px;
-}
-
-#pac-input:focus {
-  border-color: #4d90fe;
-}
 
 #title {
   color: #fff;
@@ -107,16 +94,28 @@ body {
 }
 
 /* 検索ボックス */
+
+#pac-input:focus {
+  border-color: #4d90fe;
+}
+
 .controls{
   box-sizing: border-box;
   position: relative;
   border: 1px solid #999;
+  background-color: #fff;
   display: block;
+  font-family: Roboto;
+  font-size: 15px;
+  font-weight: 300;
+  margin-top: 13px;
+  margin-left: 12px;
   padding: 3px 10px;
   border-radius: 20px;
   height: 2.3em;
-  width: 260px;
+  width: 360px;
   overflow: hidden;
+  text-overflow: ellipsis;
 }
 .controls input[type="text"]{
   border: none;
@@ -125,13 +124,6 @@ body {
 .controls input[type="text"]:focus {
   outline: 0;
 }
-#category{
-  margin-left: 35%;
-}
-.gu{
-  margin: 0 0 0 auto;
-}
-
 #mise {
   cursor: pointer;
   padding-top: 10px;
@@ -148,62 +140,26 @@ body {
 #cate3 {
   cursor: pointer;
 }
-#cate4{
+#cate4 {
+  cursor: pointer;
+}
+#cate5 {
+  cursor: pointer;
+}
+#cate6 {
+  cursor: pointer;
+}
+#cm {
   cursor: pointer;
 }
 
-
-
-.overlay-modal{
-  display: none;
-  width: 100%;
-  height: 100%;
-  position: fixed;
-  top: 0;
-  right: 0;
-  left: 0;
-  z-index: 1000;
-}
-.overlay-modal__overlay{
-  width: 100%;
-  height: 100%;
-  position: fixed;
-  top: 0;
-  left: 0;
-  background-color: rgba(0,0,0,0.6);
-}
-.overlay-modal__body{
-  width: 100%;
-  position: absolute;
-  top: 50px;
-  -webkit-transition: .4s;
-  transition: .4s;
-}
-.overlay-modal__inner{
-  margin: 0 auto;
-  width: 80%;
-  max-height: calc(100vh - 180px);
-  position: relative;
-  background-color: #fff;
-  border-radius: 8px;
-  -webkit-box-sizing: border-box;
-  box-sizing: border-box;
-  -webkit-overflow-scrolling: touch;
-}
-.overlay-modal__inner p{
-  font-size: 13px;
-  padding: 20px;
-}
-.overlay-modal__close{
-  position: absolute;
-  top: 10px;
-  right: 10px;
-}
-body.modal-open{
-  width: 100%;
-  height: 100%;
-  position: fixed;
-}
 .rootbutton {
   display: none;
+}
+
+@media screen and (max-width: 480px) {
+	/* 480px以下に適用されるCSS（スマホ用） */
+  .controls{
+    margin: 60px 0 0 -193px;
+  }
 }

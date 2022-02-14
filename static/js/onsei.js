@@ -21,6 +21,10 @@ window.onload = function init() {
 // 録音開始
 function startRecording(button) {
   recorder && recorder.record()
+
+  window.setTimeout(function(){
+    stopRecording()
+  }, 10000)
 }
 
 // 録音停止
@@ -52,7 +56,7 @@ function audioRecognize() {
           "content": arrayBufferToBase64(result)
         }
       }
-      fetch('https://speech.googleapis.com/v1/speech:recognize?key=' + conf.MAP_KEY, {
+      fetch('https://speech.googleapis.com/v1/speech:recognize?key=' + apiKey, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json; charset=utf-8'
@@ -64,7 +68,7 @@ function audioRecognize() {
         let result_json = JSON.parse(text)
         // 音声認識結果の表示
         text = result_json.results[0].alternatives[0].transcript
-        output.innerHTML += "\n" + text
+        output.innerHTML += text + "　" 
         console.log("result: " + text)
       })
     }
@@ -81,20 +85,4 @@ function arrayBufferToBase64(buffer) {
     binary += String.fromCharCode(bytes[i])
   }
   return window.btoa(binary)
-}
-
-
-// オーディオタグの追加
-function addAudioTag() {
-  // WAVのエクスポート
-  recorder && recorder.exportWAV(function(blob) {
-    // オーディオタグの追加
-    var url = URL.createObjectURL(blob)
-    var au = document.createElement('audio')
-    au.controls = true
-    au.src = url
-    output.appendChild(au)
-    var br = document.createElement('br')
-    output.appendChild(br)
-  })
 }

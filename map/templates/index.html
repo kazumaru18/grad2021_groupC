@@ -2,15 +2,10 @@
 {% block title %}観光推進MAP{% endblock%}
 {% load static %}
 
-{% block contents%}
-
+{% block head%}
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.css">
-<!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"> -->
-<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css"> -->
-<!-- <link href="{% static 'css/style.css' %}" rel="stylesheet" /> -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.min.js"></script>
-
 <script type="text/javascript">
   $(document).ready(function () {
     $('.slider').bxSlider({
@@ -19,8 +14,11 @@
     });
   });
 </script>
+{% endblock %}
 
-<main>
+<!-- メイン ------------------------------------>
+{% block contents%}
+<main style="max-width: 1020px; width: 90%; margin: 0 auto; padding-top: 10px;">
   <div class="slider">
     <img src="{% static 'images/01.jpg' %}" width="" height="auto" alt="">
     <img src="{% static 'images/02.jpg' %}" width="" height="auto" alt="">
@@ -35,37 +33,31 @@
   <div class="top-search">
     <h1 class="search-title">キーワード検索</h1>
     <form method="get" action="./map/?" class="search_container">
-      <input type="text" size="55%" name="q" placeholder="キーワード検索">
+      <input type="text" size="90%" name="q" placeholder="キーワード検索">
       <input class="musimegane" type="submit" value="&#xf002">
     </form>
     <h1 class="search-subtitle">音声検索</h1>
     <div class="ons">
-      <a href="http://localhost:3000/"><button>音声検索ページへ</button></a>
+      <a href="{% url 'onsei' %}"><button class="btn btn--circle btn--circle-c btn--shadow"><i class="fa fa-microphone"></i> 音声検索ページ</button></a>
     </div>
-    <h1 class="search-subtitle">カテゴリー検索</h1>
-    <ul class="menu">
-      <li><a href='map?q=食料品'><strong>食料品</strong></a></li>
-      <li><a href="map?q=レストラン"><strong>レストラン</strong></a></li>
-      <li><a href="map?q=ホテル"><strong>ホテル</strong></a></li>
-      <li><a href="map?q=ガソリン"><strong>ガソリン</strong></a></li>
-      <li><a href="map?q=atm"><strong>ATM</strong></a></li>
-    </ul>
   </div>
   <div class="news">
     <h1 class="news-title">お知らせ</h1>
     <dl>
-      <dt>2020/01/06</dt>
-      <dd>株式会社◯◯◯◯と資本提携しました。ここにテキストが入ります。</dd>
-      <dt>2019/12/30</dt>
-      <dd>XXXが日経新聞で取り上げられました。ここにテキストが入ります。</dd>
-      <dt>2019/12/10</dt>
-      <dd>自社サービスXXXがリリースされました。ここにテキストが入ります。</dd>
-      <dt>2019/10/06</dt>
-      <dd>本社移転しました。ここにテキストが入ります。</dd>
-      <dt>2020/01/06</dt>
-      <dd>株式会社◯◯◯◯と資本提携しました。</dd>
-      <dt>2019/12/30</dt>
-      <dd>XXXが日経新聞で取り上げられました。</dd>
+      <dt>2022/02/04</dt>
+      <dd>坂田くんがグループに合流しました。<dd>
+      <dt>2022/02/01</dt>
+      <dd>卒業研究の最終発表がありました。</dd>
+      <dt>2022/01/31</dt>
+      <dd>卒業研究の最後の仕上げをしました。</dd>
+      <dt>2022/01/30</dt>
+      <dd>坂田くんが20歳になりました。</dd>
+      <dt>2022/01/17</dt>
+      <dd>坂田くんがグループを離脱しました。<dd>
+      <dt>2022/01/12</dt>
+      <dd>冬休みが終わりました。</dd>
+      <dt>2021/12/04</dt>
+      <dd>冬休みが始まりました。</dd>
       <dt>2021/12/01</dt>
       <dd>卒業研究の中間発表がありました。</dd>
       <dt>2021/10/04</dt>
@@ -73,37 +65,4 @@
     </dl>
   </div>
 </main>
-
-<footer id="footer">
-  <section class="primary">
-    <div class="footer">
-      <p class="logo"><a href="https://github.com/kazumaru18/grad2021_groupC">GroupC</a></p>
-      <p class="address">
-        〒277-0842 千葉県柏市末広町10-1<br>
-        TEL : 04-7147-1008　/　二号館 : 04-7167-2601
-      </p>
-      <div class="navi-row">
-        <ul class="navi">
-          <li><a href="{% url 'index' %}">ホーム</a></li>
-          <li><a href="{% url 'describe' %}">システム概要</a></li>
-          <li><a href="{% url 'map' %}">マップ</a></li>
-          <li><a href="#">お問い合わせ</a></li>
-        </ul>
-        <ul class="sns-navi">
-          <li><a href="https://twitter.com/ohara_kashiwa"><i class="fa fa-twitter"></i></a></li>
-          <li><a href="{% url 'map' %}"><i class="fa fa-map"></i></a></li>
-          <li><a href="https://github.com/kazumaru18/grad2021_groupC"><i class="fa fa-github"></i></a></li>
-          <li><a href="{% url 'index' %}"><i class="fa fa-home"></i></a></li>
-        </ul>
-      </div>
-    </div>
-  </section>
-  <section class="secondary">
-    <div class="footer">
-      <p class="copyright">Copyright 2022 GroupC.</p>
-    </div>
-  </section>
-</footer>
-
 {% endblock %}
-

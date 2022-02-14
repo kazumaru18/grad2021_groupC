@@ -1,0 +1,30 @@
+<footer id="footer">
+  <section class="primary">
+    <div class="footer">
+      <p class="logo"><a href="https://github.com/kazumaru18/grad2021_groupC">GroupC</a></p>
+      <p class="address">
+        〒277-0842 千葉県柏市末広町10-1<br>
+        TEL : 04-7147-1008  /  二号館 : 04-7167-2601
+      </p>
+      <div class="navi-row">
+        <ul class="navi">
+          <li><a href="{% url 'index' %}">ホーム</a></li>
+          <li><a href="{% url 'describe' %}">システム概要</a></li>
+          <li><a href="{% url 'map' %}">マップ</a></li>
+          <li><a href="{% url 'calendar' %}">予定表</a></li>
+        </ul>
+        <ul class="sns-navi">
+          <li><a href="https://twitter.com/ohara_kashiwa"><i class="fa fa-twitter"></i></a></li>
+          <li><a href="{% url 'map' %}"><i class="fa fa-map"></i></a></li>
+          <li><a href="https://github.com/kazumaru18/grad2021_groupC"><i class="fa fa-github"></i></a></li>
+          <li><a href="{% url 'index' %}"><i class="fa fa-home"></i></a></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+  <section class="secondary">
+    <div class="footer">
+      <p class="copyright">Copyright 2022 GroupC.</p>
+    </div>
+  </section>
+</footer>

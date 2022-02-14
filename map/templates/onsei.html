@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block title %}観光推進MAP{% endblock%}
+{% load static %}
+
+{% block head%}
+<link href="{% static 'css/onsei.css' %}" rel="stylesheet" />
+<script src="{% static 'js/onseiapi.js' %}"></script> 
+<script src="{% static 'js/onsei.js' %}"></script> 
+<script src="{% static 'js/recorder.js' %}"></script> 
+<script>
+  function mario(button) {
+    window.location.href = "{% url 'map' %}" + '?q=' + this.output.innerHTML;
+  }
+  function cleee(button) {
+    output.innerHTML = '';
+  }
+</script>
+{% endblock %}
+
+<!-- メイン ------------------------------------>
+{% block contents%}
+<div class="onseimain">
+  <h1 class="summary_title" data-en="Voice search"><span>音声検索</span></h1>
+  <button id="b-mic" class="btn btn--circle btn--circle-c btn--shadow" onclick="startRecording(this)"><i class="fa fa-microphone"></i> 音声入力</button>
+  <button id="b-text" class="btn btn--circle btn--circle-c btn--shadow" onclick="stopRecording(this)"><i class="fa fa-pencil"></i> テキスト化</button>
+  <div class="onseioutput" id="output"></div>
+  <button id="b-search" class="btn btn--circle btn--circle-c btn--shadow" onclick="mario(this)"><i class="fa fa-search"></i> 検索</button>
+  <button id="b-undo" class="btn btn--circle btn--circle-c btn--shadow" onclick="cleee(this)"><i class="fa fa-undo"></i> テキストクリア</button>
+</div>
+{% endblock %}

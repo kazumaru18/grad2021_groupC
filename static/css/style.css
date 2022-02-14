@@ -2,12 +2,12 @@
   box-sizing: border-box;
 }
 
-body {
+html, body {
   margin: 0;
   padding: 0;
   height: 100%;
   font-family: "Hiragino Kaku Gothic Pro", "ヒラギノ角ゴ Pro W3", メイリオ, Meiryo, "ＭＳ Ｐゴシック", "Helvetica Neue", Helvetica, Arial, sans-serif;
-  background-color: #ffff;
+  
 }
 
 .bg_pattern {
@@ -55,7 +55,7 @@ header {
   padding: 0px 10% 0px;
   position: static;
   top: 0;
-  background-color: #fff;
+  /* background-color: #fff; */
   display: flex;
   align-items: center;
 }
@@ -76,7 +76,7 @@ header {
   .btn-trigger {
     position: absolute;
     float: right;
-    top: 20px;
+    top: 2%;
     right: 20px;
     /* position: relative; */
     width: 50px;
@@ -126,12 +126,12 @@ header {
     text-align: center;
   }
   #sm{
-    top: 80px;
+    top: 10%;
     left: 0px;
     position: absolute;
     z-index: 10;
     width: 100%;
-    background-color: #fff;
+    background-color: rgb(242, 242, 242, 0.9);
   }
   #ham_nav{
     flex-direction: column;
@@ -228,6 +228,63 @@ main {
   font-size: 35px;
 }
 
+button {
+  cursor: pointer;
+}
+
+.btn--circle {
+  width: 400px;
+  height: 80px;
+  margin: 0 auto;
+  padding: 0;
+  background: #fff;
+  border-radius: 40px;
+  -webkit-box-shadow: 0 3px 5px rgba(0, 0, 0, .3);
+  box-shadow: 0 3px 5px rgba(0, 0, 0, .3);
+}
+
+.btn--circle-c {
+  font-size: 150%;
+  line-height: 40px;
+  -webkit-transition: all .3s;
+  transition: all .3s;
+  letter-spacing: 0;
+}
+
+.btn--shadow {
+  line-height: 35px;
+}
+
+@media screen and (max-width: 480px) {
+	/* 480px以下に適用されるCSS（スマホ用） */
+  /* img {
+    width: 100%;
+  } */
+
+  .btn--circle {
+    width: 280px;
+    height: 80px;
+    margin: 0 auto;
+    padding: 0;
+    background: #fff;
+    border-radius: 40px;
+    -webkit-box-shadow: 0 3px 5px rgba(0, 0, 0, .3);
+    box-shadow: 0 3px 5px rgba(0, 0, 0, .3);
+  }
+  
+  .btn--circle-c {
+    font-size: 150%;
+    line-height: 40px;
+    -webkit-transition: all .3s;
+    transition: all .3s;
+    letter-spacing: 0;
+  }
+  
+  .btn--shadow {
+    line-height: 35px;
+  }
+}
+
 .search-subtitle {
   text-align: center;
   padding: 30px 0px 15px 0px;
@@ -313,9 +370,10 @@ dl::after {
 
 @media screen and (max-width: 480px) {
 	/* 480px以下に適用されるCSS（スマホ用） */
-  img {
+  /* img {
     width: 100%;
-  }
+  } */
+
   .ons button{
       font-size: 25px;
   }
