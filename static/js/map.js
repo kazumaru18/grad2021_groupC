@@ -245,7 +245,25 @@ function initMap() {
         var params = url.searchParams;
         input = document.getElementById("pac-input");
         var str = params.get('q');
-        test3(str);
+        if (str != null) {
+            var timeSearchFlag = document.getElementById('timeSearch');
+            var GetThere = document.getElementById('GetThere');
+            timeSearchFlag.checked = true;
+            GetThere.checked = true;
+            str = str.trim();
+            if (str.match(/[　\ ]/) == null) {
+                console.log('つながっている');
+                str = split(str);
+                test3(str);
+                input.value = str;
+            } else {
+                console.log('分割');
+            }
+            // console.log(str);
+        } else {
+            console.log('null!!');
+        }
+
         console.log(word + ' ' + hours + ' ' + week);
         enter();
     });
@@ -871,7 +889,7 @@ function dayWeek(year, month, nowDay) {
 //     eigyou();
 // }
 
-function eigyou(eigyoutime,p,word,week,h) {
+function eigyou(eigyoutime, p, word, week, h) {
     // eigyoutime = calc('柏駅', '那覇市');
     console.log(eigyoutime);
     eigyoutime = replaceFullToHalf(eigyoutime);
@@ -901,9 +919,9 @@ function eigyou(eigyoutime,p,word,week,h) {
             result = result + minutes;
         }
     });
-    result=Number(result);
+    result = Number(result);
     console.log(result);
-    searchHours2(result , p, week, h)
+    searchHours2(result, p, week, h)
 }
 
 
@@ -949,16 +967,16 @@ function calc(s, e, p, word, week, h) {
         //zoom削除
 
         // } else {
-            // alert('ルートが見つかりませんでした…');
-            // }
-            eigyou(et, p, word, week, h);
-        });
+        // alert('ルートが見つかりませんでした…');
+        // }
+        eigyou(et, p, word, week, h);
+    });
 }
 
 
 
 
-function searchHours2(r , place, week, time) {
+function searchHours2(r, place, week, time) {
     console.log('d');
     var service = new google.maps.places.PlacesService(map);
     service.getDetails({
@@ -1008,10 +1026,10 @@ function searchHours2(r , place, week, time) {
 
 
                 console.log(time);
-                if(r!=0){
-                    time=time+r;
+                if (r != 0) {
+                    time = time + r;
                 }
-                
+
                 console.log(day[1]);
                 console.log(day[2]);
                 console.log(day[3]);
@@ -1054,14 +1072,137 @@ function searchHours2(r , place, week, time) {
                             break;
                         }
                 }
-            }else{
+            } else {
                 console.log('時間がない2');
 
             }
-        }else{
+        } else {
             console.log('時間がない');
             console.log(place['opening_hours']);
 
         }
     });
+}
+
+function split(str) {
+    console.log(str);
+    str = replaceFullToHalf(str);
+    var timeStr;
+    var dayStr;
+    var weekStr;
+    if (str.match(/[0-9][0-9]時[0-9][0-9]分/) != null) {
+        var index = str.match(/[0-9][0-9]時[0-9][0-9]分/);
+        index = index['index'];
+        // console.log(index);
+        timeStr = str.slice(index, index + 6);
+        str = str.replace(timeStr, '');
+        // console.log(str);
+        console.log(timeStr);
+        // console.log('11時');
+    } else if (str.match(/[0-9][0-9]時[0-9]分/) != null) {
+        var index = str.match(/[0-9][0-9]時[0-9]分/);
+        index = index['index'];
+        // console.log(index);
+        timeStr = str.slice(index, index + 5);
+        str = str.replace(timeStr, '');
+        // console.log(str);
+        console.log(timeStr);
+        // console.log('11時');
+    } else if (str.match(/[0-9]時[0-9][0-9]分/) != null) {
+        var index = str.match(/[0-9]時[0-9][0-9]分/);
+        index = index['index'];
+        // console.log(index);
+        timeStr = str.slice(index, index + 5);
+        str = str.replace(timeStr, '');
+        // console.log(str);
+        console.log(timeStr);
+        // console.log('11時');
+    } else if (str.match(/[0-9]時[0-9]分/) != null) {
+        var index = str.match(/[0-9]時[0-9]分/);
+        index = index['index'];
+        // console.log(index);
+        timeStr = str.slice(index, index + 4);
+        str = str.replace(timeStr, '');
+        // console.log(str);
+        console.log(timeStr);
+        // console.log('11時');
+    } else if (str.match(/[0-9][0-9]時半/) != null) {
+        var index = str.match(/[0-9][0-9]時半/);
+        index = index['index'];
+        // console.log(index);
+        timeStr = str.slice(index, index + 4);
+        str = str.replace(timeStr, '');
+        // console.log(str);
+        console.log(timeStr);
+        // console.log('11時');
+    } else if (str.match(/[0-9]時半/) != null) {
+        var index = str.match(/[0-9]時半/);
+        index = index['index'];
+        // console.log(index);
+        timeStr = str.slice(index, index + 3);
+        str = str.replace(timeStr, '');
+        // console.log(str);
+        console.log(timeStr);
+        // console.log('9時');
+    } else if (str.match(/[0-9][0-9]時/) != null) {
+        var index = str.match(/[0-9][0-9]時/);
+        index = index['index'];
+        // console.log(index);
+        timeStr = str.slice(index, index + 3);
+        str = str.replace(timeStr, '');
+        // console.log(str);
+        console.log(timeStr);
+        // console.log('11時');
+    } else if (str.match(/[0-9]+時/) != null) {
+        var index = str.match(/[0-9]時/);
+        index = index['index'];
+        // console.log(index);
+        timeStr = str.slice(index, index + 2);
+        str = str.replace(timeStr, '');
+        // console.log(str);
+        console.log(timeStr);
+        // console.log('9時');
+    }
+    if (str.match(/.曜日/) != null) {
+        var index = str.match(/.曜日/);
+        index = index['index'];
+        // console.log(index);
+        weekStr = str.slice(index, index + 3);
+        console.log(weekStr);
+        str = str.replace(weekStr, '');
+        // console.log(str);
+    }
+    if (str.match(/[0-9][0-9]日/) != null) {
+        var index = str.match(/[0-9][0-9]日/);
+        index = index['index'];
+        // console.log(index);
+        dayStr = str.slice(index, index + 3);
+        console.log(dayStr);
+        str = str.replace(dayStr, '');
+        console.log(str);
+    } else if (str.match(/[0-9]日/) != null) {
+        var index = str.match(/[0-9]日/);
+        index = index['index'];
+        // console.log(index);
+        dayStr = str.slice(index, index + 3);
+        console.log(dayStr);
+        str = str.replace(dayStr, '');
+        // console.log(str);
+    }
+    var resultStr = '';
+    if (str != null) {
+        resultStr = resultStr + ' ' + str;
+    }
+    if (timeStr != null) {
+        resultStr = resultStr + ' ' + timeStr;
+    }
+    if (dayStr != null) {
+        resultStr = resultStr + ' ' + dayStr;
+    }
+    if (weekStr != null) {
+        resultStr = resultStr + ' ' + weekStr;
+    }
+    resultStr = resultStr.trim();
+    console.log(resultStr);
+    return resultStr;
 }

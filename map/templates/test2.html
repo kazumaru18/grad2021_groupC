@@ -10,107 +10,98 @@
 
 <body>
     <script>
-
-        // 34日 15時間
-        var result=0;
-        var eigyoutime;
-        eigyoutime = '１日　14時間 13分';
-
-        // var GetThere = document.getElementById('GetThere');
-        // if (GetThere.checked == true) {
-        //     eigyou();
-        // }
-
-        eigyou();
-
-        function eigyou() {
-            calc('柏駅', '那覇市');
-            eigyoutime = replaceFullToHalf(eigyoutime);
-
-            eigyoutime = eigyoutime.split(/[　\ ]/);
-            result=0;
-
-            eigyoutime.forEach(element => {
-                // console.log(element);
-                if (element.match(/[0-9]+日/) != null) {
-                    var dayTime = element.replace(/['日']/, '');
-                    dayTime = dayTime * 24;
-                    dayTime = dayTime * 100;
-                    dayTime = Number(dayTime);
-                    result = result + dayTime;
+        window.addEventListener('load', function () {
+            var url = new URL(window.location.href);
+            // URLSearchParamsオブジェクトを取得
+            var params = url.searchParams;
+            input = document.getElementById("pac-input");
+            var str = params.get('q');
+            if (str != null) {
+                str = str.trim();
+                if (str.match(/[　\ ]/) == null) {
+                    console.log('つながっている');
+                    str = split(str);
+                    test3(str);
+                } else {
+                    console.log('分割');
                 }
-                if (element.match(/[0-9]+時間/) != null) {
-                    var hoursTime = element.replace(/['時']/, '');
-                    hoursTime = hoursTime.replace(/['間']/, '');
-                    hoursTime = hoursTime * 100;
-                    hoursTime = Number(hoursTime);
-                    result = result + hoursTime;
-                }
-                if (element.match(/[0-9]+分/) != null) {
-                    var minutes = element.replace(/['分']/, '');
-                    minutes = Number(minutes);
-                    result = result + minutes;
-                }
-            });
-            console.log(result);
-        }
-
-
-        function calc(s, e) {
-            switch ($("#mode").val()) {
-                case "driving":
-                    mode = google.maps.DirectionsTravelMode.DRIVING;
-                    break;
-                case "bicycling":
-                    mode = google.maps.DirectionsTravelMode.BICYCLING;
-                    break;
-                case "transit":
-                    mode = google.maps.DirectionsTravelMode.TRANSIT;
-                    break;
-                case "walking":
-                    mode = google.maps.DirectionsTravelMode.WALKING;
-                    break;
+                // console.log(str);
+            } else {
+                console.log('null!!');
             }
+        });
 
-            if ($('#highways').val() == 'yes') {
-                highways = false;
-            } else if ($('#highways').val() == 'no') {
-                highways = true;
+
+
+
+
+        function split(str) {
+            console.log(str);
+            var timeStr;
+            var dayStr;
+            var weekStr;
+            if (str.match(/[0-9][0-9]時/) != null) {
+                var index = str.match(/[0-9][0-9]時/);
+                index = index['index'];
+                // console.log(index);
+                timeStr = str.slice(index, index + 3);
+                str = str.replace(timeStr, '');
+                // console.log(str);
+                console.log(timeStr);
+                // console.log('11時');
+            } else if (str.match(/[0-9]+時/) != null) {
+                var index = str.match(/[0-9]時/);
+                index = index['index'];
+                // console.log(index);
+                timeStr = str.slice(index, index + 2);
+                str = str.replace(timeStr, '');
+                // console.log(str);
+                console.log(timeStr);
+                // console.log('9時');
             }
-            var request = {
-                origin: s,         // 開始地点
-                destination: e,      // 終了地点
-                travelMode: mode,   //交通手段
-                avoidHighways: highways,        // 高速道路利用フラグ
-            };
-
-            // インスタンス作成
-            directionsService = new google.maps.DirectionsService();
-
-            directionsService.route(request, function (response, status) {
-                // if (status == google.maps.DirectionsStatus.OK) {
-
-                //所要時間
-                eigyoutime = response['routes'][0]['legs'][0]['duration']['text'];
-
-                //zoom削除
-
-
-                // } else {
-                // alert('ルートが見つかりませんでした…');
-                // }
-            });
+            if (str.match(/.曜日/) != null) {
+                var index = str.match(/.曜日/);
+                index = index['index'];
+                // console.log(index);
+                weekStr = str.slice(index, index + 3);
+                console.log(weekStr);
+                str = str.replace(weekStr, '');
+                // console.log(str);
+            }
+            if (str.match(/[0-9][0-9]日/) != null) {
+                var index = str.match(/[0-9][0-9]日/);
+                index = index['index'];
+                // console.log(index);
+                dayStr = str.slice(index, index + 3);
+                console.log(dayStr);
+                str = str.replace(dayStr, '');
+                console.log(str);
+            } else if (str.match(/[0-9]日/) != null) {
+                var index = str.match(/[0-9]日/);
+                index = index['index'];
+                // console.log(index);
+                dayStr = str.slice(index, index + 3);
+                console.log(dayStr);
+                str = str.replace(dayStr, '');
+                // console.log(str);
+            }
+            var resultStr = '';
+            if (str != null) {
+                resultStr = resultStr + ' ' + str;
+            }
+            if (timeStr != null) {
+                resultStr = resultStr + ' ' + timeStr;
+            }
+            if (dayStr != null) {
+                resultStr = resultStr + ' ' + dayStr;
+            }
+            if (weekStr != null) {
+                resultStr = resultStr + ' ' + weekStr;
+            }
+            resultStr = resultStr.trim();
+            console.log(resultStr);
+            return resultStr;
         }
-
-
-        // 全角→半角(英数字)
-        function replaceFullToHalf(str) {
-            return str.replace(/[！-～]/g, function (s) {
-                return String.fromCharCode(s.charCodeAt(0) - 0xFEE0);
-            });
-        }
-
-
     </script>
 </body>
 
