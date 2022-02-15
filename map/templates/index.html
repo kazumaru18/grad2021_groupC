@@ -40,10 +40,15 @@
       <input class="musimegane" type="submit" value="&#xf002">
     </form>
     <h1 class="search-title">5w1hテスト</h1>
-    <form method="get" action="./test/?" class="search_container">
+    <!-- <form method="post" class="search_container">
       <input type="text" size="90%" name="q" placeholder="キーワード検索">
-      <input class="musimegane" type="submit" value="&#xf002" onclick="clickBtn()">
+      <input id="ext" class="musimegane" type="button" value="&#xf002" onclick="clickBtn()">
+    </form> -->
+    <form id="form" target="sendPhoto">
+      <input id="ext" type="text" capture="camera" accept="image/*">
+      <button class="btn-send" onclick="clickBtn()">送信</button>
     </form>
+    <iframe name="sendPhoto" style="width:0px;height:0px;border:0px;"></iframe>
     <h1 class="search-subtitle">音声検索</h1>
     <div class="ons">
       <a href="http://localhost:3000/"><button>音声検索ページへ</button></a>
@@ -103,5 +108,18 @@
 </footer>
 
 <div class="bg_pattern Paper_v2"></div>
+<script>
+  const $form = $('#form')
+$('.btn-send').on('click', evt => {
+  $form.submit()
+  $form[0].reset()
+  return false
+})
 
+function clickBtn() {
+	var a = document.getElementById('ext');
+	document.cookie = 'str=' + a.value;
+}
+
+</script>
 {% endblock %}

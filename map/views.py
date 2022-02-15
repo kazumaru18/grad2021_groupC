@@ -4,6 +4,7 @@ import requests
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 import codecs
+import cgi
 
 # Create your views here.
 class IndexView(generic.TemplateView):
@@ -19,10 +20,13 @@ class OnseiView(generic.TemplateView):
 class TestView(generic.TemplateView):
   template_name="test.html"
 
+form = cgi.FieldStorage() # フォームデータを取得する
+q = form.getvalue("q")
 
 @api_view(['GET', 'POST'])
 def get_extract_from_zip(request):
     resp = requests.get(
-        'http://ap.mextractr.net/ma9/mext5w1h?out=atom&apikey=17333CBF6A1D9B2E29B84A012D2AAF2C498735C7&text=マクドナルド',
+        'http://ap.mextractr.net/ma9/mext5w1h?out=atom&apikey=17333CBF6A1D9B2E29B84A012D2AAF2C498735C7&text=' + str(q),
         )
     return Response(resp, status=resp.status_code)
+    
