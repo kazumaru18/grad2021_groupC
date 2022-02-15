@@ -23,7 +23,7 @@ var hours;
 var dayFlag;
 var timeFlag;
 var enterFlag;
-var nullnull = 1;
+var nullFlag = 1;
 var dayNum;
 var timeNum;
 var year;
@@ -105,8 +105,8 @@ function initMap() {
         console.log(hours);
 
         console.log(str);
-        console.log(nullnull);
-        // if (nullnull == 0) {
+        console.log(nullFlag);
+        // if (nullFlag == 0) {
         //     week = null;
         //     hours = null;
         //     dayFlag = null;
@@ -133,13 +133,13 @@ function initMap() {
             } else {
 
                 if (timeSearchFlag.checked == false) {
-                    nullnull = 0;
+                    nullFlag = 0;
                 }
-                if (nullnull == 0) {
+                if (nullFlag == 0) {
                     marker(place);
                     console.log("検索キーワードのみ！！！");
                     //     // return;
-                } else if (nullnull == 1) {
+                } else if (nullFlag == 1) {
                     searchHours(place, week, hours);
                     console.log("ワード、曜日、時間");
                     //     // return;
@@ -163,7 +163,7 @@ function initMap() {
         word = '';
         week = null;
         hours = null;
-        nullnull = 1;
+        nullFlag = 1;
     });
 
 
@@ -554,6 +554,7 @@ function se() {
     e = $('#ep').val();
     initialize(s, e);
     calcRoute(s, e);
+    gpsStart();
     $('#navi-end').show();
 }
 
@@ -673,7 +674,7 @@ function test3(data) {
     var month = null;
     week;
     hours;
-    nullnull = 1;
+    nullFlag = 1;
     monthFlag = 0;
     data = data.split(/[,、\　\ ]/);
     console.log(data.length);
@@ -712,8 +713,8 @@ function test3(data) {
 
     console.log(dayNum + ' ' + timeNum);
     if (dayNum == null && timeNum == null) {
-        nullnull = 0;
-        console.log(nullnull);
+        nullFlag = 0;
+        console.log(nullFlag);
     }
     for (let i = 0; i < data.length; i++) {
         if (i != dayNum && i != timeNum) {
