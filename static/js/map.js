@@ -1,6 +1,6 @@
 function gmap() {
     var sc = document.createElement('script');
-    sc.src = 'https://maps.googleapis.com/maps/api/js?key=' + conf.MAP_KEY + '&libraries=places&callback=initMap&v=weekly&v=beta';
+    sc.src = 'https://maps.googleapis.com/maps/api/js?key=' + xxxxxx + '&libraries=places&callback=initMap&v=weekly&v=beta';
     document.body.appendChild(sc);
 }
 
@@ -16,7 +16,6 @@ var mode, highways;
 var timeId;
 var input;
 var searchBox;
-var reSearchFlag = true;
 var word = '';
 var week;
 var hours;
@@ -35,7 +34,7 @@ var et = '';
 var weeks = { '月曜日': 0, '火曜日': 1, '水曜日': 2, '木曜日': 3, '金曜日': 4, '土曜日': 5, '日曜日': 6 };
 function initMap() {
     map = new google.maps.Map(document.getElementById('map'), {
-        center: { lat: 35.859766, lng: 139.971014 },
+        // center: { lat: 35.859766, lng: 139.971014 },
         zoom: 14,
         heading: 0,
         tilt: 0,
@@ -64,6 +63,7 @@ function initMap() {
         //マップの中心位置を指定
         map.setCenter(pos);
     }, function () {  //位置情報の取得をユーザーがブロックした場合のコールバック
+        map.setCenter({ lat: 35.6809591, lng: 139.7673068 });
         //情報ウィンドウの位置をマップの中心位置に指定
         infowindow.setPosition(map.getCenter());
         //情報ウィンドウのコンテンツを設定
@@ -99,22 +99,7 @@ function initMap() {
         markers = [];
         var str = input.value;
 
-        test3(str);
-        console.log(word);
-        console.log(week);
-        console.log(hours);
-
-        console.log(str);
-        console.log(nullFlag);
-        // if (nullFlag == 0) {
-        //     week = null;
-        //     hours = null;
-        //     dayFlag = null;
-        //     timeFlag = null;
-        // }
-        console.log(word);
-        console.log(week);
-        console.log(hours);
+        setTime(str);
 
         var timeSearchFlag = document.getElementById('timeSearch');
         var GetThere = document.getElementById('GetThere');
@@ -129,7 +114,6 @@ function initMap() {
                 var strat = pos['lat'] + ',' + pos['lng']
                 var end = place['formatted_address'];
                 calc(strat, end, place, word, week, hours);
-                console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
             } else {
 
                 if (timeSearchFlag.checked == false) {
@@ -137,11 +121,9 @@ function initMap() {
                 }
                 if (nullFlag == 0) {
                     marker(place);
-                    console.log("検索キーワードのみ！！！");
                     //     // return;
                 } else if (nullFlag == 1) {
                     searchHours(place, week, hours);
-                    console.log("ワード、曜日、時間");
                     //     // return;
                 }
             }
@@ -191,7 +173,7 @@ function initMap() {
         });
         gpsMarkers = [];
         markers = [];
-        var urlw = '//webservice.recruit.co.jp/hotpepper/gourmet/v1/?key=' + conf.GOURMET_KEY + '&lat=' + lat + '&lng=' + lng + '&range=4&order=4&count=50&format=jsonp';
+        var urlw = '//webservice.recruit.co.jp/hotpepper/gourmet/v1/?key=' + xxxxxx + '&lat=' + lat + '&lng=' + lng + '&range=4&order=4&count=50&format=jsonp';
         $.ajax({
             url: urlw,
             type: 'GET',
@@ -260,19 +242,12 @@ function initMap() {
             GetThere.checked = true;
             str = str.trim();
             if (str.match(/[　\ ]/) == null) {
-                console.log('つながっている');
                 str = split(str);
-                test3(str);
+                setTime(str);
                 input.value = str;
-            } else {
-                console.log('分割');
             }
-            // console.log(str);
-        } else {
-            console.log('null!!');
         }
 
-        console.log(word + ' ' + hours + ' ' + week);
         enter();
     });
 
@@ -432,7 +407,7 @@ function calcRoute(s, e) {
         // if (status == google.maps.DirectionsStatus.OK) {
 
         //所要時間
-        console.log(response['routes'][0]['legs'][0]['duration']['text']);
+        // console.log(response['routes'][0]['legs'][0]['duration']['text']);
 
         //zoom削除
         delete response['routes'][0]['bounds'];
@@ -455,7 +430,7 @@ function syousai() {
     var range = r.value;
     var g = document.getElementById('genre');
     // var genre = g.value;
-    var url = '//webservice.recruit.co.jp/hotpepper/gourmet/v1/?key=' + conf.GOURMET_KEY + '&lat=' + lat + '&lng=' + lng + '&range=' + range;
+    var url = '//webservice.recruit.co.jp/hotpepper/gourmet/v1/?key=' + xxxxxx + '&lat=' + lat + '&lng=' + lng + '&range=' + range;
     var arr = ['&card=1', '&lunch=1', '&wifi=1', '&private_room=1', '&midnight_meal=1', '&pet=1', '&cocktail=1', '&shochu=1', '&sake=1', '&wine=1', '&parking=1', '&barrier_free=1', '&free_food=1', '&free_drink=1', '&child=1', '&non_smoking=1', '&tatami=1', '&course=1'];
 
     const syousai = document.ca.syousai;
@@ -505,11 +480,9 @@ function syousaiMarker(res, pos) {
 
     //マーカーにイベントリスナを設定
     marker.addListener('click', function () {
-        console.log("sssss");
         if (info != null) {
             info.close();
         }
-        console.log(res);
         start = pos['lat'] + ',' + pos['lng'];
         end = res['address'];
         var positio = { lat: res['lat'], lng: res['lng'] };
@@ -606,10 +579,14 @@ function gpsEmd() {
         window.navigator.geolocation.clearWatch(watch_id);
         watch_id = 0;
     }
+    gpsMarkers.forEach((marker) => {
+        marker.setMap(null);
+    });
+    gpsMarkers = [];
 }
 
 function marker(place) {
-    console.log(place);
+    // console.log(place);
     var search;
     search = new google.maps.Marker({
         map,
@@ -627,7 +604,7 @@ function marker(place) {
             if (place['opening_hours']) {
                 if (place['opening_hours']['weekday_text']) {
                     i = i + place['opening_hours']['weekday_text'][0] + '<br>' + place['opening_hours']['weekday_text'][1] + '<br>' + place['opening_hours']['weekday_text'][2] + '<br>' + place['opening_hours']['weekday_text'][3] + '<br>' + place['opening_hours']['weekday_text'][4] + '<br>' + place['opening_hours']['weekday_text'][5] + '<br>' + place['opening_hours']['weekday_text'][6] + '<br>'
-                    console.log(place['opening_hours']['weekday_text']);
+                    // console.log(place['opening_hours']['weekday_text']);
                 }
             }
             var dom = document.createElement("div");
@@ -655,7 +632,6 @@ function replaceFullToHalf(str) {
 }
 
 function enter() {
-    console.log('Enter!!');
     var input = document.getElementById("pac-input");
     input.focus();
     let KEvent = new KeyboardEvent("keydown", { keyCode: 13 });
@@ -664,7 +640,8 @@ function enter() {
 }
 
 var monthFlag = 0;
-function test3(data) {
+// var reSearchFlag = true;
+function setTime(data) {
     dayNum;
     timeNum;
     dayFlag = null;
@@ -677,7 +654,6 @@ function test3(data) {
     nullFlag = 1;
     monthFlag = 0;
     data = data.split(/[,、\　\ ]/);
-    console.log(data.length);
     var strDayFlag = 0;
     for (let i = 0; i < data.length; i++) {
         const day = data[i].match(/.曜日/);
@@ -688,13 +664,9 @@ function test3(data) {
             strDay = strDay.replace(/['日']/, '');
             var dey = new Date();
             dey = dey.getDate();
-            console.log(dey);
-            console.log(strDay);
-
             if (dey > strDay) {
                 monthFlag = 1;
             }
-            console.log(strDay);
             strDay = Number(strDay);
             data[i] = '';
         }
@@ -711,15 +683,12 @@ function test3(data) {
         }
     }
 
-    console.log(dayNum + ' ' + timeNum);
     if (dayNum == null && timeNum == null) {
         nullFlag = 0;
-        console.log(nullFlag);
     }
     for (let i = 0; i < data.length; i++) {
         if (i != dayNum && i != timeNum) {
             word += ' ' + data[i];
-            console.log(word);
         }
     }
     // if (typeof dayNum === "undefined") {
@@ -733,19 +702,15 @@ function test3(data) {
             var nowWeek = now.getDay();
             var nowWeeks = ['日曜日', '月曜日', '火曜日', '水曜日', '木曜日', '金曜日', '土曜日'];
             week = weeks[nowWeeks[nowWeek]];
-            console.log('newWeek   ' + week);
         } else {
             // } else {
             week = weeks[data[dayNum]];
-            console.log(week);
             // }
         }
     }
 
-    console.log(week + " " + timeNum + ' ' + word);
     // if (typeof timeNum === "undefined") {
     if (timeNum) {
-        console.log(data[timeNum]);
         hours = replaceFullToHalf(data[timeNum]);
         hours = hours.replace(/[半]/, '30分');
         hours = hours.replace(/['時']/, '');
@@ -756,7 +721,6 @@ function test3(data) {
             hours = hours.replace(/['分']/, '');
         }
         hours = Number(hours);
-        console.log(hours);
     } else {
         if (time == null) {
             timeFlag = 1;
@@ -765,23 +729,17 @@ function test3(data) {
             var Min = now.getMinutes();
             var nowTime = Hour * 100 + Min;
             hours = nowTime;
-            console.log('new Hours   ' + hours);
         }
     }
-    // console.log(week);
-    // console.log(hours);
-    if (week != null || hours != null) {
-        if (timeFlag !== 1 && dayFlag !== 1) {
-            // reSearchFlag = 1;
-            // reSearch(word);
-        }
-        console.log(week + " " + hours + ' ' + word);
-        console.log('enterEnd');
-    }
+    // if (week != null || hours != null) {
+    //     if (timeFlag !== 1 && dayFlag !== 1) {
+    //         // reSearchFlag = 1;
+    //         // reSearch(word);
+    //     }
+    // }
 }
 
 function searchHours(place, week, time) {
-    console.log('d');
     var service = new google.maps.places.PlacesService(map);
     service.getDetails({
         placeId: place['place_id'],
@@ -792,7 +750,6 @@ function searchHours(place, week, time) {
             var nowWeek = now.getDay();
             var nowWeeks = ['日曜日', '月曜日', '火曜日', '水曜日', '木曜日', '金曜日', '土曜日'];
             week = weeks[nowWeeks[nowWeek]];
-            console.log(week);
         }
         if (time == null) {
             var now = new Date();
@@ -800,7 +757,6 @@ function searchHours(place, week, time) {
             var Min = now.getMinutes();
             var nowTime = Hour * 100 + Min;
             time = nowTime;
-            console.log(time);
         }
         // if (status == google.maps.places.PlacesServiceStatus.OK) {
         if (place['opening_hours']) {
@@ -809,7 +765,6 @@ function searchHours(place, week, time) {
                 // console.log(place['opening_hours']['weekday_text']);
                 day = day.split(/[:～,]/);
 
-                console.log(day);
                 if (day[1] === ' 24 時間営業') {
                     // console.log('yes');
                     return true;
@@ -831,30 +786,23 @@ function searchHours(place, week, time) {
                     case 3:
                         if (day[2] <= day[1]) {
                             day[2] += 2400;
-                            console.log(day[2])
                         }
                         if (day[1] <= time && day[2] >= time) {
-                            // console.log(day[1]);
-                            // console.log(day[2]);
                             marker(place);
                             // return true;
                             break;
                         } else {
-                            // console.log('no');
                             // return false;
                             break;
                         }
                     case 5:
                         if (day[2] <= day[1]) {
                             day[2] += 2400;
-                            console.log(day[2])
                         }
                         if (day[4] <= day[3]) {
                             day[4] += 2400;
-                            console.log(day[4])
                         }
                         if (day[1] <= time && day[2] >= time || day[3] <= time && day[4] >= time) {
-                            // console.log('yes');
                             marker(place);
                             // return true;
                             break;
@@ -890,17 +838,8 @@ function dayWeek(year, month, nowDay) {
         nowDay = date.getDate();
     }
 
-    // Dateオブジェクトには実際の月ー１の値を指定するため
-    // var jsMonth = month - 1;
-    // Dateオブジェクトは曜日情報を0から6の数値で保持しているため、翻訳する
     var dayOfWeekStrJP = [6, 0, 1, 2, 3, 4, 5];
-    // 指定日付で初期化したDateオブジェクトのインスタンスを生成する
     var date = new Date(year, month, nowDay);
-    // 木曜日は数値の4として保持されているため、dayOfWeekStrJP[4]の値が出力される
-    // console.log(year);
-    // console.log(month);
-    // console.log(nowDay);
-    // console.log(dayOfWeekStrJP[date.getDay()]);
     week = dayOfWeekStrJP[date.getDay()];
 }
 
@@ -912,7 +851,6 @@ function dayWeek(year, month, nowDay) {
 
 function eigyou(eigyoutime, p, word, week, h) {
     // eigyoutime = calc('柏駅', '那覇市');
-    console.log(eigyoutime);
     eigyoutime = replaceFullToHalf(eigyoutime);
 
     eigyoutime = eigyoutime.split(/[　\ ]/);
@@ -941,7 +879,6 @@ function eigyou(eigyoutime, p, word, week, h) {
         }
     });
     result = Number(result);
-    console.log(result);
     searchHours2(result, p, week, h)
 }
 
@@ -983,7 +920,6 @@ function calc(s, e, p, word, week, h) {
         //所要時間
         et = response['routes'][0]['legs'][0]['duration']['text'];
         // console.log(response['routes'][0]['legs'][0]['duration']['text']);
-        // console.log(et);
 
         //zoom削除
 
@@ -998,7 +934,6 @@ function calc(s, e, p, word, week, h) {
 
 
 function searchHours2(r, place, week, time) {
-    console.log('d');
     var service = new google.maps.places.PlacesService(map);
     service.getDetails({
         placeId: place['place_id'],
@@ -1009,7 +944,6 @@ function searchHours2(r, place, week, time) {
             var nowWeek = now.getDay();
             var nowWeeks = ['日曜日', '月曜日', '火曜日', '水曜日', '木曜日', '金曜日', '土曜日'];
             week = weeks[nowWeeks[nowWeek]];
-            console.log(week);
         }
         if (time == null) {
             var now = new Date();
@@ -1017,17 +951,14 @@ function searchHours2(r, place, week, time) {
             var Min = now.getMinutes();
             var nowTime = Hour * 100 + Min;
             time = nowTime;
-            console.log(time);
         }
         // if (status == google.maps.places.PlacesServiceStatus.OK) {
         if (place['opening_hours']) {
             if (place['opening_hours']['weekday_text']) {
-                console.log('時間がある');
                 var day = place['opening_hours']['weekday_text'][week]
                 // console.log(place['opening_hours']['weekday_text']);
                 day = day.split(/[:～,]/);
 
-                console.log(day);
                 if (day[1] === ' 24 時間営業') {
                     // console.log('yes');
                     return true;
@@ -1041,30 +972,20 @@ function searchHours2(r, place, week, time) {
                     element = element.replace(/['時']/, '');
                     element = element.replace(/['分']/, '');
                     element = Number(element);
-                    // console.log(element);
                     day[i] = element;
                 }
 
 
-                console.log(time);
                 if (r != 0) {
                     time = time + r;
                 }
 
-                console.log(day[1]);
-                console.log(day[2]);
-                console.log(day[3]);
-                console.log(day[4]);
-                console.log(time);
                 switch (day.length) {
                     case 3:
                         if (day[2] <= day[1]) {
                             day[2] += 2400;
-                            console.log(day[2])
                         }
                         if (day[1] <= time && day[2] >= time) {
-                            // console.log(day[1]);
-                            // console.log(day[2]);
                             marker(place);
                             // return true;
                             break;
@@ -1076,11 +997,9 @@ function searchHours2(r, place, week, time) {
                     case 5:
                         if (day[2] <= day[1]) {
                             day[2] += 2400;
-                            console.log(day[2])
                         }
                         if (day[4] <= day[3]) {
                             day[4] += 2400;
-                            console.log(day[4])
                         }
                         if (day[1] <= time && day[2] >= time || day[3] <= time && day[4] >= time) {
                             // console.log('yes');
@@ -1093,20 +1012,12 @@ function searchHours2(r, place, week, time) {
                             break;
                         }
                 }
-            } else {
-                console.log('時間がない2');
-
             }
-        } else {
-            console.log('時間がない');
-            console.log(place['opening_hours']);
-
         }
     });
 }
 
 function split(str) {
-    console.log(str);
     str = replaceFullToHalf(str);
     var timeStr;
     var dayStr;
@@ -1114,101 +1025,60 @@ function split(str) {
     if (str.match(/[0-9][0-9]時[0-9][0-9]分/) != null) {
         var index = str.match(/[0-9][0-9]時[0-9][0-9]分/);
         index = index['index'];
-        // console.log(index);
         timeStr = str.slice(index, index + 6);
         str = str.replace(timeStr, '');
-        // console.log(str);
-        console.log(timeStr);
-        // console.log('11時');
     } else if (str.match(/[0-9][0-9]時[0-9]分/) != null) {
         var index = str.match(/[0-9][0-9]時[0-9]分/);
         index = index['index'];
-        // console.log(index);
         timeStr = str.slice(index, index + 5);
         str = str.replace(timeStr, '');
-        // console.log(str);
-        console.log(timeStr);
-        // console.log('11時');
     } else if (str.match(/[0-9]時[0-9][0-9]分/) != null) {
         var index = str.match(/[0-9]時[0-9][0-9]分/);
         index = index['index'];
-        // console.log(index);
         timeStr = str.slice(index, index + 5);
         str = str.replace(timeStr, '');
-        // console.log(str);
-        console.log(timeStr);
-        // console.log('11時');
     } else if (str.match(/[0-9]時[0-9]分/) != null) {
         var index = str.match(/[0-9]時[0-9]分/);
         index = index['index'];
-        // console.log(index);
         timeStr = str.slice(index, index + 4);
         str = str.replace(timeStr, '');
-        // console.log(str);
-        console.log(timeStr);
-        // console.log('11時');
     } else if (str.match(/[0-9][0-9]時半/) != null) {
         var index = str.match(/[0-9][0-9]時半/);
         index = index['index'];
-        // console.log(index);
         timeStr = str.slice(index, index + 4);
         str = str.replace(timeStr, '');
-        // console.log(str);
-        console.log(timeStr);
-        // console.log('11時');
     } else if (str.match(/[0-9]時半/) != null) {
         var index = str.match(/[0-9]時半/);
         index = index['index'];
-        // console.log(index);
         timeStr = str.slice(index, index + 3);
         str = str.replace(timeStr, '');
-        // console.log(str);
-        console.log(timeStr);
-        // console.log('9時');
     } else if (str.match(/[0-9][0-9]時/) != null) {
         var index = str.match(/[0-9][0-9]時/);
         index = index['index'];
-        // console.log(index);
         timeStr = str.slice(index, index + 3);
         str = str.replace(timeStr, '');
-        // console.log(str);
-        console.log(timeStr);
-        // console.log('11時');
     } else if (str.match(/[0-9]+時/) != null) {
         var index = str.match(/[0-9]時/);
         index = index['index'];
-        // console.log(index);
         timeStr = str.slice(index, index + 2);
         str = str.replace(timeStr, '');
-        // console.log(str);
-        console.log(timeStr);
-        // console.log('9時');
     }
     if (str.match(/.曜日/) != null) {
         var index = str.match(/.曜日/);
         index = index['index'];
-        // console.log(index);
         weekStr = str.slice(index, index + 3);
-        console.log(weekStr);
         str = str.replace(weekStr, '');
-        // console.log(str);
     }
     if (str.match(/[0-9][0-9]日/) != null) {
         var index = str.match(/[0-9][0-9]日/);
         index = index['index'];
-        // console.log(index);
         dayStr = str.slice(index, index + 3);
-        console.log(dayStr);
         str = str.replace(dayStr, '');
-        console.log(str);
     } else if (str.match(/[0-9]日/) != null) {
         var index = str.match(/[0-9]日/);
         index = index['index'];
-        // console.log(index);
         dayStr = str.slice(index, index + 3);
-        console.log(dayStr);
         str = str.replace(dayStr, '');
-        // console.log(str);
     }
     var resultStr = '';
     if (str != null) {
@@ -1224,6 +1094,5 @@ function split(str) {
         resultStr = resultStr + ' ' + weekStr;
     }
     resultStr = resultStr.trim();
-    console.log(resultStr);
     return resultStr;
 }
