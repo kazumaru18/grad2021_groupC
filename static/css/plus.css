@@ -270,23 +270,6 @@ border-bottom: 1px dotted #8c8c8c;
 .textlink01 a:hover::after {
 	transform: scaleX(1);
 }
-.mike{
-  font-size: 30px;
-}
-.mike_png{
-  height: 30px;
-  width: 30px;
-}
-@media screen and (max-width: 480px) {
-  .mike{
-    font-size: 20px;
-  }
-  .mike_png{
-    height: 10px;
-    width: 10px;
-  }
-}
-
 /* 以下　システム概要 */
 #wrapper{
   margin:0 auto;
