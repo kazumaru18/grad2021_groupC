@@ -55,7 +55,7 @@ header {
   padding: 0px 10% 0px;
   position: static;
   top: 0;
-  /* background-color: #fff; */
+  background-color: #fff;
   display: flex;
   align-items: center;
   box-shadow: 2px 2px 4px #dcdcdc;
